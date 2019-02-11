@@ -1,0 +1,34 @@
+.container{
+  background-color: #fff;
+  text-align: center;
+
+}
+table{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.signup_control{
+  padding: 16px;
+}
+
+.controls{
+  display: inline;
+  width: 20%;
+  text-align: center;
+}
+
+#signup_card{
+  margin-top: 10%;
+  border-radius: 25px;
+  padding: 16px;
+  width:40%;
+}
+
+#body_id{
+  background: url('../images/bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}

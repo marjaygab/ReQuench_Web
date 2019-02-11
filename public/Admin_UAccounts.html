@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Summary (Admin)</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/Admin_UAccounts.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCVk9YOp5EvIFVVLa8t4Gx48qwYe87PASY",
+        authDomain: "requench-fireapp.firebaseapp.com",
+        databaseURL: "https://requench-fireapp.firebaseio.com",
+        projectId: "requench-fireapp",
+        storageBucket: "requench-fireapp.appspot.com",
+        messagingSenderId: "793188493760"
+      };
+      firebase.initializeApp(config);
+    </script>
+  </head>
+  <body>
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="assets/images/logo.png" width="35" height="30" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a id="summary_button" class="nav-link" href="Admin_Summary.html">Summary</a>
+            </li>
+            <li class="nav-item">
+              <a id="admin_activity_navbutton" class="nav-link" href="Admin_Activity.html">Activity</a>
+            </li>
+            <li class="nav-item">
+              <a id="admin_transac_navbutton" class="nav-link" href="Admin_Transactions.html">Transactions</a>
+            </li>
+            <li class="nav-item active">
+              <a id="admin_uaccount_navbutton" class="nav-link" href="Admin_UAccounts.html">User Accounts</a>
+            </li>
+            <li class="nav-item">
+              <a id="admin_monitor_navbuttonn" class="nav-link" href="Admin_Monitoring.html">Monitoring</a>
+            </li>
+            <li class="nav-item">
+              <a id="admin_contact_navbutton" class="nav-link" href="#">Help</a>
+            </li>
+
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item notifs dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="fas fa-bell notifs"></span><span id="notif_count" class="badge badge-light">4</span>
+              </a>
+              <div id="notif_list" class="dropdown-menu notif-list dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <div class="dropdown-item notif-item container">
+                  <img id="notif-icon" class="notif-icon" src="assets/images/profile.jpg" alt="">
+                  <div class="d-inline-block notif-content">
+                    <h5 id="notif-title" class="notif-title">Notification Title</h5>
+                    <p id="notif-description" class="notif-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                  </div>
+                </div>
+                <div class="dropdown-item notif-item container">
+                  <img id="notif-icon" class="notif-icon" src="assets/images/profile.jpg" alt="">
+                  <div class="d-inline-block notif-content">
+                    <h5 id="notif-title" class="notif-title">Notification Title</h5>
+                    <p id="notif-description" class="notif-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                  </div>
+                </div>
+                <div class="dropdown-item notif-item container">
+                  <img id="notif-icon" class="notif-icon" src="assets/images/profile.jpg" alt="">
+                  <div class="d-inline-block notif-content">
+                    <h5 id="notif-title" class="notif-title">Notification Title</h5>
+                    <p id="notif-description" class="notif-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+
+
+            <li class="nav-item setting dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="fas fa-cog setting"></span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="Admin_MyAccount.html">My Account</a>
+                <a class="dropdown-item" href="Admin_Settings.html">Settings</a>
+              </div>
+            </li>
+
+            <li class="nav-item">
+              <a id="logout_button" class="nav-link" href="#">Log Out</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container admin_uaccounts_whole">
+      <div class="card">
+        <div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" id="user_tab" href="#">Users</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="cashier_tab" href="#">Cashiers</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="admin_tab" href="#">Admins</a>
+            </li>
+            <li class="nav-item search_bar ml-auto">
+              <input id="search_bar" type="text" class="form-control form-control-sm" name="" value="" placeholder="Search User">
+            </li>
+            <li class="nav-item add_account">
+              <a href="#" id="add_account"><span class="fas fa-plus-square"></span></a>
+            </li>
+          </ul>
+          <!-- <ul class="nav nav-tabs card-header-tabs justify-content-end"> -->
+          <!-- </ul> -->
+        </div>
+        <div class="card-body navi_container">
+          <!-- <h5 class="card-title">Special title treatment</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a> -->
+          <div id="navi-slots" class="row navi-slots">
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="card account_card">
+                <div class="card-body">
+                  <div id="profile_picture" class="profile_picture test inline-elem">
+                  </div>
+                  <div class="d-inline-block user_details">
+                    <h5 class="card-title user_full_name">FirstName LastName</h5>
+                    <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="overlay">
+                <div class="card account_card">
+                  <div class="card-body">
+                    <div id="profile_picture" class="profile_picture test inline-elem">
+                    </div>
+                    <div class="d-inline-block user_details">
+                      <h5 class="card-title user_full_name">FirstName LastName</h5>
+                      <p class="card-text user_join_date">Joined on: <span id="join_date">01/01/1997</span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="Admin_UAccounts.js"></script>
+  <script type="text/javascript" src="HttpRequest.js"></script>
+  <script type="text/javascript" src="sweetalert2.all.min.js"></script>
+</html>

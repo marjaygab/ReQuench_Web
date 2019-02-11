@@ -1,0 +1,119 @@
+.notif-icon{
+  width: 50px;
+  height: 50px;
+  vertical-align: baseline;
+}
+
+.notif-content{
+  padding: 16px;
+  padding-right: 0px;
+  margin-top: 0;
+}
+
+.notif-item{
+  word-wrap: break-word;
+  width:400px;
+  display: block;
+  padding-left: 10px;
+  padding-right: 0px;
+}
+
+.notif-title{
+  margin-bottom: 0;
+}
+.notif-description{
+  display: inline-block;
+  word-break: break-word;
+  white-space: normal;
+  width: 300px;
+}
+
+.fa-circle{
+  font-size: 15px;
+  float: right;
+}
+
+.active_notif{
+  background-color: #F3F3F3;
+}
+
+
+#notif_count{
+  margin-left: 16px;
+}
+
+.profile_picture {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border-color: #1EB3BE;
+  border-style: solid;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  top: 50%;
+}
+
+.user_details{
+  margin-left: 10px;
+  vertical-align: top;
+  margin-top: 6px;
+}
+
+.user_full_name{
+  margin-bottom: 0;
+}
+
+
+.navi_container{
+  background: #f3f3f3;
+  overflow-y: scroll;
+  height: 800px;
+}
+
+tabs .navi-link.active{
+  background-color: #f3f3f3;
+}
+
+.add_account{
+  padding-right: 10px;
+  font-size: 20px;
+  padding-left: 20px;
+}
+
+.admin_uaccounts_whole{
+  margin-top: 100px;
+}
+
+.account_card{
+  margin-bottom: 20px;
+}
+
+.search_bar{
+  float: right;
+}
+
+.ml-auto{
+  margin-left: auto;
+
+}
+
+.form-account{
+  margin-bottom: 30px;
+}
+
+#submit{
+  width: 20%;
+}
+
+.error{
+  color:red;
+  font-size: 10px;
+  margin-bottom: 0;
+  text-align: left;
+}
+
+/* .inline-elem{
+  display: inline;
+} */

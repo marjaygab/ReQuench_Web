@@ -1,0 +1,150 @@
+<style>
+
+html {
+background-color: #e7fbe1;
+}
+
+.option{
+  width: 45%;
+}
+.separator{
+	margin: 25px auto;
+}
+.set1{
+  margin:2%;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 40%;
+}
+/* Gray */
+.default {
+  border-color: #e7e7e7;
+  color: black;
+}
+
+.default:hover {
+  background: #e7e7e7;
+}
+/* Blue */
+.info {
+  border-color: #2196F3;
+  color: dodgerblue
+}
+
+.info:hover {
+  background: #2196F3;
+  color: white;
+}
+.bottom{
+  margin-top: 5%;
+}
+.title{
+  margin: 2%;
+}
+.account{
+  margin-left: 7%;
+}
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  height: 400px;
+}
+.infield{
+  text-align: center;
+}
+.rightcolumn {
+  float: left;
+  width: 50%;
+}
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.table{
+  width: 100%;
+  overflow: auto;
+  text-align: left;
+  height:50%;
+}
+.table th{
+    padding:10px 5px;
+}
+
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
+#container{
+	width: 50px;
+	height: 25%;
+	background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)), url(bgImg.jpg);
+	/* margin: 20px auto; */
+}
+#calculator{
+	width: 65%;
+	height:330px;
+	background-color: #eaedef;
+	margin: 50px auto;
+	top: 20px;
+	position: static;
+	border-radius: 5px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#result{
+	height: 120px;
+}
+#history{
+	text-align: right;
+	height: 20px;
+	margin: 0 20px;
+	padding-top: 20px;
+	font-size: 15px;
+	color: #919191;
+}
+#output{
+	text-align: right;
+	height: 60px;
+	margin: 10px 20px;
+	font-size: 30px;
+}
+
+.operator, .number, .empty{
+	width: 25%;
+	height: 22%;
+	margin: 5px 15px;
+	float: left;
+	border-radius: 10%;
+	border-width: 0;
+	font-weight: bold;
+	font-size: 30px;
+}
+.number, .empty{
+	background-color: #eaedef;
+}
+.number, .operator{
+	cursor: pointer;
+}
+.operator:active, .number:active{
+	font-size: 20px;
+}
+.operator:focus, .number:focus, .empty:focus{
+	outline: 0;
+}
+.number{
+	font-size: 20px;
+	background-color: #a3ccc9;
+}
+/* .okay{
+	font-size: 20px;
+	background-color: #28a745;
+} */
+
+</style>

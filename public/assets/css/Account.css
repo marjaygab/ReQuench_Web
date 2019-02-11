@@ -1,0 +1,47 @@
+.account_whole{
+  margin-top: 50px;
+}
+
+.card{
+  margin-bottom: 10px;
+}
+
+.profile_picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border-color: #1EB3BE;
+  border-style: solid;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  top: 50%;
+}
+
+.user_label{
+
+}
+
+.user_block{
+  vertical-align: middle;
+  margin:0;
+  position: absolute;
+  bottom: 30%;
+  vertical-align: middle;
+  padding-left: 20px;
+}
+
+.picture_block{
+  text-align: center;
+}
+
+.details{
+  float:right;
+}
+
+.isDisabled {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+}

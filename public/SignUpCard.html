@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/SignUp.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  </head>
+  <body id="body_id">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">
+        <img src="assets/images/logo.png" width="35" height="30" alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a id="home_button" class="nav-link" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a id="about_button" class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a id="contact_button" class="nav-link" href="#">Contact Us</a>
+          </li>
+          <!-- for disabling nav bar button -->
+          <!-- <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li> -->
+        </ul>
+      </div>
+    </nav>
+
+
+
+
+    <div id="signup_card" class="container">
+      <h2>Sign Up</h2>
+      <p>Please Fill up the form below</p>
+      <table style="text-align: left;">
+        <tr>
+          <div>
+            <td><label>ID Number:</label>
+            <td><input id="id_no" class="form-control" type="text"  NAME="StudentEmployeeID" required>
+          </div>
+        </tr>
+        <tr>
+          <div>
+            <td><label>User Name:</label>
+            <td><input id="u_name" class="form-control" type="text"  NAME="User_Name" required>
+          </div>
+        </tr>
+        <tr>
+          <div>
+            <td><label>First Name:</label>
+            <td><input id="f_name" class="form-control" type="text" NAME="First_Name" required>
+          </div>
+        </tr>
+        <tr>
+          <div>
+            <td><label>Last Name:</label>
+            <td><input id="l_name" class="form-control" type="text" NAME="Last_Name" required>
+          </div>
+        </tr>
+        <tr>
+          <div>
+            <td><label>Email:</label>
+            <td><input id="email" class="form-control" type="text" NAME="Email" required>
+          </div>
+        </tr>
+        <tr>
+          <div>
+            <td><label>Password:</label>
+            <td><input id="pass" class="form-control" type="password" NAME="Password" required>
+          </div>
+        </tr>
+      </table>
+      <div class="signuop_control">
+        <td><button id="submit_button" class="btn btn-info controls" type="button" name="button">Submit</button>
+        <td><button id="cancel_button" class="btn btn-danger controls" type="button" name="button">Cancel</button>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="SignUp.js"></script>
+  <script type="text/javascript" src="HttpRequest.js"></script>
+</html>
