@@ -27,7 +27,7 @@ $(document).ready(function() {
 
 
 //get initial notif list
-  requestHttp('POST',"Fetch_Notifs.php",params,function(e){
+  requestHttp('POST',"https://requench-rest.herokuapp.com/Fetch_Notifs.php",params,function(e){
     if (this.readyState == 4 && this.status == 200) {
       var response = this.responseText;
       if (response != null) {
@@ -105,7 +105,7 @@ $(document).ready(function() {
         params.Acc_ID = response.Account_Details.Acc_ID;
         params.registration_token = currentToken;
 
-        requestHttp('POST',"Update_Token.php",params,function(e){
+        requestHttp('POST',"https://requench-rest.herokuapp.com/Update_Token.php",params,function(e){
           if (this.readyState == 4 && this.status == 200) {
             var response = this.responseText;
             if (response != null) {
@@ -145,7 +145,7 @@ $(document).ready(function() {
           params.Acc_ID = response.Account_Details.Acc_ID;
           params.registration_token = currentToken;
 
-          requestHttp('POST',"Update_Token.php",params,function(e){
+          requestHttp('POST',"https://requench-rest.herokuapp.com/pdate_Token.php",params,function(e){
             if (this.readyState == 4 && this.status == 200) {
               var response = this.responseText;
               if (response != null) {
@@ -185,7 +185,7 @@ $(document).ready(function() {
     var response = JSON.parse(sessionStorage.getItem('JSON_Response'));
     params.Acc_ID = response.Account_Details.Acc_ID;
     //clear registration token to reject incoming background notifications
-    requestHttp('POST',"Clear_Token.php",params,function(e){});
+    requestHttp('POST',"https://requench-rest.herokuapp.com/Clear_Token.php",params,function(e){});
   }
 
 //Get Generated User Token then update the Back End DB fpr changes.
@@ -195,14 +195,14 @@ $(document).ready(function() {
     var response = JSON.parse(sessionStorage.getItem('JSON_Response'));
     params.Acc_ID = response.Account_Details.Acc_ID;
     //clear registration token for later renewal
-    requestHttp('POST',"Clear_Token.php",params,function(e){});
+    requestHttp('POST',"https://requench-rest.herokuapp.com/Clear_Token.php",params,function(e){});
   };
 
 
   messaging.onMessage(function(payload) {
     //handle notification arrival here
 
-    requestHttp('POST',"Fetch_Notifs.php",params,function(e){
+    requestHttp('POST',"https://requench-rest.herokuapp.com/Fetch_Notifs.php",params,function(e){
       if (this.readyState == 4 && this.status == 200) {
         console.log('A Message is received!');
         var response = this.responseText;
@@ -277,7 +277,7 @@ $(document).ready(function() {
       var response = JSON.parse(sessionStorage.getItem('JSON_Response'));
       params.Acc_ID = response.Account_Details.Acc_ID;
       //clear registration token for later renewal
-      requestHttp('POST',"Clear_Token.php",params,function(e){});
+      requestHttp('POST',"https://requench-rest.herokuapp.com/Clear_Token.php",params,function(e){});
       window.location.href = "index.php";
     }, function(error) {
       Swal({
@@ -362,7 +362,7 @@ $(document).ready(function() {
     params.Notif_ID = notif_id;
     params.Seen = seen;
     var success = false;
-    requestHttp('POST',"Update_Seen.php",params,function(e){
+    requestHttp('POST',"https://requench-rest.herokuapp.com/Update_Seen.php",params,function(e){
       if (this.readyState == 4 && this.status == 200) {
         var response = this.responseText;
         if (response != null) {

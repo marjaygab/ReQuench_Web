@@ -82,7 +82,7 @@ $(document).ready(function() {
               params.Acc_ID = jsonobj.Account_Details.Acc_ID;
               params.file_name = jsonobj.Account_Details.Access_Level + '_' + params.Acc_ID + '.' +file_type;
               params.image_string = str;
-              requestHttp('POST',"Upload_Image.php",params,function(e){
+              requestHttp('POST',"https://requench-rest.herokuapp.com/Upload_Image.php",params,function(e){
                 if (this.readyState == 4 && this.status == 200) {
                   var response = this.responseText;
                   if (response != null) {
@@ -152,7 +152,7 @@ $(document).ready(function() {
         params.Acc_ID = jsonobj.Account_Details.Acc_ID;
         params.ID_Number = id_num_field.value;
         params.User_Name = user_field.value;
-        requestHttp('POST',"Update_Account.php",params,function(e){
+        requestHttp('POST',"https://requench-rest.herokuapp.com/Update_Account.php",params,function(e){
           if (this.readyState == 4 && this.status == 200) {
             var response = this.responseText;
             // response = response.slice(1,-1);
@@ -206,7 +206,7 @@ $(document).ready(function() {
         params.Command = 'email';
         params.Acc_ID = jsonobj.Account_Details.Acc_ID;
         params.Email = email_field.value;
-        requestHttp('POST',"Update_Account.php",params,function(e){
+        requestHttp('POST',"https://requench-rest.herokuapp.com/Update_Account.php",params,function(e){
           if (this.readyState == 4 && this.status == 200) {
             var response = this.responseText;
             // response = response.slice(1,-1);
@@ -264,7 +264,7 @@ $(document).ready(function() {
         params.Command = 'phone';
         params.Acc_ID = jsonobj.Account_Details.Acc_ID;
         params.Phone = phone_field.value;
-        requestHttp('POST',"Update_Account.php",params,function(e){
+        requestHttp('POST',"https://requench-rest.herokuapp.com/Update_Account.php",params,function(e){
           if (this.readyState == 4 && this.status == 200) {
             var response = this.responseText;
             // response = response.slice(1,-1);
@@ -349,7 +349,7 @@ $(document).ready(function() {
               text: 'Something went Wrong! Please try again later.'
             });
           }else{
-            requestHttp('POST',"Update_Account.php",params,function(e){
+            requestHttp('POST',"https://requench-rest.herokuapp.com/Update_Account.php",params,function(e){
               if (this.readyState == 4 && this.status == 200) {
                 var response = this.responseText;
                 // response = response.slice(1,-1);

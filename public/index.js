@@ -32,12 +32,12 @@ $('document').ready(function() {
       params = {};
       params.Email = user.email;
       Swal({
-        title: 'Redirecting...',
+        title: 'Redirecting....',
         onBeforeOpen: () =>{
           Swal.showLoading();
         }
       });
-      requestHttp('POST',"Email_Check.php",params,function(e){
+      requestHttp('POST',"https://requench-rest.herokuapp.com/Email_Check.php",params,function(e){
         if (this.readyState == 4 && this.status == 200) {
           var response = this.responseText;
 
@@ -109,7 +109,7 @@ $('document').ready(function() {
         var params = {};
         params.User_Name = content.querySelector("#user_field").value;
         params.Password = content.querySelector("#pass_field").value;
-        requestHttp('POST',"Login.php",params,function(e){
+        requestHttp('POST',"https://requench-rest.herokuapp.com/Login.php",params,function(e){
           if (this.readyState == 4 && this.status == 200) {
             var response = this.responseText;
             response = response.slice(1,-1);
@@ -134,8 +134,15 @@ $('document').ready(function() {
       }
       google_login_button.onclick = function(){
         //lead to sign up page
+        // var provider = new firebase.auth.GoogleAuthProvider();
+        // firebase.auth().signInWithRedirect(provider);
         var provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().signInWithRedirect(provider);
+        firebase.auth().getRedirectResult().then(function(result) {
+          var token = result.credential.accessToken;
+          currentUser = result.user;
+          console.log(token);
+        });
         // firebase.auth().getRedirectResult().then(function (result) {
         //   if (result.credential) {
         //     // This gives you a Google Access Token. You can use it to access the Google API.

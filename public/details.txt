@@ -1,6 +1,6 @@
-mysql://bc88d4488c8d2a:8183538a@us-cdbr-iron-east-03.cleardb.net/heroku_41516de6f172a28?reconnect=true
+mysql://bffc36c60eb244:0f4f564c@us-cdbr-iron-east-03.cleardb.net/heroku_965df3cd76177bf?reconnect=true
 
-HOSTNAME = bc88d4488c8d2a
-PASSWORD = 8183538a
+HOSTNAME = bffc36c60eb244
+PASSWORD = 0f4f564c
 HOST = us-cdbr-iron-east-03.cleardb.net
-DATABASE_NAME = heroku_41516de6f172a28
+DATABASE_NAME = heroku_965df3cd76177bf

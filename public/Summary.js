@@ -249,7 +249,7 @@ function fetchHistory(account_id,set) {
     var params = {};
     params.Acc_ID = account_id;
 
-    requestHttp('POST','Fetch_History.php',params,function(e) {
+    requestHttp('POST','https://requench-rest.herokuapp.com/Fetch_History.php',params,function(e) {
       if (this.readyState == 4 && this.status == 200) {
         var response = this.responseText;
         console.log(response);

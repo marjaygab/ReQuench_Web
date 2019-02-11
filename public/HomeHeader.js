@@ -68,7 +68,7 @@ login_button.onclick = function() {
     var params = {};
     params.User_Name = content.querySelector("#user_field").value;
     params.Password = content.querySelector("#pass_field").value;
-    requestHttp('POST',"Login.php",params,function(e){
+    requestHttp('POST',"https://requench-rest.herokuapp.com/Login.php",params,function(e){
       if (this.readyState == 4 && this.status == 200) {
         var response = this.responseText;
         response = response.slice(1,-1);
