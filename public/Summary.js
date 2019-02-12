@@ -103,7 +103,7 @@ $('document').ready(function() {
 
   logout_button.onclick = function() {
     firebase.auth().signOut().then(function() {
-      window.location.href = "index.php";
+      window.location.href = "index.html";
     }, function(error) {
       Swal({
         type: 'error',

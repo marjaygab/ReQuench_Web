@@ -12,6 +12,20 @@ function requestHttp(method,url,parameters,fn) {
 }
 
 
+function requestHttps(URL,params,fn_data,fn_res,fn_err) {
+  const otherParam = {
+    headers:{
+      "content-type":"application/json; charset=UTF-8"
+    },
+    body:params,
+    method: "POST"
+  }
+  fetch(URL,otherParam)
+  .then(fn_data(data))
+  .then(fn_res(res))
+  .then(fn_err(error))
+}
+
 function updateSessionVariable(params,callback) {
   requestHttp('POST',"https://requench-rest.herokuapp.com/Update_Session.php",params,function(e){
     if (this.readyState == 4 && this.status == 200) {

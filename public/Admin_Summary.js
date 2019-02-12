@@ -276,7 +276,7 @@ $(document).ready(function() {
       params.Acc_ID = response.Account_Details.Acc_ID;
       //clear registration token for later renewal
       requestHttp('POST',"https://requench-rest.herokuapp.com/Clear_Token.php",params,function(e){});
-      window.location.href = "index.php";
+      window.location.href = "index.html";
     }, function(error) {
       Swal({
         type: 'error',

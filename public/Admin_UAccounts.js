@@ -557,7 +557,7 @@ $(document).ready(function() {
       params.Acc_ID = response.Account_Details.Acc_ID;
       //clear registration token for later renewal
       requestHttp('POST',"https://requench-rest.herokuapp.com/Clear_Token.php",params,function(e){});
-      window.location.href = "index.php";
+      window.location.href = "index.html";
     }, function(error) {
       Swal({
         type: 'error',
@@ -577,9 +577,9 @@ $(document).ready(function() {
     for (var i = 0; i < list.length; i++) {
       var file_path = list[i].Image_Path;
       if (file_path == null) {
-        file_path = "../ReQuench/user_images/logo.png";
+        file_path = "https://requench-rest.herokuapp.com/user_images/logo.png";
       }else{
-        file_path = `../ReQuench${file_path}`;
+        file_path = `https://requench-rest.herokuapp.com/${file_path}`;
       }
       var string = `<div class="col-sm-4">
         <div class="card account_card">

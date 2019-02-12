@@ -25,6 +25,8 @@ $('document').ready(function() {
     }
 
   firebase.auth().onAuthStateChanged(function(user) {
+    console.log(user);
+    
     if (user) {
       //check if email is present in the backend server
       console.log('State Changed');
@@ -136,31 +138,31 @@ $('document').ready(function() {
         //lead to sign up page
         // var provider = new firebase.auth.GoogleAuthProvider();
         // firebase.auth().signInWithRedirect(provider);
-        var provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithRedirect(provider);
-        firebase.auth().getRedirectResult().then(function(result) {
-          var token = result.credential.accessToken;
-          currentUser = result.user;
-          console.log(token);
-        });
-        // firebase.auth().getRedirectResult().then(function (result) {
-        //   if (result.credential) {
-        //     // This gives you a Google Access Token. You can use it to access the Google API.
-        //     var token = result.credential.accessToken;
-        //     console.log(token);
-            
-        //     // The signed-in user info.
-        //     var user = result.user;
-        //   } 
-        //   else {
-        //     var provider = new firebase.auth.GoogleAuthProvider();
-        //     firebase.auth().signInWithRedirect(provider);
-        
-        //    }
-        // }).catch(function (error) {
-        //   // Handle Errors here.
-        //   console.log(error);
+        // var provider = new firebase.auth.GoogleAuthProvider();
+        // firebase.auth().signInWithRedirect(provider);
+        // firebase.auth().getRedirectResult().then(function(result) {
+        //   var token = result.credential.accessToken;
+        //   currentUser = result.user;
+        //   console.log(token);
         // });
+        firebase.auth().getRedirectResult().then(function (result) {
+          if (result.credential) {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            var token = result.credential.accessToken;
+            console.log(token);
+            
+            // The signed-in user info.
+            var user = result.user;
+          } 
+          else {
+            var provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithRedirect(provider);
+        
+           }
+        }).catch(function (error) {
+          // Handle Errors here.
+          console.log(error);
+        });
       }
     },
     onClose: () => {

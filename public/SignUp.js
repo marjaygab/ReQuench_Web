@@ -31,5 +31,5 @@ submit_button.onclick = function() {
 cancel_button.onclick = function() {
   //clear all the data first
     params = {};
-    window.location.href = "index.php";
+    window.location.href = "index.html";
 }
