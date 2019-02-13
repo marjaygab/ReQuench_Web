@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <title>Cashier</title>
+    <link rel="stylesheet" href="Cashier_Style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    
+</head>
+  <body background="assets/images/background_3.jpg">
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            <img src="..\assets\images\BrandwLogo.png" height="30" class="d-inline-block align-top" alt="">
+        </a>
+    </nav>
+  <div class="column">
+    <div class="card left-card" id="left-card">
+        <div class="card-body">
+                <div class="row input_mode">
+                    <div class="col-10">
+                        <h6 id="input_mode_label">Input Mode:</h6>
+                    </div>
+                    <div class="col-2">
+                            <input id="toggle-method" type="checkbox" checked data-toggle="toggle" data-on="Preset" data-off="Keypad" data-onstyle="success" data-offstyle="danger">
+                    </div>
+                </div>
+                <div class="row input_control">
+                        <div class="col-10">
+                            <input type="text" class="form-control" placeholder="Enter ID Number or Scan ID" id="rfid_field">
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn-primary" id="enter_rfid">Enter</button>
+                        </div>
+                </div>
+                <div class="row label_control">
+                        <div class="form-group col-6">
+                            <label for="acc_num_display">Account Number</label>
+                            <input id="acc_num_display" type="text" class="form-control" placeholder="Account Number" disabled>
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="balance_display">Balance</label>
+                            <input id="balance_display" type="text" class="form-control" placeholder="Balance" disabled>
+                        </div>
+                </div>
+                <div class="row toggle_control">
+                    <div class="col-6">
+                        <input type="text" class="form-control" id="amount_display" placeholder="Amount">
+                    </div>
+                    <div class="col-2">
+                        <input id="toggle-unit" type="checkbox" checked data-toggle="toggle" data-on="mL" data-off="Php" data-onstyle="success" data-offstyle="danger">
+                    </div>
+                    <div class="col-4">
+                        <button class="btn btn-info" id="add_item">Add Item</button>
+                    </div>
+                </div>
+                <div class="row amount_control">
+                    <div class="card col-12 preset" id="preset">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-1">
+                                </div>
+                                <div class="col-3 card preset_1 text-center preset_item bg-success text-white">
+                                    <div class="card-body">
+                                        <p class="card-text">Php 10</p>
+                                    </div>
+                                    <div id="footer-card" class="card-footer">
+                                        <a href="#" class="text-white add_links" id="10">Add Item</a>
+                                    </div>
+                                </div>
+                                <div class="col-3 card preset_2 text-center preset_item bg-primary text-white">
+                                    <div class="card-body">
+                                        <p class="card-text">Php 25</p>
+                                    </div>
+                                    <div id="footer-card" class="card-footer">
+                                        <a href="#" class="text-white add_links" id="25">Add Item</a>
+                                    </div>
+                                </div>
+                                <div class="col-3 card preset_3 text-center preset_item bg-danger text-white">
+                                    <div class="card-body">
+                                        <p class="card-text">Php 50</p>
+                                    </div>
+                                    <div id="footer-card" class="card-footer">
+                                        <a href="#" class="text-white add_links" id="50">Add Item</a>
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1">
+                                </div>
+                                <div class="col-3 card preset_4 text-center preset_item bg-warning text-white">
+                                    <div class="card-body">
+                                        <p class="card-text">Php 75</p>
+                                    </div>
+                                    <div id="footer-card" class="card-footer">
+                                        <a href="#" class="text-white add_links" id="75">Add Item</a>
+                                    </div>
+                                </div>
+                                <div class="col-3 card preset_5 text-center preset_item bg-info text-white">
+                                    <div class="card-body">
+                                        <p class="card-text">Php 100</p>
+                                    </div>
+                                    <div id="footer-card" class="card-footer">
+                                        <a href="#" class="text-white add_links" id="100">Add Item</a>
+                                    </div>
+                                </div>
+                                <div class="col-3 card preset_6 text-center preset_item bg-dark text-white">
+                                    <div class="card-body">
+                                        <p class="card-text">Php 150</p>
+                                    </div>
+                                    <div id="footer-card" class="card-footer">
+                                        <a href="#" class="text-white add_links" id="150">Add Item</a>
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card col-12 keypad" id="keypad">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-1">
+                                    </div>
+                                    <div class="button_card col-3 card text-center">
+                                        <button class="btn btn-outline-dark">7</button>
+                                    </div>
+                                    <div class="button_card col-3 card text-center">
+                                        <button class="btn btn-outline-dark">8</button>
+                                    </div>
+                                    <div class="button_card col-3 card text-center">
+                                        <button class="btn btn-outline-dark">9</button>
+                                    </div>
+                                    <div class="col-1">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-1">
+                                    </div>
+                                    <div class="button_card col-3 card text-center">
+                                        <button class="btn btn-outline-dark">4</button>
+                                    </div>
+                                    <div class="button_card col-3 card text-center">
+                                        <button class="btn btn-outline-dark">5</button>
+                                    </div>
+                                    <div class="button_card col-3 card text-center">
+                                        <button class="btn btn-outline-dark">6</button>
+                                    </div>
+                                    <div class="col-1">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-1">
+                                    </div>
+                                    <div class="button_card col-3 card text-center">
+                                        <button class="btn btn-outline-dark">1</button>
+                                    </div>
+                                    <div class="button_card col-3 card text-center">
+                                        <button class="btn btn-outline-dark">2</button>
+                                    </div>
+                                    <div class="button_card col-3 card text-center">
+                                        <button class="btn btn-outline-dark">3</button>
+                                    </div>
+                                    <div class="col-1">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-1">
+                                    </div>
+                                    <div class="button_card col-3 card text-center">
+                                        <button class="btn btn-outline-dark"><span class="fas fa-arrow-left"></span></button>
+                                    </div>
+                                    <div class="button_card col-3 card text-center">
+                                        <button class="btn btn-outline-dark">0</button>
+                                    </div>
+                                    <div class="button_card col-3 card text-center">
+                                        <button class="btn btn-outline-dark">CLEAR</button>
+                                    </div>
+                                    <div class="col-1">
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                
+        </div>
+    </div>
+  </div>
+
+  <div class="rightcolumn">
+    <center>
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                    <div class="table table-hover" style="height:220px;width:100%;margin-top:20px;">
+                        <table id="purch_summary" class="table" style="width:100%;background-color: none">
+                            <tr>
+                                <th>Volume (mL)</th>
+                                <th>Price per mL</th>
+                            </tr>
+                        </table>
+                    </div>
+            </div>
+            <div class="col-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-6"></div>
+            <div class="col-2">
+                <button class="btn btn-warning delete_buttons" id="remove_button">Remove</button>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-danger delete_buttons" id="clear_button">Clear</button>
+            </div>
+        </div>
+    <center>
+    <form name="" method="POST" action="">
+      <div class="table1" style="height:250px;width:50%;margin-top:20px">
+      <table id= "purch_sub" class="table">
+          <tr>
+            <th>Total</th>
+            <td><input type="text" name="total" id="total" class="cash form-control" ></td>
+            <!-- total volume purchased -->
+            <td><input type="hidden" name="vol_purchased" id="vol_purchased" class="cash" value="vol_purchased"></td>
+          </tr>
+          <tr>
+            <th>Cash</th>
+            <td><input type="text" name="cash" id="cash" class="cash form-control" onchange="getchange()"></td>
+          </tr>
+          <tr>
+            <th>Change</th>
+            <td><input type="text" name="change" id="change" class="cash form-control" ></td>
+          </tr>
+        </table>
+        <div class="bottom">
+          <input id="cancel" type="submit" class="btn btn-danger btn-lg" value="Cancel"/>
+          <input id="nexttransaction" name="nexttransaction" type="submit" class="btn btn-warning btn-lg" value="Next Transaction" />
+        </div>
+      </center>
+      </div>
+    </form>
+  </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js" integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp" crossorigin="anonymous"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<script type="text/javascript" src="sweetalert2.all.min.js"></script>
+<script src="Cashier.js"></script>
+<script type="text/javascript" src="HttpRequest.js"></script>
+</html>

@@ -1,0 +1,278 @@
+.input_methods{
+    width: 100%;
+    height: 100%;
+}
+.column_container{
+    padding-left: 0;
+    padding-right: 0;
+}
+#left-card{
+    margin: 30px;
+    height: 100%;
+    border: 0;
+}
+#input_mode_label{
+    float: right;
+    line-height: 2;
+}
+
+
+#footer-card{
+    padding: 0;
+    background: rgba(0, 0, 0, 0);
+}
+
+.button_card{
+    border: 0 !important;
+    margin-top: 5px;
+
+}
+
+.delete_buttons{
+    width: 100%;
+}
+.add_link{
+    color: #fff;
+}
+
+#add_item{
+    width: 100%;
+}
+
+
+.button_card button{
+    padding: 10px 5px 10px 5px;
+    height: 80px;
+}
+
+#preset{
+    display: unset;
+}
+
+#keypad{
+    display: none;
+}
+
+.preset_item{
+    margin: 5px;
+}
+.input_mode{
+    margin: 10px;
+}
+.toggle_control{
+    margin: 10px;
+}
+
+.card-footer{
+    border-top: 1px solid rgba(255, 255, 255, 0.884)
+}
+.label_control{
+    margin: 10px;
+}
+.toggle-handle{
+    background: #fff !important; 
+}
+
+
+#control_header{
+    vertical-align: middle;
+    text-align: center;
+    line-height: 3;
+}
+
+#body_id{
+
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#rfid_input{
+    text-align: center;
+    margin: 30px;
+}
+#rfid_input button{
+    text-align: center;
+}
+.scan{
+    text-align: center;
+}
+#presetbuttons{
+    display: none;
+}
+
+#calculator{
+    display: block;
+}
+
+.option{
+  width: 45%;
+}
+.separator{
+	margin: 25px auto;
+}
+.set1{
+  margin:2%;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 40%;
+  background-color: #ccffde;
+}
+/* Gray */
+.default {
+  border-color: #e7e7e7;
+  color: black;
+}
+
+.default:hover {
+  background: #e7e7e7;
+}
+/* Blue */
+.info {
+  border-color: #2196F3;
+  color: black;
+}
+
+.info:hover {
+  background: #d6ecff;
+  color: black;
+}
+.bottom{
+  margin-top: 5%;
+}
+.title{
+  margin: 2%;
+}
+.account{
+  margin-left: 7%;
+}
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  height: 400px;
+}
+.infield{
+  text-align: center;
+}
+.rightcolumn {
+  float: left;
+  /* background-color: ##b8d8c6; */
+  width: 50%;
+}
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.table{
+  width: 100%;
+  overflow: auto;
+  text-align: center;
+  height:45%;
+}
+.table1{
+  width: 100%;
+  overflow: auto;
+  text-align: left;
+  height:100%;
+}
+.table th{
+    padding:10px 5px;
+}
+
+th, td {
+  text-align: center;
+  padding: 8px;
+}
+
+table .th {
+  background-color: #f4f9ff;
+  color: black;
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
+#container{
+	width: 50px;
+	height: 25%;
+	background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)), url(bgImg.jpg);
+	/* margin: 20px auto; */
+}
+#calculator{
+	width: 50%;
+	height:280px;
+	/* background-color: #eaedef; */
+	margin: 50px auto;
+	top: 20px;
+	position: static;
+	border-radius: 5px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#result{
+	height: 120px;
+}
+#history{
+	text-align: right;
+	height: 20px;
+	margin: 0 20px;
+	padding-top: 20px;
+	font-size: 15px;
+	color: #919191;
+}
+#output{
+	text-align: right;
+	height: 60px;
+	margin: 10px 20px;
+	font-size: 30px;
+}
+
+.operator, .number, .empty{
+	width: 24%;
+	height: 20%;
+	margin: 5px 15px;
+	float: left;
+	border-radius: 10%;
+	border-width: 0;
+	font-weight: bold;
+	font-size: 30px;
+}
+.number, .empty{
+	background-color: #eaedef;
+}
+.number, .operator{
+	cursor: pointer;
+}
+.operator:active, .number:active{
+	font-size: 20px;
+}
+.operator:focus, .number:focus, .empty:focus{
+	outline: 0;
+}
+.number{
+	font-size: 20px;
+	background-color: #cffcec;
+}
+.topleft {
+  /* position: absolute; */
+  top: 8px;
+  left: 8px;
+  font-size: 18px;
+  width:50px;
+  height:45px;
+}
+.topleft:hover{
+  opacity: .5;
+}
+
+
+/* .okay{
+	font-size: 20px;
+	background-color: #28a745;
+} */
+
