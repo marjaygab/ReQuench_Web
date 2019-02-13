@@ -36,9 +36,21 @@ confirm.addEventListener("click", function (event) {
   document.getElementById("vol_purchased").value = y;
 });
 
+equal.addEventListener("click", function (event) {
+  var newRow = table1.insertRow(table1.rows.length);
+  var cell1 = newRow.insertCell(0);
+  cell1.innerHTML = document.getElementById('outputmL').value ;
+  var cell2 = newRow.insertCell(1);
+  cell2.innerHTML = "25";
+  var x = document.getElementById('textBox').value ;
+  document.getElementById("total").value = x;
+  var y = document.getElementById('outputmL').value ;
+  document.getElementById("vol_purchased").value = y;
+});
 cancel.addEventListener("click", function (event) {
 location.reload();
 });
+
 
 var operator = document.getElementsByClassName("operator");
 for(var i =0;i<operator.length;i++){
@@ -162,3 +174,22 @@ function getFormattedNumber(num){
 function reverseNumberFormat(num){
 	return Number(num.replace(/,/g,''));
 }
+
+//
+// function newacc(){
+//   swal({
+//     title: "Register New User",
+//     text: "Please enter the student number:",
+//     type: "input",
+//     showCancelButton: true,
+//     closeOnConfirm: false,
+//     inputPlaceholder: "Student Number"
+//   }, function (inputValue) {
+//     if (inputValue === false) return false;
+//     if (inputValue === "") {
+//       swal.showInputError("Please enter the student number!");
+//       return false
+//     }
+//     swal("Success!", "Student Number: " + inputValue, "success");
+//   });
+// }

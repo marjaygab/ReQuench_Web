@@ -9,12 +9,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body>
-  <div class="column">
+  <body background="assets/images/background_3.jpg">
     <center>
+      <!-- <a href="#home"><img src="assets/images/logo.png" class="topleft"></a> -->
       <h3 id="header" class="title">ReQuench: A DLSL Water Vending Machine</h3>
     </center>
+  <div class="column">
+
     <div class="account">
       <form name="myform" method="post">
         <input type="text" name="scan" id="scan">
@@ -22,24 +25,50 @@
       </form>
       <?php
         session_start();
-        include '../ConnectDB.php';
+        include 'ConnectDB.php';
 
         if (isset($_POST["enter"]))
         {
         $scan = (int) $_POST['scan'];
         $_SESSION['scan']= $scan;
-        $SQL = "SELECT * FROM acc_users WHERE ID_Number= '$scan'";
+
+        $SQL = "SELECT * FROM acc_users
+        LEFT JOIN unrecorded_users
+        ON acc_users.Student_Number= unrecorded_users.ID_Number
+        WHERE Student_Number= '$scan'";
         $result = mysqli_query($conn,$SQL);
         $data= mysqli_fetch_assoc($result);
+        $countrow= mysqli_num_rows($result);
 
-        $stud_name= $data['First_Name'];
+        if ($countrow>=1){
+          $stud_name= $data['First_Name'];
+          $current = $data['Balance'];
+          $_SESSION['current']=$current;
+          ?>
+          <h6 class="text_account">Account Name/Stud Number: <?php echo $stud_name; ?> </h6>
+          <h6 class="text_account">Available Balance: <?php echo $current; ?></h6>
+          <?php
+        }
+        else if($countrow==0){
+          ?>
+          <form name="myform" method="post">
+            <input type="text" name="input" id="input">
+            <input type="submit" class="btn btn-success" value="Add Account" id="Add" name="Add"/>
+          </form>
+          <?php
+          if (isset($_POST["Add"]))
+          {
+            $input_id = (int) $_POST['input'];
+            $scan = $_SESSION['scan'];
+
+        mysqli_query($conn,"INSERT INTO`unrecorded_users`(`UU_ID`, `RFID_ID`, `ID_Number`, `Balance`) VALUES ('','$scan','$input_id','');")
+        or die(mysqli_error($conn));
+        $stud_name= $data['ID_Number'];
         $current = $data['Balance'];
         $_SESSION['current']=$current;
-      ?>
-      <h6 class="text_account">Account Name: <?php echo $stud_name; ?> </h6>
-      <h6 class="text_account">Available Balance: <?php echo $current; ?></h6>
-      <?php
-        }
+      }}
+
+      }
 
         if (isset($_POST["nexttransaction"]))
         {
@@ -47,7 +76,7 @@
           $scan = $_SESSION['scan'];
           $vol_purchased = (int) $_POST['vol_purchased'];
           $updated= $current + $vol_purchased;
-          $query  = "UPDATE acc_users SET Balance='$updated' WHERE ID_Number ='$scan'";
+          $query  = "UPDATE acc_users SET Balance='$updated' WHERE Student_Number ='$scan'";
           mysqli_query($conn, $query)
           or die(mysqli_error($conn));
         }
@@ -77,7 +106,7 @@
         <button class="number" id="3">3</button>
         <button class="operator" id="backspace"><-</button>
         <button class="number" id="0">0</button>
-        <button class="operator" id="=" onclick="this.disabled = true;">OK</button>
+        <button class="operator" id="equal" onclick="this.disabled = true;">OK</button>
       </div>
       <div class="separator" id="presetbuttons" >
         <button type="button" class="btn info btn-lg set1" value="10" onclick="setText(this)">P 10</button>
@@ -90,10 +119,11 @@
       </div>
   </center>
   </div>
+
   <div class="rightcolumn">
     <center>
-    <div class="table" style="height:300px;">
-    <table id="purch_summary" class="table" style="width:100%;">
+    <div class="table" style="height:220px;width:80%;margin-top:20px;">
+    <table id="purch_summary" class="table" style="width:100%;background-color: none">
       <tr>
         <th>Volume (mL)</th>
         <th>Price per mL</th>
@@ -102,7 +132,7 @@
     </div>
     <center>
     <form name="" method="POST" action="">
-      <div class="table">
+      <div class="table1" style="height:250px;width:50%;margin-top:20px">
       <table id= "purch_sub" class="table">
           <tr>
             <th>Total</th>
@@ -119,7 +149,6 @@
             <td><input type="text" name="change" id="change" class="cash" ></td>
           </tr>
         </table>
-      <center>
         <div class="bottom">
           <input id="cancel" type="submit" class="btn btn-danger btn-lg" value="Cancel"/>
           <input id="nexttransaction" name="nexttransaction" type="submit" class="btn btn-warning btn-lg" value="Next Transaction" />
