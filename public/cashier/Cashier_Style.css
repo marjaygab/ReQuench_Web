@@ -1,3 +1,7 @@
+#body_id{
+  background: #f3f3f3;
+}
+
 .input_methods{
     width: 100%;
     height: 100%;
@@ -10,22 +14,47 @@
     margin: 30px;
     height: 100%;
     border: 0;
+    background: #ffffff00;
 }
 #input_mode_label{
     float: right;
     line-height: 2;
 }
 
+.display{
+  margin-bottom: 5px;
+}
 
 #footer-card{
     padding: 0;
     background: rgba(0, 0, 0, 0);
 }
 
+#checkout_button{
+  width: 100%;
+  margin-left: 10px;
+}
+
 .button_card{
     border: 0 !important;
     margin-top: 5px;
 
+}
+
+#display-group{
+  padding: 10px;
+  padding-left: 45px;
+  text-align: center;
+}
+
+
+#right_card{
+  width: 45%;
+  margin: 20px;
+}
+
+.customer-info{
+  padding: 5px;
 }
 
 .delete_buttons{
@@ -72,6 +101,7 @@
 .toggle-handle{
     background: #fff !important; 
 }
+
 
 
 #control_header{
@@ -150,6 +180,7 @@
   float: left;
   width: 50%;
   height: 400px;
+  padding: 70px;
 }
 .infield{
   text-align: center;
@@ -170,7 +201,6 @@
   width: 100%;
   overflow: auto;
   text-align: center;
-  height:45%;
 }
 .table1{
   width: 100%;
@@ -178,6 +208,7 @@
   text-align: left;
   height:100%;
 }
+
 .table th{
     padding:10px 5px;
 }
