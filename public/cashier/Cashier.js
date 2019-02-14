@@ -36,6 +36,13 @@ var current_account = {
         } else {
             return 'rec';
         }
+    },
+    getSelectedID: function() {
+      if (this.unrec.isSelected) {
+        return this.unrec.UU_ID;
+      } else {
+          return this.rec.Acc_ID;
+      }
     }
 }
 
@@ -113,15 +120,73 @@ checkout_button.onclick = function() {
     amount_field.disabled = false;
     
   } else {
+
+    var params = {};
     console.log(current_list);
     amount_field.disabled = true;
+    console.log(current_account.selected() + ' ' + current_account.getSelectedID());
+    var account_type = '';
+    if (current_account.selected() == 'rec') {
+      account_type = 'Recorded';
+      params.Acc_ID = current_account.getSelectedID();
+    } else {
+      account_type = 'Unrecorded';
+      params.UU_ID = current_account.getSelectedID();
+    }
+    params.Account_Type = account_type;
+    var total_volume = 0;
+    for (let index = 0; index < current_list.length; index++) {
+      const element = current_list[index];
+      total_volume = total_volume + parseInt(current_list[index].volume);
+    }
+    
+    var total_price = parseInt(total_field.value);
+    
+    params.Load = total_volume;
+    params.Price = total_price;
 
+    Swal.fire({
+      title: 'Updating..',
+      onBeforeOpen: () => {
+        Swal.showLoading();
+        requestHttp('POST','https://requench-rest.herokuapp.com/Update_Balance.php',params,function(e) {
+          if (this.readyState == 4 && this.status == 200) {
+            var response = this.responseText;
+            if (response != null) {
+              var json_object = JSON.parse(response);
+              if (json_object.Success) {
+                Swal.fire({
+                  title:"Update Complete!",
+                  type:'success'
+                }).then((result) => {
+                  if (result.value) {
+                    window.location.reload();
+                  }
+                });
+              }
+            }
+          }
+        });
+      },
+      onClose: () => {
+      }
+    }).then((result) => {
+      if (
+        // Read more about handling dismissals
+        result.dismiss === Swal.DismissReason.timer
+      ) {
+        console.log('I was closed by the timer')
+      }
+    })
+    
     checkout_button.innerHTML = 'CONFIRM';
     checkout_button.classList.remove('btn-info');
     checkout_button.classList.add('btn-secondary');
     total_field.value = '';
     amount_field.value = '';
     change_field.value = '';
+    current_list = [];
+    displayList(current_list);
   }
 }
 
@@ -147,8 +212,8 @@ rfid_field.onkeypress = function(e) {
                     console.log(json_object);
                     if (json_object.Success && json_object.Account_Type == 'Unrecorded') {
                         current_account.unrec.isSelected = true;
-                        current_account.rec.isSelected = false;
                         current_account.unrec.UU_ID = json_object.Account.UU_ID;
+                        current_account.rec.isSelected = false;
                         balance_display.value = json_object.Account.Balance;
                         if (json_object.Account.ID_Number == null) {
                           acc_num_display.value = 'Unset';
@@ -203,8 +268,12 @@ rfid_field.onkeypress = function(e) {
                         acc_num_display.value = json_object.Account.ID_Number;
                         balance_display.value = json_object.Account.Balance;
                     }else if (json_object.Success && json_object.Account_Type == 'Inserted_Unrecorded') {
+                      current_account.unrec.isSelected = true;
+                      current_account.rec.isSelected = false;
+                      current_account.unrec.UU_ID = json_object.Insert_ID;
                       acc_num_display.value = 'Unset';
                       balance_display.value = json_object.Balance;
+
                       Swal.fire({
                         title: 'This ID does not have any Associated ID Number. Please enter the ID Number.',
                         input: 'text',
@@ -327,6 +396,9 @@ enter_rfid.onclick = function(){
                 acc_num_display.value = json_object.Account.ID_Number;
                 balance_display.value = json_object.Account.Balance;
             }else if (json_object.Success && json_object.Account_Type == 'Inserted_Unrecorded') {
+                current_account.unrec.isSelected = false;
+                current_account.rec.isSelected = true;
+                current_account.unrec.UU_ID = json_object.Insert_ID;
                 console.log(json_object.Insert_ID);
                 acc_num_display.value = 'Unset';
                 balance_display.value = json_object.Balance;
@@ -568,6 +640,11 @@ for(var i =0;i<number.length;i++){
 function displayList(current_list) {
   clearListDisplay();
   var total_field = document.getElementById('total_field');
+  var remove_button = document.getElementById('remove_button');
+  var clear_button = document.getElementById('clear_button');
+  console.log(`Current List Length = ${current_list.length}`);
+  
+  
   var total_amount = 0;
   for (let index = 0; index < current_list.length; index++) {
     const item = current_list[index];
@@ -594,6 +671,13 @@ function displayList(current_list) {
     }
   }
   total_field.value = total_amount;
+  if (current_list.length <= 0) {
+    remove_button.disabled = true;
+    clear_button.disabled = true;
+  }else{
+    remove_button.disabled = false;
+    clear_button.disabled = false;
+  }
 }
 
 function clearListDisplay() {
