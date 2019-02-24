@@ -175,11 +175,13 @@ $(document).ready(function () {
         <div class="row form-account">
           <div class="col-sm-12">
             <input id="Email" type="text" class="form-control" placeholder = "Email" required>
+            <p id="duplicate_email_error" class="error">Duplicate Email Detected!</p>
           </div>
         </div>
         <div class="row form-account">
           <div class="col-sm-12">
             <input id="User_Name" type="text" class="form-control" placeholder = "User Name" required>
+            <p id="username_taken_error" class="error">This username is already taken!</p>
           </div>
         </div>
         <div class="row form-account">
@@ -194,6 +196,7 @@ $(document).ready(function () {
         <div class="row form-account">
           <div class="col-sm-12">
             <button id = "submit" type="submit" class="btn btn-primary">Submit</button>
+            <p id="incomplete_info_error" class="error">Please fill out all required fields!</p>
           </div>
         </div>
       </div>
@@ -210,14 +213,24 @@ $(document).ready(function () {
                 const email = $('#Email');
                 const submit = $('#submit');
                 const duplicate_id_error = $('#duplicate_id_error');
+                const duplicate_email_error = $('#duplicate_email_error');
+                const username_taken_error = $('#username_taken_error');
                 const pass_mismatch_error = $('#pass_mismatch_error');
                 const access_level_user = $('#access_level_user');
                 const access_level_admin = $('#access_level_admin');
                 const access_level_cashier = $('#access_level_cashier');
                 const dropdownMenuButtonCat = $('#dropdownMenuButtonCat');
                 duplicate_id_error.style.visibility = "hidden";
+                duplicate_email_error.style.visibility = "hidden";
+                username_taken_error.style.visibility = "hidden";
                 pass_mismatch_error.style.visibility = "hidden";
-
+                incomplete_info_error.style.visibility = "hidden";
+                var valid_id = false;
+                var valid_email = false;
+                // var valid_first = false;
+                // var valid_last = false;
+                var valid_user = false;
+                // var valid_password = false;
 
                 access_level_user.onclick = function () {
                     this.className = "dropdown-item category-item active";
@@ -249,9 +262,10 @@ $(document).ready(function () {
                         console.log(response);
                         var json_object = JSON.parse(response);
                         console.log(json_object.Success);
-
+                        valid_id = true;
                         if (!json_object.Success) {
                           duplicate_id_error.style.visibility = "visible";
+                          valid_id = false;
                         }
                       }
                     }
@@ -259,11 +273,67 @@ $(document).ready(function () {
 
                 }
                 id_num.onfocus = function () {
-
                     duplicate_id_error.style.visibility = "hidden";
+
                 }
 
+                email.onblur = function () {
+                  var params = {};
+                  params.Command = "EMAIL";
+                  params.Variable = this.value;
+                  requestHttp('POST',"https://requench-rest.herokuapp.com/Check_Dup.php",params,function(e) {
+                    if (this.readyState == 4 && this.status == 200) {
+                      var response = this.responseText;
+                      if (response != null) {
+                        console.log(response);
+                        var json_object = JSON.parse(response);
+                        console.log(json_object.Success);
+                        valid_email = true;
 
+                        if (!json_object.Success) {
+                          duplicate_email_error.style.visibility = "visible";
+                          valid_email = false;
+                        }
+                      }
+                    }
+                  });
+                }
+
+                email.onfocus = function () {
+
+                  duplicate_email_error.style.visibility = "hidden";
+                }
+
+                user_name.onblur = function () {
+                  var params = {};
+                  params.Command = "USER_NAME";
+                  params.Variable = this.value;
+                  requestHttp('POST',"https://requench-rest.herokuapp.com/Check_Dup.php",params,function(e) {
+                    if (this.readyState == 4 && this.status == 200) {
+                      var response = this.responseText;
+                      if (response != '') {
+                        console.log(response);
+                        var json_object = JSON.parse(response);
+                        console.log(json_object.Success);
+                        valid_user = true;
+
+                        if (!json_object.Success) {
+                          username_taken_error.style.visibility = "visible";
+                          valid_user = false;
+                        }
+                      }
+                    }
+                  });
+                }
+
+                user_name.onfocus = function () {
+
+                  username_taken_error.style.visibility = "hidden";
+                }
+                pass_mismatch_error.onfocus = function () {
+
+                  pass_mismatch_error.style.visibility = "hidden";
+                }
 
                 submit.onclick = function () {
                     var params = {};
@@ -280,31 +350,39 @@ $(document).ready(function () {
                     console.log(params);
                     
                     if (params.Password != params.retype_password) {
-                        //handle error here
-                    } else {
-                        // requestHttp('POST', "https://requench-rest.herokuapp.com/Add_Account.php", params, function (e) {
-                        //     if (this.readyState == 4 && this.status == 200) {
-                        //         var response = this.responseText;
-                        //         console.log(response);
-                        //         if (response != null) {
-                        //             var json_object = JSON.parse(this.response);
-                        //             if (json_object.Success == true) {
-                        //                 //enlist parsed notifs
-                        //                 console.log('Update Success');
-                        //             }
-                        //             else {
-                        //                 Swal({
-                        //                     type: 'error',
-                        //                     title: 'Oops!',
-                        //                     text: 'Something went wrong! Please try again later.'
-                        //                 });
-                        //             }
-                        //             Swal.close();
-                        //         }
-                        //     } else {
-                        //         console.log('else');
-                        //     }
-                        // });
+                    document.getElementById('Retype_Password').value = '';
+                    pass_mismatch_error.style.visibility = "visible";
+
+                    //handle error here
+                    }
+                    else if (id_num.value == '' || first_name.value == '' || last_name.value == '' || user_name.value == '' || password.value == '') {
+                    incomplete_info_error.style.visibility = "visible";
+                    //handle error here
+                    }
+                    else if (valid_id == true && valid_email == true && valid_user == true) {
+                        requestHttp('POST', "https://requench-rest.herokuapp.com/Add_Account.php", params, function (e) {
+                            if (this.readyState == 4 && this.status == 200) {
+                                var response = this.responseText;
+                                console.log(response);
+                                if (response != null) {
+                                    var json_object = JSON.parse(this.response);
+                                    if (json_object.Success == true) {
+                                        //enlist parsed notifs
+                                        console.log('Update Success');
+                                    }
+                                    else {
+                                        Swal({
+                                            type: 'error',
+                                            title: 'Oops!',
+                                            text: 'Something went wrong! Please try again later.'
+                                        });
+                                    }
+                                    Swal.close();
+                                }
+                            } else {
+                                console.log('else');
+                            }
+                        });
                     }
                 }
             },
@@ -650,9 +728,6 @@ $(document).ready(function () {
         }
         fn();
     }
-
-
-
 
 
     function clearList(notif_list) {
