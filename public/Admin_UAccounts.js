@@ -239,8 +239,24 @@ $(document).ready(function () {
                 }
 
                 id_num.onblur = function () {
-                    //insert id validation here
-                    duplicate_id_error.style.visibility = "visible";
+                  var params = {};
+                  params.Command = "ID_NUM";
+                  params.Variable = this.value;
+                  requestHttp('POST',"https://requench-rest.herokuapp.com/Check_Dup.php",params,function(e) {
+                    if (this.readyState == 4 && this.status == 200) {
+                      var response = this.responseText;
+                      if (response != null) {
+                        console.log(response);
+                        var json_object = JSON.parse(response);
+                        console.log(json_object.Success);
+
+                        if (!json_object.Success) {
+                          duplicate_id_error.style.visibility = "visible";
+                        }
+                      }
+                    }
+                  });
+
                 }
                 id_num.onfocus = function () {
 
@@ -280,7 +296,7 @@ $(document).ready(function () {
                                             text: 'Something went wrong! Please try again later.'
                                         });
                                     }
-                                    // window.location.href = 'User.php';
+                                    Swal.close();
                                 }
                             } else {
                                 console.log('else');
