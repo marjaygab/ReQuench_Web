@@ -159,7 +159,6 @@ $(document).ready(function() {
             if (response != null) {
               console.log(response);
               var json_object = JSON.parse(response);
-
               if (json_object.Update_Success == true) {
                 updateSessionVariable(params,function(response){
                   var string_json = JSON.stringify(response);
@@ -245,7 +244,17 @@ $(document).ready(function() {
           }
         });
 
-
+        //HTTP REQUEST FORMAT
+        // requestHttp('POST',"https://requench-rest.herokuapp.com/Update_Account.php",params,function(e) {
+        //   if (this.readyState == 4 && this.status == 200) {
+        //     var response = this.responseText;
+        //     if (response != null) {
+        //       console.log(response);
+        //       var json_object = JSON.parse(response);
+              
+        //     }
+        //   }
+        // });
 
 
       }
@@ -305,7 +314,7 @@ $(document).ready(function() {
     }
 
 
-    change_pass_link.onclick = function() {
+    change_pass_link.onclick = function() {   
       if (edit_mode.accounts == true) {
         Swal({
         title: 'Change Password',
