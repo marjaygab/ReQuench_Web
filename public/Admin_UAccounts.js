@@ -274,34 +274,37 @@ $(document).ready(function () {
                     params.Password = password.value;
                     params.retype_password = retype_password.value;
                     params.Email = email.value;
-                    params.Access_Level = dropdownMenuButtonCat.innerHTML;
-
+                    // params.Access_Level = dropdownMenuButtonCat.innerHTML;
+                    var regex = new RegExp('[a-zA-Z]');
+                    params.Access_Level = regex.matchAll(dropdownMenuButtonCat.innerHTML);
+                    console.log(params);
+                    
                     if (params.Password != params.retype_password) {
                         //handle error here
                     } else {
-                        requestHttp('POST', "https://requench-rest.herokuapp.com/Add_Account.php", params, function (e) {
-                            if (this.readyState == 4 && this.status == 200) {
-                                var response = this.responseText;
-                                console.log(response);
-                                if (response != null) {
-                                    var json_object = JSON.parse(this.response);
-                                    if (json_object.Success == true) {
-                                        //enlist parsed notifs
-                                        console.log('Update Success');
-                                    }
-                                    else {
-                                        Swal({
-                                            type: 'error',
-                                            title: 'Oops!',
-                                            text: 'Something went wrong! Please try again later.'
-                                        });
-                                    }
-                                    Swal.close();
-                                }
-                            } else {
-                                console.log('else');
-                            }
-                        });
+                        // requestHttp('POST', "https://requench-rest.herokuapp.com/Add_Account.php", params, function (e) {
+                        //     if (this.readyState == 4 && this.status == 200) {
+                        //         var response = this.responseText;
+                        //         console.log(response);
+                        //         if (response != null) {
+                        //             var json_object = JSON.parse(this.response);
+                        //             if (json_object.Success == true) {
+                        //                 //enlist parsed notifs
+                        //                 console.log('Update Success');
+                        //             }
+                        //             else {
+                        //                 Swal({
+                        //                     type: 'error',
+                        //                     title: 'Oops!',
+                        //                     text: 'Something went wrong! Please try again later.'
+                        //                 });
+                        //             }
+                        //             Swal.close();
+                        //         }
+                        //     } else {
+                        //         console.log('else');
+                        //     }
+                        // });
                     }
                 }
             },

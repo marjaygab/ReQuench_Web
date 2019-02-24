@@ -45,3 +45,11 @@
 .admin_transaction_whole{
   margin-top: 10%;
 }
+
+.controls{
+  margin-bottom: 20px;
+}
+
+.toggle-handle{
+  background-color: #fff;
+}
