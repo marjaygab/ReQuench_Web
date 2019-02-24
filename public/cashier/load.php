@@ -34,8 +34,8 @@
 
         $SQL = "SELECT * FROM acc_users
         LEFT JOIN unrecorded_users
-        ON acc_users.Student_Number= unrecorded_users.ID_Number
-        WHERE Student_Number= '$scan'";
+        ON acc_users.ID_Number= unrecorded_users.ID_Number
+        WHERE ID_Number= '$scan'";
         $result = mysqli_query($conn,$SQL);
         $data= mysqli_fetch_assoc($result);
         $countrow= mysqli_num_rows($result);
