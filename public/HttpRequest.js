@@ -22,7 +22,7 @@ function requestHttps(URL,params,fn_data,fn_res,fn_err) {
   }
   fetch(URL,otherParam)
   .then(fn_data(data))
-  .then(fn_res(res))
+  .then(fn_res(res))  
   .then(fn_err(error))
 }
 
