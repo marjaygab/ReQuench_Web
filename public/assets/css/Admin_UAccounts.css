@@ -69,7 +69,7 @@
 .navi_container{
   background: #f3f3f3;
   overflow-y: scroll;
-  height: 800px;
+  height: 400px;
 }
 
 tabs .navi-link.active{
@@ -83,12 +83,48 @@ tabs .navi-link.active{
 }
 
 .admin_uaccounts_whole{
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 .account_card{
   margin-bottom: 20px;
 }
+
+#logo {
+  float: left;
+  padding: 0px;
+  position: relative;
+  cursor: pointer;
+}
+
+#logo a span {
+  position:absolute;
+  width:100%;
+  height:100%;
+  top:0;
+  left: 0;
+  z-index: 1;
+  background-image: url('empty.gif');
+}
+
+#logo:hover, #logo:focus{
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.3);
+}
+
+header nav {
+  float: right;
+  padding: 10px;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {display: inline-block;}  /* for IE/Mac */
 
 .search_bar{
   float: right;

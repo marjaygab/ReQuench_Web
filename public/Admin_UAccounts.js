@@ -103,7 +103,6 @@ $(document).ready(function () {
         displayAccountCards(cashier_list);
     }
 
-
     search_bar.oninput = function () {
         switch (current_active) {
             case 'USER':
@@ -141,66 +140,64 @@ $(document).ready(function () {
         }
     }
 
-
     add_account.onclick = function () {
         Swal({
             title: "Add New Account",
             showConfirmButton: false,
             html: `
-      <div class="container">
-        <div class="row form-account">
-          <div class="col-sm-8">
-            <input id = "ID_Number" type="text" class="form-control" placeholder = "ID Number">
-            <p id="duplicate_id_error" class="error">Duplicated ID Detected!</p>
-          </div>
-          <div class="dropdown col-sm-4">
-            <button class="btn btn-block btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonCat" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              USER
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonCat">
-              <a id="access_level_user" class="dropdown-item category-item active" href="#">USER</a>
-              <a id="access_level_admin" class="dropdown-item category-item" href="#">ADMIN</a>
-              <a id="access_level_cashier" class="dropdown-item category-item" href="#">CASHIER</a>
+            <div class="container">
+              <div class="row form-account">
+                <div class="col-sm-8">
+                  <input id = "ID_Number" type="text" class="form-control" placeholder = "ID Number">
+                  <p id="duplicate_id_error" class="error">Duplicated ID Detected!</p>
+                </div>
+                <div class="dropdown col-sm-4">
+                  <button class="btn btn-block btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonCat" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Access Level</button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonCat">
+                    <a id="access_level_user" class="dropdown-item category-item active" href="#">USER</a>
+                    <a id="access_level_admin" class="dropdown-item category-item" href="#">ADMIN</a>
+                    <a id="access_level_cashier" class="dropdown-item category-item" href="#">CASHIER</a>
+                  </div>
+                </div>
+              </div>
+              <div class="row form-account">
+                <div class="col-sm-6">
+                  <input id="First_Name" type="text" class="form-control" placeholder = "First Name" required>
+                </div>
+                <div class="col-sm-6">
+                  <input id="Last_Name" type="text" class="form-control" placeholder = "Last Name" required>
+                </div>
+              </div>
+              <div class="row form-account">
+                <div class="col-sm-12">
+                  <input id="Email" type="text" class="form-control" placeholder = "Email" required>
+                  <p id="duplicate_email_error" class="error">Duplicate Email Detected!</p>
+                </div>
+              </div>
+              <div class="row form-account">
+                <div class="col-sm-12">
+                  <input id="User_Name" type="text" class="form-control" placeholder = "User Name" required>
+                  <p id="username_taken_error" class="error">This username is already taken!</p>
+                </div>
+              </div>
+              <div class="row form-account">
+                <div class="col-sm-6">
+                  <input id="Password" type="text" class="form-control" placeholder = "Password" required>
+                </div>
+                <div class="col-sm-6">
+                  <input id="Retype_Password" type="password" class="form-control" placeholder = "Retype Password" required>
+                  <p id="pass_mismatch_error" class="error">Password Mismatch!</p>
+                </div>
+              </div>
+              <div class="row form-account">
+                <div class="col-sm-12">
+                  <button id = "submit" type="submit" class="btn btn-primary">Submit</button>
+                  <p id="incomplete_info_error" class="error">Please fill out all required fields!</p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="row form-account">
-          <div class="col-sm-6">
-            <input id="First_Name" type="text" class="form-control" placeholder = "First Name" required>
-          </div>
-          <div class="col-sm-6">
-            <input id="Last_Name" type="text" class="form-control" placeholder = "Last Name" required>
-          </div>
-        </div>
-        <div class="row form-account">
-          <div class="col-sm-12">
-            <input id="Email" type="text" class="form-control" placeholder = "Email" required>
-            <p id="duplicate_email_error" class="error">Duplicate Email Detected!</p>
-          </div>
-        </div>
-        <div class="row form-account">
-          <div class="col-sm-12">
-            <input id="User_Name" type="text" class="form-control" placeholder = "User Name" required>
-            <p id="username_taken_error" class="error">This username is already taken!</p>
-          </div>
-        </div>
-        <div class="row form-account">
-          <div class="col-sm-6">
-            <input id="Password" type="text" class="form-control" placeholder = "Password" required>
-          </div>
-          <div class="col-sm-6">
-            <input id="Retype_Password" type="password" class="form-control" placeholder = "Retype Password" required>
-            <p id="pass_mismatch_error" class="error">Password Mismatch!</p>
-          </div>
-        </div>
-        <div class="row form-account">
-          <div class="col-sm-12">
-            <button id = "submit" type="submit" class="btn btn-primary">Submit</button>
-            <p id="incomplete_info_error" class="error">Please fill out all required fields!</p>
-          </div>
-        </div>
-      </div>
-`,
+      `,
             onBeforeOpen: function () {
                 const content = Swal.getContent();
                 const $ = content.querySelector.bind(content);
@@ -344,11 +341,11 @@ $(document).ready(function () {
                     params.Password = password.value;
                     params.retype_password = retype_password.value;
                     params.Email = email.value;
-                    // params.Access_Level = dropdownMenuButtonCat.innerHTML;
-                    var regex = new RegExp('[a-zA-Z]');
-                    params.Access_Level = regex.matchAll(dropdownMenuButtonCat.innerHTML);
+                    params.Access_Level = dropdownMenuButtonCat.innerHTML;
+                    // var regex = new RegExp('[a-zA-Z]');
+                    // params.Access_Level = regex.matchAll(dropdownMenuButtonCat.innerHTML);
                     console.log(params);
-                    
+
                     if (params.Password != params.retype_password) {
                     document.getElementById('Retype_Password').value = '';
                     pass_mismatch_error.style.visibility = "visible";
@@ -470,7 +467,6 @@ $(document).ready(function () {
     });
 
     // console.log(seen_toggler.item(2));
-
 
     if (permission == 'granted') {
         messaging.getToken().then(function (currentToken) {
@@ -679,23 +675,168 @@ $(document).ready(function () {
             }
             var string = `<div class="col-sm-4">
         <div class="card account_card">
-          <div class="card-body">
-            <div id="profile_picture" class="profile_picture test inline-elem" style="background-image:url('${file_path}')">
-            </div>
-            <div class="d-inline-block user_details">
-              <h5 class="card-title user_full_name">${list[i].First_Name + ' ' + list[i].Last_Name}</h5>
-              <p class="card-text user_join_date">ID Number: <span id="id_num">${list[i].ID_Number}</span></p>
+          <div id="logo" class="btn logo">
+            <div class="card-body">
+              <div id="profile_picture" class="profile_picture test inline-elem" style="background-image:url('${file_path}')">
+              </div>
+              <div class="d-inline-block user_details">
+                <h5 class="card-title user_full_name">${list[i].First_Name + ' ' + list[i].Last_Name}</h5>
+                <p class="card-text user_join_date">ID Number: <span id="id_num">${list[i].ID_Number}</span></p>
+                <p id="demo"></p>
+              </div>
             </div>
           </div>
-        </div>
-      </div>`;
+        </div>`;
             console.log(string);
             var $container = $('#navi-slots');
             var html = $.parseHTML(string);
             $container.append(html);
+
+              var session_var = sessionStorage.getItem('JSON_Response');
+              var jsonobj = JSON.parse(session_var);
+              var params = {};
+              params.Acc_ID = jsonobj.Account_Details.Acc_ID;
+              console.log(params.Acc_ID);
+              var profile_picture_div = document.getElementById('profile_picture');
+              var id_num_field = document.getElementById('id_num_field');
+              var user_field = document.getElementById('user_field');
+              var first_field = document.getElementById('first_field');
+              var last_field = document.getElementById('last_field');
+              var email_field = document.getElementById('email_field');
+              var access_level_field = document.getElementById('access_level_field');
+              var pass_field = document.getElementById('pass_field');
+              var balance_field = document.getElementById('balance_field');
+              var logo = document.getElementsByClassName('logo');
+
+              updateSessionVariable(params,function(response){
+                console.log(response);
+                var string_json = JSON.stringify(response);
+                sessionStorage.setItem('JSON_Response',string_json);
+
+                jsonobj = JSON.parse(sessionStorage.getItem('JSON_Response'));
+                console.log(jsonobj);
+                // jsonobj = session_var;
+                var path = "url('.." + jsonobj.file_path +"')";
+                profile_picture_div.style.backgroundImage = "url('../ReQuench/" + jsonobj.file_path +"')";
+                id_num_field.value = jsonobj.Account_Details.ID_Number;
+                user_field.value = jsonobj.Account_Details.User_Name;
+                first_field.value = jsonobj.Account_Details.First_Name;
+                last_field.value = jsonobj.Account_Details.Last_Name;
+                email_field.value = jsonobj.Account_Details.Email;
+                dropdownMenuButtonCat.value = jsonobj.Account_Details.dropdownMenuButtonCat;
+                pass_field.value = jsonobj.Account_Details.Password;
+                balance_field.value = jsonobj.Account_Details.Balance;
+              });
+
+              // var edit_mode = {
+              //   accounts:false,
+              //   id_num:false,
+              //   user_name:false,
+              //   first_name:false,
+              //   last_name:false,
+              //   email:false,
+              //   access_level:false,
+              //   password:false,
+              //   balance:false,
+              // };
+
+            logo.ondblclick = function(){
+            Swal({
+                title: "Edit Existing Account",
+                showConfirmButton: false,
+                html: `
+            <div class="container">
+              <div class="row form-account">
+                <div class="col-sm-8">
+                  <input id = "id_num_field" type="text" class="form-control" placeholder = "ID Number">
+                  <p id="duplicate_id_error" class="error">Duplicated ID Detected!</p>
+                </div>
+                <div class="dropdown col-sm-4">
+                <button class="btn btn-block btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonCat" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Access Level</button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonCat">
+                  <a id="access_level_user" class="dropdown-item category-item active" href="#">USER</a>
+                  <a id="access_level_admin" class="dropdown-item category-item" href="#">ADMIN</a>
+                  <a id="access_level_cashier" class="dropdown-item category-item" href="#">CASHIER</a>
+                </div>
+              </div>
+            </div>
+              <div class="row form-account">
+                <div class="col-sm-6">
+                  <input id="First_Name" type="text" class="form-control" placeholder = "First Name" required>
+                </div>
+                <div class="col-sm-6">
+                  <input id="Last_Name" type="text" class="form-control" placeholder = "Last Name" required>
+                </div>
+              </div>
+              <div class="row form-account">
+                <div class="col-sm-12">
+                  <input id="Email" type="text" class="form-control" placeholder = "Email" required>
+                  <p id="duplicate_email_error" class="error">Duplicate Email Detected!</p>
+                </div>
+              </div>
+              <div class="row form-account">
+                <div class="col-sm-12">
+                  <input id="User_Name" type="text" class="form-control" placeholder = "User Name" required>
+                  <p id="username_taken_error" class="error">This username is already taken!</p>
+                </div>
+              </div>
+              <div class="row form-account">
+                <div class="col-sm-6">
+                  <input id="Password" type="text" class="form-control" placeholder = "Password" required>
+                </div>
+                <div class="col-sm-6">
+                  <input id="Retype_Password" type="password" class="form-control" placeholder = "Retype Password" required>
+                  <p id="pass_mismatch_error" class="error">Password Mismatch!</p>
+                </div>
+              </div>
+              <div class="row form-account">
+                <div class="col-sm-12">
+                  <button id = "submit" type="submit" class="btn btn-primary">Submit</button>
+                  <p id="incomplete_info_error" class="error" >Please fill out all required fields!</p>
+                </div>
+              </div>
+            </div>
+    `,
+                onBeforeOpen: function () {
+                    const content = Swal.getContent();
+                    const $ = content.querySelector.bind(content);
+                    const id_num_field = $('#ID_Number');
+                    const first_field = $('#First_Name');
+                    const last_field = $('#Last_Name');
+                    const user_field = $('#User_Name');
+                    const pass_field = $('#Password');
+                    const balance_field = $('#Balance');
+                    const user_field = $('#User_Name');
+                    const pass_field = $('#Password');
+                    const retype_password = $('#Retype_Password');
+                    const email_field = $('#Email');
+                    const access_level_user = $('#access_level_user');
+                    const access_level_admin = $('#access_level_admin');
+                    const access_level_cashier = $('#access_level_cashier');
+                    const dropdownMenuButtonCat = $('#dropdownMenuButtonCat');
+                    const submit = $('#submit');
+                    const duplicate_id_error = $('#duplicate_id_error');
+                    const duplicate_email_error = $('#duplicate_email_error');
+                    const username_taken_error = $('#username_taken_error');
+                    const pass_mismatch_error = $('#pass_mismatch_error');
+
+                    duplicate_id_error.style.visibility = "hidden";
+                    duplicate_email_error.style.visibility = "hidden";
+                    username_taken_error.style.visibility = "hidden";
+                    pass_mismatch_error.style.visibility = "hidden";
+                    incomplete_info_error.style.visibility = "hidden";
+                    var valid_id = false;
+                    var valid_email = false;
+                    var valid_first = false;
+                    var valid_last = false;
+                    var valid_user = false;
+                    var valid_password = false;
+            }
+          });
         }
     }
-
+}
 
     function displayNotifs(id, notifications, fn) {
         var size = notifications.length;
