@@ -666,7 +666,7 @@ $(document).ready(function () {
 
     function displayAccountCards(list) {
         var size = list.length;
-
+        
         for (var i = 0; i < list.length; i++) {
             var file_path = list[i].Image_Path;
             if (file_path == null) {
@@ -838,7 +838,12 @@ $(document).ready(function () {
                             var valid_password = false;
 
                             //get user data here
-                            
+                            var params = {};
+                            params.Acc_ID = list[index].Acc_ID;
+                            requestHttps("https://requench-rest.herokuapp.com/Fetch_Profile.php",params,function(data) {
+                                console.log(data);
+                                
+                            });
 
 
 
