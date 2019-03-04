@@ -1,32 +1,34 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+  <head>
+
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  	<link rel="stylesheet" href="assets/css/main.css">
+  	<link rel="stylesheet" href="assets/css/main.css">
+
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-dark-grey.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script>
       // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyCVk9YOp5EvIFVVLa8t4Gx48qwYe87PASY",
-        authDomain: "requench-fireapp.firebaseapp.com",
-        databaseURL: "https://requench-fireapp.firebaseio.com",
-        projectId: "requench-fireapp",
-        storageBucket: "requench-fireapp.appspot.com",
-        messagingSenderId: "793188493760"
-      };
-      firebase.initializeApp(config);
     </script>
-  </head>
-  <body id="body_id">
-    <title>ReQuench</title>
+  </head>
+
+  <body id="body_id">
+
+    <title>ReQuench</title>
+
 
 <!-- Navbar -->
 <nav class="w3-top navbar navbar-expand-lg navbar-dark bg-dark">
@@ -56,14 +58,16 @@
 </nav>
 
 <!-- center title -->
-<div id="header_container" class="container">
+<div id="header_container" class="container">
+
   <img class="image_banner" id="image_banner" src="assets/images/BrandwLogo.png" alt="">
   <h1 id="header_label">A DLSL Water Vending Machine</h1>
   <div class="container button_header_container">
     <button id="login_button" class="btn btn-info header_button" type="button" name="button">Log In</button>
     <button id="signup_button" class="btn btn-danger header_button" type="button" name="button">Create an Account</button>
   </div>
-</div>
+</div>
+
 
 <!-- About -->
 <div class="w3-row-padding w3-padding-64 w3-theme-d5 w3-center" id="about">
@@ -143,8 +147,13 @@
     </div>
   </div>
 </div>
-  </body>
-  <script type="text/javascript" src="index.js"></script>
-  <script type="text/javascript" src="HttpRequest.js"></script>
-  <script type="text/javascript" src="sweetalert2.all.min.js"></script>
-</html>
+  </body>
+
+  <script type="text/javascript" src="index.js"></script>
+
+  <script type="text/javascript" src="HttpRequest.js"></script>
+
+  <script type="text/javascript" src="sweetalert2.all.min.js"></script>
+
+</html>
+

@@ -21,7 +21,7 @@ function requestHttps(URL,params,callback) {
     method: "POST"
   }
   fetch(URL,otherParam)
-  .then(res => res.text())
+  .then(res => res.json())
   .then(data => callback(data))
   .catch(error => console.log(error));
 }

@@ -24,44 +24,44 @@ $('document').ready(function() {
       }
     }
 
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      //check if email is present in the backend server
-      params = {};
-      params.Email = user.email;
+  // firebase.auth().onAuthStateChanged(function(user) {
+  //   if (user) {
+  //     //check if email is present in the backend server
+  //     params = {};
+  //     params.Email = user.email;
 
-      Swal({
-        title: 'Redirecting...',
-        onBeforeOpen: () =>{
-          Swal.showLoading();
-        }
-      });
-      requestHttp('POST',"Email_Check.php",params,function(e){
-        if (this.readyState == 4 && this.status == 200) {
-          var response = this.responseText;
+  //     Swal({
+  //       title: 'Redirecting...',
+  //       onBeforeOpen: () =>{
+  //         Swal.showLoading();
+  //       }
+  //     });
+  //     requestHttp('POST',"Email_Check.php",params,function(e){
+  //       if (this.readyState == 4 && this.status == 200) {
+  //         var response = this.responseText;
 
-          if (response != null) {
-            console.log(response);
-            var json_object = JSON.parse(this.response);
-            if (json_object.Success == 'true') {
-              var access_level = json_object.Account_Details.Access_Level
-              authorize(access_level,this.response);
-            }
-            else{
-              Swal({
-                type: 'error',
-                title: 'Login Failed!',
-                text: 'Either your username or password is incorrect.'
-              });
-            }
-            // window.location.href = 'User.php';
-          }
-        }
-      });
-    } else {
-      // No user is signed in.
-    }
-  });
+  //         if (response != null) {
+  //           console.log(response);
+  //           var json_object = JSON.parse(this.response);
+  //           if (json_object.Success == 'true') {
+  //             var access_level = json_object.Account_Details.Access_Level
+  //             authorize(access_level,this.response);
+  //           }
+  //           else{
+  //             Swal({
+  //               type: 'error',
+  //               title: 'Login Failed!',
+  //               text: 'Either your username or password is incorrect.'
+  //             });
+  //           }
+  //           // window.location.href = 'User.php';
+  //         }
+  //       }
+  //     });
+  //   } else {
+  //     // No user is signed in.
+  //   }
+  // });
 
 
 
@@ -134,7 +134,7 @@ $('document').ready(function() {
       }
       google_login_button.onclick = function(){
         //lead to sign up page
-        firebase.auth().signInWithRedirect(provider);
+        // firebase.auth().signInWithRedirect(provider);
       }
     },
     onClose: () => {

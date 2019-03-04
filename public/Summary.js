@@ -102,15 +102,15 @@ $('document').ready(function() {
 
 
   logout_button.onclick = function() {
-    firebase.auth().signOut().then(function() {
-      window.location.href = "index.html";
-    }, function(error) {
-      Swal({
-        type: 'error',
-        title: 'Something went Wrong!',
-        text: 'Please contact your administrator for assistance. Thank you!'
-      });
-    });
+    // firebase.auth().signOut().then(function() {
+    //   window.location.href = "index.html";
+    // }, function(error) {
+    //   Swal({
+    //     type: 'error',
+    //     title: 'Something went Wrong!',
+    //     text: 'Please contact your administrator for assistance. Thank you!'
+    //   });
+    // });
   }
 
 
