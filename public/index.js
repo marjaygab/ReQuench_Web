@@ -6,7 +6,7 @@ $('document').ready(function () {
 	var contact_button = document.getElementById('contact_button');
 	var login_button = document.getElementById("login_button");
 	var signup_button = document.getElementById("signup_button");
-	
+
 
 	function authorize(al, jsobj) {
 		if (al == 'USER') {
