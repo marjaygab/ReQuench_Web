@@ -27,7 +27,6 @@ $(document).ready(function () {
     //   }
     // }
 
-
     $('.dropdown-menu').click(function (e) {
         e.stopPropagation();
     });
@@ -108,7 +107,6 @@ $(document).ready(function () {
                 var json_object = JSON.parse(this.response);
                 if (json_object.Success == true) {
                     //enlist parsed notifs
-
                     notif_counter = 0;
                     notif_list = [];
                     for (var i = 0; i < json_object.Notifications.length; i++) {

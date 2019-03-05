@@ -842,12 +842,15 @@ $(document).ready(function () {
                             params.Acc_ID = list[index].Acc_ID;
                             requestHttps("https://requench-rest.herokuapp.com/Fetch_Profile.php",params,function(data) {
                                 console.log(data);
-                                
+                                id_num_field.value = data.User_Information.ID_Number;
+                                first_field.value = data.User_Information.First_Name;
+                                last_field.value = data.User_Information.Last_Name;
+                                user_field.value = data.User_Information.User_Name;
+                                pass_field.value = data.User_Information.Password;
+                                retype_password.value = data.User_Information.Password;
+                                email_field.value = data.User_Information.Email;
+                                dropdownMenuButtonCat.innerHTML = data.User_Information.Access_Level;
                             });
-
-
-
-
                             access_level_user.onclick = function () {
                                 this.className = "dropdown-item category-item active";
                                 access_level_admin.className = "dropdown-item category-item";
@@ -969,7 +972,6 @@ $(document).ready(function () {
                                 if (params.Password != params.retype_password) {
                                     document.getElementById('Retype_Password').value = '';
                                     pass_mismatch_error.style.visibility = "visible";
-            
                                     //handle error here
                                 }
                                 else if (id_num_field.value == '' || first_name.value == '' || last_name.value == '' || user_name.value == '' || password.value == '') {
@@ -977,28 +979,13 @@ $(document).ready(function () {
                                     //handle error here
                                 }
                                 else if (valid_id == true && valid_email == true && valid_user == true) {
-                                    // requestHttp('POST', "https://requench-rest.herokuapp.com/Add_Account.php", params, function (e) {
-                                    //     if (this.readyState == 4 && this.status == 200) {
-                                    //         var response = this.responseText;
-                                    //         console.log(response);
-                                    //         if (response != null) {
-                                    //             var json_object = JSON.parse(this.response);
-                                    //             if (json_object.Success == true) {
-                                    //                 //enlist parsed notifs
-                                    //                 console.log('Update Success');
-                                    //             }
-                                    //             else {
-                                    //                 Swal({
-                                    //                     type: 'error',
-                                    //                     title: 'Oops!',
-                                    //                     text: 'Something went wrong! Please try again later.'
-                                    //                 });
-                                    //             }
-                                    //             Swal.close();
-                                    //         }
-                                    //     } else {
-                                    //         console.log('else');
-                                    //     }
+                                    //Set params.command to update. Set to 'all' to update all at once. 
+                                    // params.Command = 'all';
+                                    //request
+                                    //HTTP Request.
+                                    // requestHttps("https://request-rest.herokuapp.com",params,function(result_json) {
+                                    //      //result_json is of type JSON. No need to parse.
+                                    //     //do something here after updating
                                     // });
                                 }
                             }
