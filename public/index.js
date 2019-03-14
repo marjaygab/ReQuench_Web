@@ -18,7 +18,7 @@ $('document').ready(function () {
 			window.location.href = 'Admin_Summary.html';
 		} else if (al == 'CASHIER') {
 			sessionStorage.setItem('JSON_Response', jsobj);
-			window.location.href = 'cashier/load.php';
+			window.location.href = 'cashier/Cashier.html';
 		} else {
 
 		}
