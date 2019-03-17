@@ -14,7 +14,7 @@ $(document).ready(function () {
     var current_list,current_list_unrecorded;
     var notif_counter = 0;
     var selected_items = [];
-    var category_selected = 'Machine Location';
+    var category_selected = 'Amount';
     var order_selected = 'Descending';
     
     // var seen_toggler = {
@@ -119,17 +119,25 @@ $(document).ready(function () {
     }
 
     var params = {};
-    requestHttp('POST', "https://requench-rest.herokuapp.com/Fetch_All_Transaction.php", params, function (e) { 
+    requestHttp('POST', "https://requench-rest.herokuapp.com/Fetch_All_Purchase.php", params, function (e) { 
         if (this.readyState == 4 && this.status == 200) {
             var response = this.responseText;
             console.log(response);
             
             if (response != null) {
                 var json_object = JSON.parse(response);
-                current_list = json_object.Transaction_List;
-                current_list_unrecorded = json_object.Transaction_List_Unrecorded;
+                current_list = json_object.Purchase_List;
+                current_list_unrecorded = json_object.Purchase_List_Unrecorded;
                 console.log(json_object);
                 
+                filter(current_list,category_selected,order_selected,function(list_returned) {
+                    console.log(list_returned);
+                });
+                filter(current_list_unrecorded,category_selected,order_selected,function(list_returned) {
+                    console.log(list_returned);
+                });
+
+
                 clearListDisplay();
                 displayList(current_list);
             }
@@ -165,7 +173,7 @@ $(document).ready(function () {
 
 
     function displayList(current_list) {
-        var table1 = document.getElementById('transaction_table');
+        var table1 = document.getElementById('purchase_table');
         clearListDisplay();
         var total_amount = 0;
         for (let index = 0; index < current_list.length; index++) {
@@ -177,18 +185,15 @@ $(document).ready(function () {
             }else{
                 cell1.innerHTML = current_list[index].UU_ID;
             }
+            
             var cell2 = newRow.insertCell(1);
-            cell2.innerHTML = current_list[index].Machine_Location;
+            cell2.innerHTML = current_list[index].Amount;
             var cell3 = newRow.insertCell(2);
-            cell3.innerHTML = current_list[index].Time;
+            cell3.innerHTML = current_list[index].Price_Computed;
             var cell4 = newRow.insertCell(3);
-            cell4.innerHTML = current_list[index].Date;
+            cell4.innerHTML = current_list[index].Time;
             var cell5 = newRow.insertCell(4);
-            cell5.innerHTML = current_list[index].Amount;
-            var cell6 = newRow.insertCell(5);
-            cell6.innerHTML = current_list[index].Temperature;
-            var cell7 = newRow.insertCell(6);
-            cell7.innerHTML = current_list[index].Price_Computed;
+            cell5.innerHTML = current_list[index].Date;
             newRow.onclick = function () {
                 if (this.style.backgroundColor != 'deepskyblue') {
                     this.style.backgroundColor = 'deepskyblue';
@@ -207,7 +212,7 @@ $(document).ready(function () {
 
 
     function clearListDisplay() {
-        var table = document.getElementById("transaction_table");
+        var table = document.getElementById("purchase_table");
         table.innerHTML = '';
         table.innerHTML = `<tr>
         <th scope="col">Acc_ID</th>
@@ -219,7 +224,7 @@ $(document).ready(function () {
     }
 
     function toggleListDisplay(mode) {
-        var table = document.getElementById("transaction_table");
+        var table = document.getElementById("purchase_table");
         table.innerHTML = '';
         if (mode) {
             table.innerHTML = `<tr>
@@ -248,23 +253,17 @@ $(document).ready(function () {
             switch (order) {
                 case 'Ascending':
                   switch (cat) {
+                      case 'Amount':
+                          list.sort(compByAmountAsc);
+                          break;
+                      case 'Price Computed':
+                          list.sort(compByPriceAsc);
+                          break;
                       case 'Time':
                           list.sort(compByTimeAsc);
                           break;
                       case 'Date':
                           list.sort(compByDateAsc);
-                          break;
-                      case 'Amount':
-                          list.sort(compByAmountAsc);
-                          break;
-                      case 'Machine Location':
-                          list.sort(compByMachineAsc);
-                          break;
-                      case 'Temperature':
-                          list.sort(compByTempAsc);
-                          break;
-                      case 'Price':
-                          list.sort(compByPriceAsc);
                           break;
                       default:
                           break;
@@ -273,23 +272,18 @@ $(document).ready(function () {
             
                 case 'Descending':
                 switch (cat) {
+                      case 'Amount':
+                        console.log('Testing');
+                        list.sort(compByAmountDesc);
+                      break;
+                      case 'Price Computed':
+                          list.sort(compByPriceDesc);
+                      break;
                       case 'Time':
                           list.sort(compByTimeDesc);
                       break;
                       case 'Date':
                           list.sort(compByDateDesc);
-                      break;
-                      case 'Amount':
-                          list.sort(compByAmountDesc);
-                      break;
-                      case 'Machine Location':
-                          list.sort(compByMachineDesc);
-                          break;
-                      case 'Temperature':
-                          list.sort(compByTempDesc);
-                          break;
-                      case 'Price':
-                          list.sort(compByPriceDesc);
                           break;
                       default:
                       break;
@@ -361,37 +355,6 @@ $(document).ready(function () {
 
       function compByPriceDesc(a,b) {
         if (parseFloat(a.Price_Computed) > parseFloat(b.Price_Computed)) {
-          return -1;
-        }else {
-          return 0;
-        }
-      }
-      
-      function compByMachineAsc(a,b) {
-        if (a.Machine_Location < b.Machine_Location) {
-          return -1;
-        }else {
-          return 0;
-        }
-      }
-
-      function compByMachineDesc(a,b) {
-        if (a.Machine_Location > b.Machine_Location) {
-          return -1;
-        }else {
-          return 0;
-        }
-      }
-      function compByTempAsc(a,b) {
-        if (a.Temperature < b.Temperature) {
-          return -1;
-        }else {
-          return 0;
-        }
-      }
-
-      function compByTempDesc(a,b) {
-        if (a.Temperature > b.Temperature) {
           return -1;
         }else {
           return 0;

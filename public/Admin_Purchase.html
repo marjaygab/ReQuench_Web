@@ -6,7 +6,7 @@
     <title>Summary (Admin)</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/Admin_Transactions.css">
+    <link rel="stylesheet" href="assets/css/Admin_Purchase.css">
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
         integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
@@ -52,10 +52,10 @@
                     <li class="nav-item">
                         <a id="summary_button" class="nav-link" href="Admin_Summary.html">Summary</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a id="admin_purchase_navbutton" class="nav-link" href="Admin_Purchase.html">Purchases</a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a id="admin_transac_navbutton" class="nav-link" href="Admin_Transactions.html">Transactions</a>
                     </li>
                     <li class="nav-item">
@@ -67,6 +67,7 @@
                     <li class="nav-item">
                         <a id="admin_contact_navbutton" class="nav-link" href="#">Help</a>
                     </li>
+
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item notifs dropdown">
@@ -82,7 +83,8 @@
                                 <div class="d-inline-block notif-content">
                                     <h5 id="notif-title" class="notif-title">Notification Title</h5>
                                     <p id="notif-description" class="notif-description">Lorem Ipsum is simply dummy text
-                                        of the printing and typesetting industry.</p>
+                                        of the printing
+                                        and typesetting industry.</p>
                                 </div>
                             </div>
                             <div class="dropdown-item notif-item container">
@@ -90,7 +92,8 @@
                                 <div class="d-inline-block notif-content">
                                     <h5 id="notif-title" class="notif-title">Notification Title</h5>
                                     <p id="notif-description" class="notif-description">Lorem Ipsum is simply dummy text
-                                        of the printing and typesetting industry.</p>
+                                        of the printing
+                                        and typesetting industry.</p>
                                 </div>
                             </div>
                             <div class="dropdown-item notif-item container">
@@ -98,7 +101,8 @@
                                 <div class="d-inline-block notif-content">
                                     <h5 id="notif-title" class="notif-title">Notification Title</h5>
                                     <p id="notif-description" class="notif-description">Lorem Ipsum is simply dummy text
-                                        of the printing and typesetting industry.</p>
+                                        of the printing
+                                        and typesetting industry.</p>
                                 </div>
                             </div>
                         </div>
@@ -124,30 +128,28 @@
             </div>
         </div>
     </nav>
-    <div class="container admin_transaction_whole">
+    <div class="container admin_purchase_whole">
         <div class="row controls">
             <div class="col-sm-4">
                 <br>
                 <button id="delete_button" type="button" name="button" class="button_control btn btn-danger">Delete
-                    Transaction</button>
-                <button id="add_button" type="button" name="button" class="button_control btn btn-info">Generate PDF</button>
+                    Purchase</button>
+                <button id="add_button" type="button" name="button" class="button_control btn btn-info">Generate
+                    PDF</button>
             </div>
             <div class="col-sm-3">
                 <span>Sort By:</span>
                 <div class="inline">
                     <div class="dropdown">
-                        <button class="btn btn-block btn-secondary dropdown-toggle" type="button"
-                            id="dropdown_sorter" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            Machine Location
+                        <button class="btn btn-block btn-secondary dropdown-toggle" type="button" id="dropdown_sorter"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Amount
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdown_sorter">
-                            <a id="drop_cat_time" class="dropdown-item category-item active" href="#">Machine Location</a>
+                            <a id="drop_cat_amount" class="dropdown-item category-item">Amount</a>
+                            <a id="drop_cat_price" class="dropdown-item category-item">Price Computed</a>
                             <a id="drop_cat_time" class="dropdown-item category-item" href="#">Time</a>
                             <a id="drop_cat_date" class="dropdown-item category-item" href="#">Date</a>
-                            <a id="drop_cat_amount" class="dropdown-item category-item">Amount</a>
-                            <a id="drop_cat_amount" class="dropdown-item category-item">Temperature</a>
-                            <a id="drop_cat_amount" class="dropdown-item category-item">Price</a>
                         </div>
                     </div>
                 </div>
@@ -156,9 +158,8 @@
                 <span>Order By:</span>
                 <div class="inline">
                     <div class="dropdown">
-                        <button class="btn btn-block btn-secondary dropdown-toggle" type="button"
-                            id="dropdown_order" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
+                        <button class="btn btn-block btn-secondary dropdown-toggle" type="button" id="dropdown_order"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Descending
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdown_order">
@@ -170,19 +171,18 @@
             </div>
             <div class="col-sm-2">
                 <br>
-                <input type="checkbox" checked data-toggle="toggle" data-onstyle="warning" data-offstyle="info" data-on="Recorded" data-off="Unrecorded" id="record_toggler">
+                <input type="checkbox" checked data-toggle="toggle" data-onstyle="warning" data-offstyle="info"
+                    data-on="Recorded" data-off="Unrecorded" id="record_toggler">
             </div>
         </div>
-        <table class="table" id="transaction_table">
+        <table class="table" id="purchase_table">
             <thead>
                 <tr>
                     <th scope="col">Acc_ID</th>
-                    <th scope="col">Machine Location</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Price Computed</th>
                     <th scope="col">Time</th>
                     <th scope="col">Date</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Temperature</th>
-                    <th scope="col">Price</th>
                 </tr>
             </thead>
             <tbody>
@@ -190,7 +190,7 @@
         </table>
     </div>
 </body>
-<script type="text/javascript" src="Admin_Transactions.js"></script>
+<script type="text/javascript" src="Admin_Purchase.js"></script>
 <script type="text/javascript" src="HttpRequest.js"></script>
 <script type="text/javascript" src="NotificationHandler.js"></script>
 <script type="text/javascript" src="sweetalert2.all.min.js"></script>

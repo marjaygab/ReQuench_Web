@@ -139,10 +139,6 @@ header nav {
   margin-bottom: 30px;
 }
 
-#submit{
-  width: 20%;
-}
-
 .error{
   color:red;
   font-size: 10px;

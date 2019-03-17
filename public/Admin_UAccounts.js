@@ -104,22 +104,23 @@ $(document).ready(function () {
     }
 
     search_bar.oninput = function () {
+        
         switch (current_active) {
             case 'USER':
+                console.log(user_list);
                 var filtered_items = user_list.filter(obj => {
-                    return obj.First_Name.toLowerCase().includes(this.value) || obj.Last_Name.toLowerCase().includes(this.value)
-                    obj.User_Name.toLowerCase().includes(this.value) || obj.Email.toLowerCase().includes(this.value)
-                    obj.ID_Number.toLowerCase().includes(this.value);
+                    return obj.First_Name.toLowerCase().includes(this.value.toLowerCase()) || obj.Last_Name.toLowerCase().includes(this.value.toLowerCase()) ||
+                    obj.User_Name.toLowerCase().includes(this.value.toLowerCase()) || obj.Email.toLowerCase().includes(this.value.toLowerCase()) ||
+                    obj.ID_Number.toLowerCase().includes(this.value.toLowerCase()); 
                 });
-                console.log(filtered_items);
                 clearAccountList();
                 displayAccountCards(filtered_items);
                 break;
             case 'ADMIN':
                 var filtered_items = admin_list.filter(obj => {
-                    return obj.First_Name.toLowerCase().includes(this.value) || obj.Last_Name.toLowerCase().includes(this.value)
-                    obj.User_Name.toLowerCase().includes(this.value) || obj.Email.toLowerCase().includes(this.value)
-                    obj.ID_Number.toLowerCase().includes(this.value);
+                    return obj.First_Name.toLowerCase().includes(this.value.toLowerCase()) || obj.Last_Name.toLowerCase().includes(this.value.toLowerCase()) ||
+                    obj.User_Name.toLowerCase().includes(this.value.toLowerCase()) || obj.Email.toLowerCase().includes(this.value.toLowerCase()) || 
+                    obj.ID_Number.toLowerCase().includes(this.value.toLowerCase());
                 });
                 console.log(filtered_items);
                 clearAccountList();
@@ -127,9 +128,9 @@ $(document).ready(function () {
                 break;
             case 'CASHIER':
                 var filtered_items = cashier_list.filter(obj => {
-                    return obj.First_Name.toLowerCase().includes(this.value) || obj.Last_Name.toLowerCase().includes(this.value)
-                    obj.User_Name.toLowerCase().includes(this.value) || obj.Email.toLowerCase().includes(this.value)
-                    obj.ID_Number.toLowerCase().includes(this.value);
+                    return obj.First_Name.toLowerCase().includes(this.value.toLowerCase()) || obj.Last_Name.toLowerCase().includes(this.value.toLowerCase()) || 
+                    obj.User_Name.toLowerCase().includes(this.value.toLowerCase()) || obj.Email.toLowerCase().includes(this.value.toLowerCase()) ||
+                    obj.ID_Number.toLowerCase().includes(this.value.toLowerCase());
                 });
                 console.log(filtered_items);
                 clearAccountList();
@@ -191,13 +192,15 @@ $(document).ready(function () {
                 </div>
               </div>
               <div class="row form-account">
-                <div class="col-sm-12">
-                  <button id = "submit" type="submit" class="btn btn-primary">Submit</button>
+                <div class="col-sm-6">
+                  <button id = "submit" type="submit" class="btn btn-primary btn-block">Submit</button>
                   <p id="incomplete_info_error" class="error">Please fill out all required fields!</p>
                 </div>
+                <div class="col-sm-6">
+                  <button id = "cancel" type="button" class="btn btn-danger btn-block">Cancel</button>
+                </div>
               </div>
-            </div>
-      `,
+            </div>`,
             onBeforeOpen: function () {
                 const content = Swal.getContent();
                 const $ = content.querySelector.bind(content);
@@ -209,6 +212,7 @@ $(document).ready(function () {
                 const retype_password = $('#Retype_Password');
                 const email = $('#Email');
                 const submit = $('#submit');
+                const cancel = $('#cancel');
                 const duplicate_id_error = $('#duplicate_id_error');
                 const duplicate_email_error = $('#duplicate_email_error');
                 const username_taken_error = $('#username_taken_error');
@@ -382,6 +386,9 @@ $(document).ready(function () {
                         });
                     }
                 }
+                cancel.onclick = function() {
+                    Swal.close();
+                }
             },
             onClose: function () {
 
@@ -397,249 +404,6 @@ $(document).ready(function () {
         e.stopPropagation();
     });
 
-
-    //get initial notif list
-    requestHttp('POST', "https://requench-rest.herokuapp.com/Fetch_Notifs.php", params, function (e) {
-        if (this.readyState == 4 && this.status == 200) {
-            var response = this.responseText;
-            if (response != null) {
-                var json_object = JSON.parse(this.response);
-                if (json_object.Success == true) {
-                    //enlist parsed notifs
-
-                    notif_counter = 0;
-                    notif_list = [];
-                    for (var i = 0; i < json_object.Notifications.length; i++) {
-                        notif_list.push(json_object.Notifications[i]);
-                    }
-                    notif_list.sort(compByDateDesc);
-                    previous_list_count = notif_list.length;
-                    clearList(notif_list_div);
-                    displayNotifs("#notif_list", notif_list, function () {
-                        var seen_toggler = document.getElementsByClassName('seen_toggler');
-                        console.log(seen_toggler.length);
-                        for (var i = 0; i < seen_toggler.length; i++) {
-                            seen_toggler[i].onclick = function () {
-                                var notif_id = this.parentElement.parentElement.parentElement.parentElement.id;
-                                if (this.className == 'far fa-circle seen_toggler') {
-                                    //unseens a notif
-                                    var child_element = this;
-                                    var parent_div = this.parentElement.parentElement.parentElement.parentElement;
-                                    updateSeenDB(notif_id, false, parent_div, child_element, function () {
-                                        parent_div.className = 'dropdown-item notif-item container active_notif';
-                                        notif_counter++;
-                                        child_element.className = 'fas fa-circle seen_toggler';
-                                        document.getElementById('notif_count').innerHTML = notif_counter;
-                                    });
-                                    //put db seen syncs here
-                                } else {
-                                    //seens a notif
-                                    var child_element = this;
-                                    var parent_div = this.parentElement.parentElement.parentElement.parentElement;
-                                    updateSeenDB(notif_id, true, parent_div, child_element, function () {
-                                        parent_div.className = 'dropdown-item notif-item container';
-                                        //put db seen syncs here
-                                        child_element.className = 'far fa-circle seen_toggler';
-                                        if (notif_counter != 0) {
-                                            notif_counter--;
-                                            document.getElementById('notif_count').innerHTML = notif_counter;
-                                        }
-                                    });
-                                }
-                            }
-                        }
-                    });
-
-                    for (var i = 0; i < notif_list.length; i++) {
-                        if (!notif_list[i].Seen) {
-                            notif_counter++;
-                        }
-                    }
-
-                    document.getElementById('notif_count').innerHTML = notif_counter;
-
-                }
-                else {
-                }
-
-            }
-        }
-    });
-
-    // console.log(seen_toggler.item(2));
-
-    if (permission == 'granted') {
-        messaging.getToken().then(function (currentToken) {
-            if (currentToken) {
-                var params = {};
-                var response = JSON.parse(sessionStorage.getItem('JSON_Response'));
-                params.Acc_ID = response.Account_Details.Acc_ID;
-                params.registration_token = currentToken;
-
-                requestHttp('POST', "https://requench-rest.herokuapp.com/Update_Token.php", params, function (e) {
-                    if (this.readyState == 4 && this.status == 200) {
-                        var response = this.responseText;
-                        if (response != null) {
-                            console.log(response);
-                            var json_object = JSON.parse(this.response);
-                            if (json_object.Success == true) {
-                                //enlist parsed notifs
-                                console.log('Update Success');
-                            }
-                            else {
-                                Swal({
-                                    type: 'error',
-                                    title: 'Oops!',
-                                    text: 'Something went wrong! Please try again later.'
-                                });
-                            }
-                            // window.location.href = 'User.php';
-                        }
-                    }
-                });
-            } else {
-                // Show permission request.
-                console.log('No Instance ID token available. Request permission to generate one.');
-                // Show permission UI.
-            }
-        }).catch(function (err) {
-            console.log('An error occurred while retrieving token. ', err);
-            showToken('Error retrieving Instance ID token. ', err);
-        });
-    } else if (permission == 'default') {
-        messaging.requestPermission()
-            .then(function () {
-                messaging.getToken().then(function (currentToken) {
-                    if (currentToken) {
-                        var params = {};
-                        var response = JSON.parse(sessionStorage.getItem('JSON_Response'));
-                        params.Acc_ID = response.Account_Details.Acc_ID;
-                        params.registration_token = currentToken;
-
-                        requestHttp('POST', "https://requench-rest.herokuapp.com/Update_Token.php", params, function (e) {
-                            if (this.readyState == 4 && this.status == 200) {
-                                var response = this.responseText;
-                                if (response != null) {
-                                    console.log(response);
-                                    var json_object = JSON.parse(this.response);
-                                    if (json_object.Success == true) {
-                                        //enlist parsed notifs
-                                        console.log('Update Success');
-                                    }
-                                    else {
-                                        Swal({
-                                            type: 'error',
-                                            title: 'Oops!',
-                                            text: 'Something went wrong! Please try again later.'
-                                        });
-                                    }
-                                    // window.location.href = 'User.php';
-                                }
-                            }
-                        });
-                    } else {
-                        // Show permission request.
-                        console.log('No Instance ID token available. Request permission to generate one.');
-                        // Show permission UI.
-                    }
-                }).catch(function (err) {
-                    console.log('An error occurred while retrieving token. ', err);
-                    showToken('Error retrieving Instance ID token. ', err);
-                });
-            })
-            .catch(function () {
-                console.log('Error Occured');
-            });
-    } else {
-        console.log('Permission denied');
-        var params = {};
-        var response = JSON.parse(sessionStorage.getItem('JSON_Response'));
-        params.Acc_ID = response.Account_Details.Acc_ID;
-        //clear registration token to reject incoming background notifications
-        requestHttp('POST', "https://requench-rest.herokuapp.com/Clear_Token.php", params, function (e) { });
-    }
-
-    //Get Generated User Token then update the Back End DB fpr changes.
-
-    window.onbeforeunload = function (e) {
-        var params = {};
-        var response = JSON.parse(sessionStorage.getItem('JSON_Response'));
-        params.Acc_ID = response.Account_Details.Acc_ID;
-        //clear registration token for later renewal
-        requestHttp('POST', "https://requench-rest.herokuapp.com/Clear_Token.php", params, function (e) { });
-    };
-
-
-    messaging.onMessage(function (payload) {
-        //handle notification arrival here
-
-        requestHttp('POST', "https://requench-rest.herokuapp.com/Fetch_Notifs.php", params, function (e) {
-            if (this.readyState == 4 && this.status == 200) {
-                console.log('A Message is received!');
-                var response = this.responseText;
-                if (response != null) {
-                    var json_object = JSON.parse(this.response);
-                    if (json_object.Success == true) {
-                        //enlist parsed notifs
-
-                        notif_counter = 0;
-                        notif_list = [];
-                        for (var i = 0; i < json_object.Notifications.length; i++) {
-                            notif_list.push(json_object.Notifications[i]);
-                        }
-                        notif_list.sort(compByDateDesc);
-                        previous_list_count = notif_list.length;
-                        clearList(notif_list_div);
-                        displayNotifs("#notif_list", notif_list, function () {
-                            var seen_toggler = document.getElementsByClassName('seen_toggler');
-                            for (var i = 0; i < seen_toggler.length; i++) {
-                                seen_toggler[i].onclick = function () {
-                                    var notif_id = this.parentElement.parentElement.parentElement.parentElement.id;
-                                    if (this.className == 'far fa-circle seen_toggler') {
-                                        //unseens a notif
-                                        var child_element = this;
-                                        var parent_div = this.parentElement.parentElement.parentElement.parentElement;
-                                        updateSeenDB(notif_id, false, parent_div, child_element, function () {
-                                            parent_div.className = 'dropdown-item notif-item container active_notif';
-                                            notif_counter++;
-                                            child_element.className = 'fas fa-circle seen_toggler';
-                                            document.getElementById('notif_count').innerHTML = notif_counter;
-                                        });
-                                        //put db seen syncs here
-                                    } else {
-                                        //seens a notif
-                                        var child_element = this;
-                                        var parent_div = this.parentElement.parentElement.parentElement.parentElement;
-                                        updateSeenDB(notif_id, true, parent_div, child_element, function () {
-                                            parent_div.className = 'dropdown-item notif-item container';
-                                            //put db seen syncs here
-                                            child_element.className = 'far fa-circle seen_toggler';
-                                            if (notif_counter != 0) {
-                                                notif_counter--;
-                                                document.getElementById('notif_count').innerHTML = notif_counter;
-                                            }
-                                        });
-                                    }
-                                }
-                            }
-                        });
-
-                        for (var i = 0; i < notif_list.length; i++) {
-                            if (!notif_list[i].Seen) {
-                                notif_counter++;
-                            }
-                        }
-
-                        document.getElementById('notif_count').innerHTML = notif_counter;
-
-                    }
-                    else {
-                    }
-
-                }
-            }
-        });
-    });
 
 
     logout_button.onclick = function () {
@@ -709,7 +473,7 @@ $(document).ready(function () {
             // var access_level_field = document.getElementById('access_level_field');
             // var pass_field = document.getElementById('pass_field');
             // var balance_field = document.getElementById('balance_field');
-            // var logo = document.getElementsByClassName('logo');
+            var logo = document.getElementsByClassName('logo');
 
             // updateSessionVariable(params, function (response) {
             //     console.log(response);
@@ -742,7 +506,6 @@ $(document).ready(function () {
             //   password:false,
             //   balance:false,
             // };
-
             for (let index = 0; index < logo.length; index++) {
                 const element = logo[index];
                 element.addEventListener("dblclick",function() {
@@ -796,9 +559,15 @@ $(document).ready(function () {
                             </div>
                         </div>
                         <div class="row form-account">
-                            <div class="col-sm-12">
-                            <button id = "submit" type="submit" class="btn btn-primary">Submit</button>
-                            <p id="incomplete_info_error" class="error" >Please fill out all required fields!</p>
+                            <div class="col-4">
+                                <button id = "submit" type="button" class="btn btn-outline-primary btn-block">Submit</button>
+                                <p id="incomplete_info_error" class="error">Please fill out all required fields!</p>
+                            </div>
+                            <div class="col-4">
+                                <button id = "remove_account" type="button" class="btn btn-outline-warning btn-block">Remove Account</button>
+                            </div>
+                            <div class="col-4">
+                                <button id = "cancel" type="button" class="btn btn-outline-danger btn-block">Cancel</button>
                             </div>
                         </div>
                         </div>`,
@@ -820,6 +589,8 @@ $(document).ready(function () {
                             var access_level_cashier = $('#access_level_cashier');
                             var dropdownMenuButtonCat = $('#dropdownMenuButtonCat');
                             var submit = $('#submit');
+                            var remove_account = $('#remove_account');
+                            var cancel = $('#cancel');
                             var duplicate_id_error = $('#duplicate_id_error');
                             var duplicate_email_error = $('#duplicate_email_error');
                             var username_taken_error = $('#username_taken_error');
@@ -989,6 +760,40 @@ $(document).ready(function () {
                                     // });
                                 }
                             }
+
+                            remove_account.onclick = function() {
+                                Swal.fire({
+                                    title: 'Are you sure?',
+                                    text: "You won't be able to revert this!",
+                                    type: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Yes, delete it!',
+                                    allowOutsideClick: false,
+                                  }).then((result) => {
+                                    if (result.value) {
+                                        var params = {};
+                                        params.Acc_ID = list[index].Acc_ID;
+                                        params.Account_Type = current_active;
+                                        requestHttps('https://requench-rest.herokuapp.com/Remove_Account.php',params,function(response) {
+                                            if (response.Success) {
+                                                Swal.fire(
+                                                    'Deleted!',
+                                                    'Account has been deleted',
+                                                    'success'
+                                                );
+                                                window.location.reload();      
+                                            }
+                                        });
+                                    }
+                                  });
+                            }
+
+                            cancel.onclick = function() {
+                                Swal.close();
+                            }
+
                         }
                     });    
                 });
@@ -996,91 +801,5 @@ $(document).ready(function () {
         }
     }
 
-    function displayNotifs(id, notifications, fn) {
-        var size = notifications.length;
-        if (size > 5) {
-            size = 5;
-        }
-
-        for (var i = 0; i < size; i++) {
-            if (notifications[i].Seen) {
-                var string = `<div id="${notifications[i].Notif_ID}" class="dropdown-item notif-item container">
-          <img id="notif-icon" class="notif-icon" src="assets/images/profile.jpg" alt="">
-          <div class="d-inline-block notif-content">
-            <h5 id="notif-title" class="notif-title">${notifications[i].Notif_Title} <a href=#><span class="far fa-circle seen_toggler"></span></a></h5>
-            <p id="notif-description" class="notif-description">${notifications[i].Notif_Desc}</p>
-          </div>
-        </div>`;
-            } else {
-                var string = `<div id="${notifications[i].Notif_ID}" class="dropdown-item notif-item container active_notif">
-          <img id="notif-icon" class="notif-icon" src="assets/images/profile.jpg" alt="">
-          <div class="d-inline-block notif-content">
-            <h5 id="notif-title" class="notif-title">${notifications[i].Notif_Title}<a href=#><span class="fas fa-circle seen_toggler"></span></a></h5>
-            <p id="notif-description" class="notif-description">${notifications[i].Notif_Desc}</p>
-          </div>
-        </div>`;
-            }
-
-            var $container = $(id);
-            var html = $.parseHTML(string);
-            $container.append(html);
-        }
-        fn();
-    }
-
-
-    function clearList(notif_list) {
-        notif_list.innerHTML = "";
-    }
-
-    function compByDateDesc(a, b) {
-        if (Date.parse(a.Date_Posted) > Date.parse(b.Date_Posted)) {
-            if (a.Time_Posted > b.Time_Posted) {
-                return -1;
-            } else {
-                return 0;
-            }
-        } else {
-            if (a.Time_Posted > b.Time_Posted) {
-                return -1;
-            } else {
-                return 0;
-            }
-        }
-    }
-
-    function compByTimeDesc(a, b) {
-        if (a.Time_Posted > b.Time_Posted) {
-            return -1;
-        } else {
-            return 0;
-        }
-    }
-
-    function updateSeenDB(notif_id, seen, parent_div, child_element, fn) {
-        var params = {};
-        var response = JSON.parse(sessionStorage.getItem('JSON_Response'));
-        params.Acc_ID = response.Account_Details.Acc_ID;
-        params.Notif_ID = notif_id;
-        params.Seen = seen;
-        var success = false;
-        requestHttp('POST', "https://requench-rest.herokuapp.com/Update_Seen.php", params, function (e) {
-            if (this.readyState == 4 && this.status == 200) {
-                var response = this.responseText;
-                if (response != null) {
-                    var response_object = JSON.parse(response);
-                    console.log(response_object);
-                    if (response_object.Success == true) {
-                        fn(parent_div, child_element);
-                    }
-                    else {
-                        // success = false;
-                    }
-                }
-            } else {
-                // success = false;
-            }
-        });
-    }
 
 });
