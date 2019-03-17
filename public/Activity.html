@@ -1,124 +1,155 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/Activity.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-messaging.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+            apiKey: "AIzaSyC4zvxWTcj8gk7FmX0UMLqMP-2RrNSvzos",
+            authDomain: "requenchweb2019.firebaseapp.com",
+            databaseURL: "https://requenchweb2019.firebaseio.com",
+            projectId: "requenchweb2019",
+            storageBucket: "requenchweb2019.appspot.com",
+            messagingSenderId: "824630117884"
+        };
+        firebase.initializeApp(config);
+    </script>
 </head>
+
 <body>
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-    <a class="navbar-brand" href="#">
-      <img src="assets/images/logo.png" width="35" height="30" alt="">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a id="summary_button" class="nav-link" href="Summary.html">Summary</a>
-        </li>
-        <li class="nav-item active">
-          <a id="activity_button" class="nav-link" href="Activity.html">Activity</a>
-        </li>
-        <li class="nav-item active">
-          <a id="activity_button" class="nav-link" href="Transaction.html">My Transaction</a>
-        </li>
-        <li class="nav-item">
-          <a id="contact_button" class="nav-link" href="#">Help</a>
-        </li>
-        <!-- for disabling nav bar button -->
-        <!-- <li class="nav-item">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="assets/images/logo.png" width="35" height="30" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a id="summary_button" class="nav-link" href="Summary.html">Summary</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a id="activity_button" class="nav-link" href="Activity.html">Activity</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="contact_button" class="nav-link" href="#">Help</a>
+                    </li>
+                    <!-- for disabling nav bar button -->
+                    <!-- <li class="nav-item">
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
         </li> -->
-      </ul>
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item setting dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="fas fa-cog setting"></span>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="Account.html">Account</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a id="contact_button" class="nav-link" href="#">Log Out</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item setting dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="fas fa-cog setting"></span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="Account.html">Account</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a id="logout_button" class="nav-link" href="#">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-<div class="activity_whole container">
-  <div class="row">
-    <div class="date_range col-sm-6">
-       <label for="date_range_field">Set Date Range</label>
-      <input id="date_range_field" class="form-control" type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
-    </div>
-    <div class="col-sm-6">
-      <div class="sorter">
+    <div class="activity_whole container">
         <div class="row">
-          <div class="col-sm-6">
-            <span>Sort By:</span>
-            <div class="inline">
-              <div class="dropdown">
-                <button class="btn btn-block btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonCat" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Date
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonCat">
-                  <a id="drop_cat_time" class="dropdown-item category-item" href="#">Time</a>
-                  <a id="drop_cat_date" class="dropdown-item category-item" href="#">Date</a>
-                  <a id="drop_cat_amount" class="dropdown-item category-item">Amount</a>
+            <div class="date_range col-sm-6">
+                <label for="date_range_field">Set Date Range</label>
+                <input id="date_range_field" class="form-control" type="text" name="daterange"
+                    value="01/01/2018 - 01/15/2018" />
+            </div>
+            <div class="col-sm-6">
+                <div class="sorter">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <span>Sort By:</span>
+                            <div class="inline">
+                                <div class="dropdown">
+                                    <button class="btn btn-block btn-secondary dropdown-toggle" type="button"
+                                        id="dropdownMenuButtonCat" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Date
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonCat">
+                                        <a id="drop_cat_time" class="dropdown-item category-item" href="#">Time</a>
+                                        <a id="drop_cat_date" class="dropdown-item category-item" href="#">Date</a>
+                                        <a id="drop_cat_amount" class="dropdown-item category-item">Amount</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <span>Order By:</span>
+                            <div class="">
+                                <div class="dropdown">
+                                    <button class="btn btn-block btn-secondary dropdown-toggle" type="button"
+                                        id="dropdownMenuButtonOrd" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Descending
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonOrd">
+                                        <a id="drop_order_asc" class="dropdown-item order-item" href="#">Ascending</a>
+                                        <a id="drop_order_desc" class="dropdown-item order-item" href="#">Descending</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-          <div class="col-sm-6">
-            <span>Order By:</span>
-            <div class="">
-              <div class="dropdown">
-                <button class="btn btn-block btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonOrd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Descending
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonOrd">
-                  <a id="drop_order_asc" class="dropdown-item order-item" href="#">Ascending</a>
-                  <a id="drop_order_desc" class="dropdown-item order-item" href="#">Descending</a>
+        </div>
+        <div class="row activity_list">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Recent Activity</h5>
+                        <ul class="list-group list-group-flush">
+                            <div id="list_items_div" class="list_items_div">
+                                <h5 id="no_activity_banner">You have no Recent Activity. Grab a Tumbler and ReQuench!
+                                </h5>
+                            </div>
+                        </ul>
+                        <hr>
+                        <br>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-  <div class="row activity_list">
-    <div class="col-sm-12">
-      <div class="card" >
-        <div class="card-body">
-          <h5 class="card-title">Recent Activity</h5>
-          <ul class="list-group list-group-flush">
-            <div id="list_items_div" class="list_items_div">
-              <h5 id="no_activity_banner">You have no Recent Activity. Grab a Tumbler and ReQuench!</h5>
-            </div>
-          </ul>
-          <hr>
-          <br>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 </body>
 <script type="text/javascript" src="Activity.js"></script>
 <script type="text/javascript" src="HttpRequest.js"></script>
 <script type="text/javascript" src="sweetalert2.all.min.js"></script>
+
 </html>

@@ -24,9 +24,9 @@ $('document').ready(function () {
 		}
 	}
 
-  $('.dropdown-menu').click(function(e) {
-    e.stopPropagation();
-  });
+	$('.dropdown-menu').click(function (e) {
+		e.stopPropagation();
+	});
 
 
 	firebase.auth().onAuthStateChanged(function (user) {
@@ -108,26 +108,21 @@ $('document').ready(function () {
 					var params = {};
 					params.User_Name = content.querySelector("#user_field").value;
 					params.Password = content.querySelector("#pass_field").value;
-					requestHttp('POST', "https://requench-rest.herokuapp.com/Login.php", params, function (e) {
-						if (this.readyState == 4 && this.status == 200) {
-							var response = this.responseText;
-							response = response.slice(1, -1);
-							if (response != null) {
-								console.log(response);
-								var json_object = JSON.parse(this.response);
-								if (json_object.Success == 'true') {
-									var access_level = json_object.Account_Details.Access_Level
-									authorize(access_level, this.response);
-								}
-								else {
-									Swal({
-										type: 'error',
-										title: 'Login Failed!',
-										text: 'Either your username or password is incorrect.'
-									});
-								}
-								// window.location.href = 'User.php';
-							}
+
+					requestHttps("https://requench-rest.herokuapp.com/Login.php", params, function (response) {
+						var json_object = response;
+						console.log(json_object);
+						
+						if (json_object.Success == 'true') {
+							var access_level = json_object.Account_Details.Access_Level
+							authorize(access_level, response);
+						}
+						else {
+							Swal({
+								type: 'error',
+								title: 'Login Failed!',
+								text: 'Either your username or password is incorrect.'
+							});
 						}
 					});
 				}
@@ -135,20 +130,20 @@ $('document').ready(function () {
 					//lead to sign up page
 					var provider = new firebase.auth.GoogleAuthProvider();
 					firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-					.then(function() {
-						return firebase.auth().signInWithPopup(provider);
-					})
-					.then(function(result) {
-						var token = result.credential.accessToken;
-						var user = result.user;
-						console.log(user.displayName + ":" + token);
-					})
-					.catch(function(error) {
-						// Handle Errors here.
-						var errorCode = error.code;
-						var errorMessage = error.message;
-						console.log(error);
-					});
+						.then(function () {
+							return firebase.auth().signInWithPopup(provider);
+						})
+						.then(function (result) {
+							var token = result.credential.accessToken;
+							var user = result.user;
+							console.log(user.displayName + ":" + token);
+						})
+						.catch(function (error) {
+							// Handle Errors here.
+							var errorCode = error.code;
+							var errorMessage = error.message;
+							console.log(error);
+						});
 				}
 			},
 			onClose: () => {

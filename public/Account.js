@@ -28,7 +28,7 @@ $(document).ready(function() {
       console.log(jsonobj);
       // jsonobj = session_var;
       var path = "url('.." + jsonobj.file_path +"')";
-      profile_picture_div.style.backgroundImage = "url('../ReQuench/" + jsonobj.file_path +"')";
+      profile_picture_div.style.backgroundImage = "url('https://requench-rest.herokuapp.com" + jsonobj.file_path +"')";
       var fullname = jsonobj.Account_Details.First_Name +' '+ jsonobj.Account_Details.Last_Name;
       console.log(fullname);
       fullnamelabel.innerHTML = fullname;
