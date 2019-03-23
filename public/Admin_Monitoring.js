@@ -12,6 +12,36 @@ $(document).ready(function () {
     var monitoring_panel = document.getElementById('monitoring_panel');
     var current_category = 'Machine_ID';
     var current_order = 'Descending';
+    var firestore = firebase.firestore();
+    const collectionRef = firestore.collection('Machines');
+
+    var getRealTimeUpdates = function() {
+        collectionRef.onSnapshot(function(collection) {
+            collection.docs.forEach(element => {
+                if(element.exists){
+                    const machine_firestore_data = element.data();
+                    
+                    machine_list.forEach(machine => {
+                        if (machine_firestore_data.mu_id == machine.MU_ID) {
+                            machine.API_KEY = machine_firestore_data.api_key;
+                            machine.Current_Water_Level = machine_firestore_data.current_water_level;
+                            machine.Last_Maintenance_Date = machine_firestore_data.last_maintenance_date;
+                            machine.Date_of_Purchase = machine_firestore_data.date_of_purchase;
+                            machine.Machine_Location = machine_firestore_data.location;
+                            machine.Model_Number = machine_firestore_data.Model_Number;
+                            machine.STATUS = machine_firestore_data.status;
+                            clearDisplay();
+                            displayMachinesGrid(machine_list);
+                        }
+                    });
+                    //update data here
+                    console.log(machine_firestore_data);
+               }      
+            });
+        });
+    }
+
+
     $('.dropdown-menu').click(function (e) {
         e.stopPropagation();
     });
@@ -60,11 +90,15 @@ $(document).ready(function () {
         if (response.Success) {
             machine_list = response.Machines;
             console.log(machine_list);
+            
+            console.log(machine_list);
             displayMachinesGrid(machine_list);
+            getRealTimeUpdates();
         } else {
             console.log(response);
         }
     });
+
 
 
 
@@ -301,22 +335,22 @@ $(document).ready(function () {
         filter(machine_list, current_category, current_order, function (returned_list) { });
         for (let index = 0; index < machine_list.length; index++) {
             const element = machine_list[index];
-            var status_indicator = 'text-danger';
-            if (status == 'ONLINE') {
-                status_indicator = 'text-success';
-            }
+            
             if (element.API_KEY != null) {
                 var current_water_level = element.Current_Water_Level;
                 var percentage = getPercentage(current_water_level, 20000);
                 var status = element.STATUS;
-                
+                var status_indicator = 'text-danger';
+                if (status == 'ONLINE' || status == 'online') {
+                    status_indicator = 'text-success';
+                }
                 var default_bg = "bg-info";
                 if (percentage <= 20) {
                     default_bg = "bg-danger";
                 }
                 var html_string = `<div class="col-sm-4">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body machine_card">
                             <h5 class="card-title">Machine ${element.MU_ID}<span class="fas ${status_indicator} fa-circle"></span></h5>
                             <p class="card-text">Last Maintenance Date: <span>${element.Last_Maintenance_Date}</span></p>
                             <p class="card-text">Location: <span>${element.Machine_Location}</span></p>
@@ -332,7 +366,7 @@ $(document).ready(function () {
             } else {
                 var html_string = `<div class="col-sm-4">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body machine_card">
                             <h5 class="card-title">Machine ${element.MU_ID}<span class="far ${status_indicator} fa-circle"></span></h5>
                             <p class="card-text">Location: <span>${element.Machine_Location}</span></p>
                             <p class="card-text">API Key: <span> Not Yet Configured. </span></p>
@@ -344,6 +378,193 @@ $(document).ready(function () {
             var $container = $('.monitoring_panel');
             var html = $.parseHTML(html_string);
             $container.append(html);
+            var machine_cards = document.getElementsByClassName("machine_card");
+
+        }
+
+        for (let index = 0; index < machine_cards.length; index++) {
+            const element = machine_cards[index];
+            element.addEventListener('dblclick',function() {
+                var MU_ID = machine_list[index].MU_ID;
+                Swal({
+                    title: "Machine Details",
+                    showConfirmButton: false,
+                    width: 600,
+                    allowOutsideClick: false,
+                    html: `
+                    <div class="container">
+                        <div class="row">
+                            <p class="col-sm-6">Machine ID#: <span id="MU_ID">1</span></p>
+                            <p class="col-sm-6">Status: <span id="STATUS">OFFLINE</span> </p>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 form-group">
+                                <label for="Model_Number" style="text-align:left;">Model Number</label>
+                                <input type="text" class="form-control" id="Model_Number">
+                            </div>
+                            <div class="col-6 form-group">
+                                <label for="Machine_Location" style="text-align:left;">Machine Location</label>
+                                <input type="text" class="form-control" id="Machine_Location"s>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 form-group">
+                                <label for="Date_of_Purchase">Date of Purchase</label>
+                                <input type="date" class="form-control" id="Date_of_Purchase">
+                            </div>
+                            <div class="col-6 form-group">
+                                <label for="Last_Maintenance_Date">Last Maintenance Date</label>
+                                <input type="date" class="form-control" id="Last_Maintenance_Date">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-group mb-3">
+                                    <label for="API_KEY">API Key</label>
+                                    <input id="API_KEY" type="text" class="form-control input_form" placeholder="API Key" aria-label="Hidden" aria-describedby="basic-addon2" readonly>
+                                    <div class="input-group-append">
+                                        <button id="renew_key" class="btn btn-outline-info" type="button">Renew Key</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <button id = "shutdown" type="button" class="btn btn-outline-danger btn-block">Shutdown</button>
+                            </div>
+                            <div class="col-3">
+                                <button id = "reboot" type="button" class="btn btn-outline-warning btn-block">Reboot</button>
+                            </div>
+                            <div class="col-3">
+                                <button id = "save_changes" type="button" class="btn btn-outline-info btn-block">Save</button>
+                            </div>
+                            <div class="col-3">
+                                <button id = "cancel" type="button" class="btn btn-outline-danger btn-block">Cancel</button>
+                            </div>
+                        </div>
+                    </div>`,
+                    onBeforeOpen: function () {
+                        var content = Swal.getContent();
+                        var $ = content.querySelector.bind(content);
+                        var MU_ID = $('#MU_ID');
+                        var Model_Number = $('#Model_Number');
+                        var Machine_Location = $('#Machine_Location');
+                        var Date_of_Purchase = $('#Date_of_Purchase');
+                        var Last_Maintenance_Date = $('#Last_Maintenance_Date');
+                        var STATUS = $('#STATUS');                        
+                        var API_KEY = $('#API_KEY');
+                        var shutdown = $('#shutdown');
+                        var reboot = $('#reboot');
+                        var save_changes = $('#save_changes');
+                        var renew_key = $('#renew_key');
+
+                        var cancel = $('#cancel');
+                        
+                        
+                        
+                        MU_ID.innerHTML = machine_list[index].MU_ID;
+                        Model_Number.value = machine_list[index].Model_Number;
+                        Machine_Location.value = machine_list[index].Machine_Location;
+                        Date_of_Purchase.value = machine_list[index].Date_of_Purchase;
+                        Last_Maintenance_Date.value = machine_list[index].Last_Maintenance_Date;
+                        
+                        if (machine_list[index].API_KEY != null) {
+                            STATUS.innerHTML = machine_list[index].STATUS.toUpperCase();
+                            API_KEY.value = machine_list[index].API_KEY;    
+                        } else {
+                            STATUS.innerHTML = "N/A";
+                            API_KEY.value = 'Not Yet Configured';
+                            renew_key.innerHTML = "Generate Secret";
+                        }
+                        
+
+                        renew_key.onclick = function() {
+                            if(this.innerHTML == 'Generate Secret'){
+                                // generate secret
+                                Swal({
+                                    title: "Generate Secret",
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    html: `
+                                    <div class="container">
+                                        <div class="row form-account machine_form">
+                                            <div class="col-sm-8">
+                                                <div class="input-group mb-3">
+                                                    <input id="secret_field" type="text" class="form-control input_form" placeholder="Secret Key" aria-label="Hidden" aria-describedby="basic-addon2" readonly>
+                                                    <div class="input-group-append">
+                                                        <button id="copy_button" class="btn btn-outline-info" type="button"><span class="far fa-clipboard"></span></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button class="btn btn-outline-info" type="button" id="generate_secret">Generate</button>
+                                            </div>
+                                        </div>
+                                        <div class="row form-account machine_form">
+                                            <div class="col-2"></div>
+                                            <div class="col-4">
+                                                <button class="btn btn-outline-info btn-block" type="button" id="submit_button">Done</button>
+                                            </div>
+                                            <div class="col-4">
+                                                <button class="btn btn-outline-danger btn-block" type="button" id="cancel_button">Cancel</button>
+                                            </div>
+                                            <div class="col-2"></div>
+                                        </div>
+                                    </div>`,
+                                    onBeforeOpen: function () {
+                                        const content = Swal.getContent();
+                                        const $ = content.querySelector.bind(content);
+                                        const secret_field = $('#secret_field');
+                                        const copy_clipboard = $('#copy_button');
+                                        const submit_button = $('#submit_button');
+                                        const cancel_button = $('#cancel_button');
+                                        const generate_secret = $('#generate_secret');
+                                        // const input_form = $('.input_form');
+                                        const input_form = content.getElementsByClassName('input_form');
+                                        copy_clipboard.onclick = function () {
+                                            if (secret_field.value != '' || secret_field.value != null) {
+                                                secret_field.select();
+                                                document.execCommand("copy");
+                                                console.log(secret_field.value);
+                                            }
+                                        }
+                                        generate_secret.onclick = function () {
+                                            var params = {};
+                                            params.Command = 'Secret';
+                                            requestHttps('https://requench-rest.herokuapp.com/Generate_API_Key.php', params, function (response) {
+                                                if (response.Success) {
+                                                    secret_field.value = response.Secret;
+                                                    var params = {};
+                                                    params.MU_ID = MU_ID.innerHTML;
+                                                    
+                                                }
+                                            });
+                                        }
+                        
+                                        submit_button.onclick = function () {
+                                            Swal.close();
+                                        }
+                                        cancel_button.onclick = function () {
+                                            Swal.close();
+                                        }
+                                    },
+                                    onClose: function () {
+                        
+                                    }
+                                });
+                            }else{
+                                //renew key
+                            }
+                        }
+
+
+                        cancel.onclick = function() {
+                            Swal.close();
+                        }
+
+                    }
+                }); 
+            });
         }
     }
 

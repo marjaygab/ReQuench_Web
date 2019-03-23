@@ -80,3 +80,7 @@
 .machine_form{
   margin-bottom: 10px;
 }
+
+.swal2-popup #swal2-content{
+  text-align: unset !important;
+}
