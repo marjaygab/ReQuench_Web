@@ -211,10 +211,12 @@ $(document).ready(function () {
         table.innerHTML = '';
         table.innerHTML = `<tr>
         <th scope="col">Acc_ID</th>
-        <th scope="col">Amount</th>
-        <th scope="col">Price_Computed</th>
+        <th scope="col">Machine Location</th>
         <th scope="col">Time</th>
         <th scope="col">Date</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Temperature</th>
+        <th scope="col">Price</th>
         </tr>`;
     }
 
@@ -224,18 +226,22 @@ $(document).ready(function () {
         if (mode) {
             table.innerHTML = `<tr>
             <th scope="col">Acc_ID</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Price_Computed</th>
+            <th scope="col">Machine Location</th>
             <th scope="col">Time</th>
             <th scope="col">Date</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Temperature</th>
+            <th scope="col">Price</th>
             </tr>`;    
         } else {
             table.innerHTML = `<tr>
             <th scope="col">UU_ID</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Price_Computed</th>
+            <th scope="col">Machine Location</th>
             <th scope="col">Time</th>
             <th scope="col">Date</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Temperature</th>
+            <th scope="col">Price</th>
             </tr>`;    
         }
         

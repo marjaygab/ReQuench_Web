@@ -9,6 +9,8 @@ $(document).ready(function() {
     var fullnamelabel = document.getElementById('full_name');
     var id_num_field = document.getElementById('id_num_field');
     var user_field = document.getElementById('user_field');
+    var firstname_field = document.getElementById('firstname_field');
+    var lastname_field = document.getElementById('lastname_field');
     var pass_field = document.getElementById('pass_field');
     var email_field = document.getElementById('email_field');
     var phone_field = document.getElementById('phone_field');
@@ -33,6 +35,8 @@ $(document).ready(function() {
       console.log(fullname);
       fullnamelabel.innerHTML = fullname;
       user_field.value = jsonobj.Account_Details.User_Name;
+      firstname_field.value = jsonobj.Account_Details.First_Name;
+      lastname_field.value = jsonobj.Account_Details.Last_Name;
       id_num_field.value = jsonobj.Account_Details.ID_Number;
       email_field.value = jsonobj.Account_Details.Email;
       phone_field.value = jsonobj.Account_Details.Phone;
@@ -152,6 +156,8 @@ $(document).ready(function() {
         params.Acc_ID = jsonobj.Account_Details.Acc_ID;
         params.ID_Number = id_num_field.value;
         params.User_Name = user_field.value;
+        params.First_Name = firstname_field.value;
+        params.Last_Name = lastname_field.value;
         requestHttp('POST',"https://requench-rest.herokuapp.com/Update_Account.php",params,function(e){
           if (this.readyState == 4 && this.status == 200) {
             var response = this.responseText;
