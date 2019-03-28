@@ -31,7 +31,7 @@ $('document').ready(function () {
 
 	firebase.auth().onAuthStateChanged(function (user) {
 		console.log(user);
-		if (user) {
+		if ( user != null || user.email != null) {
 			//check if email is present in the backend server
 			console.log('State Changed');
 			params = {};
@@ -56,7 +56,7 @@ $('document').ready(function () {
 							Swal({
 								type: 'error',
 								title: 'Login Failed!',
-								text: 'Either your username or password is incorrect.'
+								text: 'Error 101: Either your username or password is incorrect.'
 							});
 						}
 					}
@@ -111,17 +111,33 @@ $('document').ready(function () {
 
 					requestHttps("https://requench-rest.herokuapp.com/Login.php", params, function (response) {
 						var json_object = response;
-						console.log(json_object);
-						
+
 						if (json_object.Success == 'true') {
-							var access_level = json_object.Account_Details.Access_Level
-							authorize(access_level, response);
+							var access_level = json_object.Account_Details.Access_Level;
+							var token = response.Custom_Token;
+							firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+								.then(function () {
+									return firebase.auth().signInWithCustomToken(token);
+								})
+								.then(() => {
+									setTimeout(function() {
+										console.log(response);
+										authorize(access_level,JSON.stringify(response));
+									},5000)
+								})
+								.catch(function (error) {
+									// Handle Errors here.
+									var errorCode = error.code;
+									var errorMessage = error.message;
+									console.log(error);
+								});
 						}
 						else {
+							
 							Swal({
 								type: 'error',
 								title: 'Login Failed!',
-								text: 'Either your username or password is incorrect.'
+								text: 'Error 102: Either your username or password is incorrect.'
 							});
 						}
 					});

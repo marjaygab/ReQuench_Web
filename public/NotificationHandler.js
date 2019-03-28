@@ -5,6 +5,7 @@ var notif_count = document.getElementById('notif_count');
 var permission = Notification.permission;
 var notif_list = [];
 var params = {};
+console.log(sessionStorage.getItem('JSON_Response'));
 var response = JSON.parse(sessionStorage.getItem('JSON_Response'));
 var previous_list_count;
 var notif_counter = 0;
