@@ -55,6 +55,7 @@
   
 }
 
+
 .card{
   margin: 0px 0px 5%;
   position: static;
@@ -63,6 +64,11 @@
 #details{
   right: 20px;
   float: right;
+}
+
+
+.toggle-handle{
+  background-color: #F3F3F3;
 }
 
 .table{
@@ -78,6 +84,10 @@
   }
 }
 
+.arrow-carousel{
+  color: dimgrey;
+}
+
 
 /* Style the counter cards */
 .card {
@@ -85,9 +95,14 @@
   padding: 16px;
   text-align: center;
   background-color: #f1f1f1;
-  height: 275px;
   overflow: auto;
 }
+
+.machine-card{
+  height: 300px;
+}
+
+
 @media screen and (min-width: 1001px) {
   .column{
     width: 100%;
