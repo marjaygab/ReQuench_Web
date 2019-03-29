@@ -31,7 +31,7 @@ $('document').ready(function () {
 
 	firebase.auth().onAuthStateChanged(function (user) {
 		console.log(user);
-		if ( user != null || user.email != null) {
+		if ( user != null) {
 			//check if email is present in the backend server
 			console.log('State Changed');
 			params = {};
