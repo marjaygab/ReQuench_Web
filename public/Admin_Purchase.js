@@ -100,6 +100,72 @@ $(document).ready(function () {
     }
 
 
+    generate_pdf.onclick = function () {
+        Swal({
+            title: 'Generate PDF',
+            allowOutsideClicks: false,
+            showConfirmButton: false,
+            html: 
+            `<div class="row">
+                <div class= 'col-6' >
+                    <label class="sr-only" for="startdate">Start Date</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><span class="fas fa-calendar"></span></div>
+                        </div>
+                        <input type="date" class="form-control" id="startdate" placeholder="Start Date">
+                    </div>
+                </div>
+                <div class='col-6'>
+                    <label class="sr-only" for="enddate">End Date</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><span class="fas fa-calendar"></span></div>
+                        </div>
+                        <input type="date" class="form-control" id="enddate" placeholder="End Date">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <button id = "submit_button"  target="_blank" type="button" class="btn btn-info btn-block">Submit</button>
+                </div>
+                <div class="col-6">
+                    <button id = "cancel_button" type="button" class="btn btn-danger btn-block">Cancel</button>
+                </div>
+            </div>`,
+            onBeforeOpen: ()=>{
+                const content = Swal.getContent();
+                const $ = content.querySelector.bind(content);
+                var startdate = $("#startdate");
+                var enddate = $("#enddate");    
+                var submit_button = $("#submit_button");
+                var cancel_button = $("#cancel_button");    
+
+                submit_button.onclick = function() {
+                    var date_start = startdate.value;
+                    var date_end = enddate.value;
+
+                    var params = {};
+                    params.Start_Date = date_start;
+                    params.End_Date = date_end;
+                    console.log(params);
+
+                    //Request for file here
+                    window.location.assign('https://requench-rest.herokuapp.com/pdf_purchase.php?Start_Date=' + params.Start_Date + 
+                    "&End_Date="+params.End_Date);
+                    Swal.close();
+                }
+
+                cancel_button.onclick = function() {
+                    Swal.close();
+                }
+
+            }
+
+        });
+    }
+
     // console.log(seen_toggler.item(2));
     logout_button.onclick = function () {
         // firebase.auth().signOut().then(function () {

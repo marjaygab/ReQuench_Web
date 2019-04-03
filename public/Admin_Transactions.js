@@ -151,7 +151,7 @@ $(document).ready(function () {
                     console.log(params);
 
                     //Request for file here
-                    window.location.assign('https://requench-rest.herokuapp.com/pdf.php?Start_Date=' + params.Start_Date + 
+                    window.location.assign('https://requench-rest.herokuapp.com/pdf_transaction.php?Start_Date=' + params.Start_Date + 
                     "&End_Date="+params.End_Date);
                     Swal.close();
                 }
