@@ -127,7 +127,7 @@ $(document).ready(function () {
             </div>
             <div class="row">
                 <div class="col-6">
-                    <button id = "submit_button" type="button" class="btn btn-info btn-block">Submit</button>
+                    <button id = "submit_button"  target="_blank" type="button" class="btn btn-info btn-block">Submit</button>
                 </div>
                 <div class="col-6">
                     <button id = "cancel_button" type="button" class="btn btn-danger btn-block">Cancel</button>
