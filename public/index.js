@@ -114,7 +114,8 @@ $('document').ready(function () {
 
 						if (json_object.Success == 'true') {
 							var access_level = json_object.Account_Details.Access_Level;
-							var token = response.Custom_Token;
+							if (access_level == 'ADMIN') {
+								var token = response.Custom_Token;
 							firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
 								.then(function () {
 									return firebase.auth().signInWithCustomToken(token);
@@ -130,7 +131,10 @@ $('document').ready(function () {
 									var errorCode = error.code;
 									var errorMessage = error.message;
 									console.log(error);
-								});
+								});	
+							}else{
+								authorize(access_level,JSON.stringify(response));
+							}
 						}
 						else {
 							

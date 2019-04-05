@@ -517,7 +517,7 @@ $('#toggle-method').change(function () {
 
 $('#toggle-unit').change(function () {
 
-    var perml = 2;
+    var perml = 0.002;
 
     if ($(this).prop('checked')) {
         unit.ml = true;

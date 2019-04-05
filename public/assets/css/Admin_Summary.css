@@ -61,6 +61,10 @@
   position: static;
 }
 
+.card-body{
+  padding: 0;
+}
+
 #details{
   right: 20px;
   float: right;

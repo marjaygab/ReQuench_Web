@@ -20,6 +20,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
         integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
         crossorigin="anonymous"></script>
+    
         <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
         <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-auth.js"></script>
@@ -55,6 +56,9 @@
                         <a id="summary_button" class="nav-link" href="Admin_Summary.html">Summary</a>
                     </li>
                     <li class="nav-item">
+                        <a id="admin_notifs_navbutton" class="nav-link" href="Admin_Notifications.html">Notifications</a>
+                    </li>
+                    <li class="nav-item">
                         <a id="admin_purchase_navbutton" class="nav-link" href="Admin_Purchase.html">Purchases</a>
                     </li>
                     <li class="nav-item">
@@ -66,10 +70,6 @@
                     <li class="nav-item">
                         <a id="admin_monitor_navbuttonn" class="nav-link" href="Admin_Monitoring.html">Monitoring</a>
                     </li>
-                    <li class="nav-item">
-                        <a id="admin_contact_navbutton" class="nav-link" href="#">Help</a>
-                    </li>
-
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item notifs dropdown">
@@ -116,7 +116,6 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="Admin_MyAccount.html">My Account</a>
-                            <a class="dropdown-item" href="Admin_Settings.html">Settings</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -136,6 +135,14 @@
                     </div>
                     <div class="card-body">
                         <div id="recent_notif_list" class="notif-list">
+                            <div class="dropdown-item notif-item container">
+                                <img id="notif-icon" class="notif-icon" src="assets/images/profile.jpg" alt="">
+                                <div class="d-inline-block recent-notif-content">
+                                    <h5 id="notif-title" class="notif-title">Notification Title</h5>
+                                    <p id="notif-description" class="notif-description">Lorem Ipsum is simply dummy text
+                                        of the printing and typesetting industry.</p>
+                                </div>
+                            </div>
                             <div class="dropdown-item notif-item container">
                                 <img id="notif-icon" class="notif-icon" src="assets/images/profile.jpg" alt="">
                                 <div class="d-inline-block recent-notif-content">
@@ -231,7 +238,7 @@
                                     <th scope="col">Date</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="sales_body">
                             </tbody>
                         </table>
                         <a id="seemore_notif_pt" href="Admin_Purchase.html">See more...</a>
@@ -274,5 +281,5 @@
 <script type="text/javascript" src="HttpRequest.js"></script>
 <script type="text/javascript" src="NotificationHandler.js"></script>
 <script type="text/javascript" src="sweetalert2.all.min.js"></script>
-
+<script type="text/javascript" src="moment.min.js"></script>
 </html>

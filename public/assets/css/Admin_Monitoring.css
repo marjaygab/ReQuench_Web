@@ -79,8 +79,18 @@
 
 .machine_form{
   margin-bottom: 10px;
+  text-align: left;
 }
 
-.swal2-popup #swal2-content{
-  text-align: unset !important;
+/* .swal2-popup #swal2-content{
+  text-align: left !important;
+} */
+
+/* #machine_water_level{
+  margin-bottom: 3%;
+} */
+
+
+.controls_row{
+  margin-top: 3%;
 }

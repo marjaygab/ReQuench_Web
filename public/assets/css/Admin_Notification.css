@@ -48,6 +48,65 @@
     width: 300px;
   }
 
+  #your_notifications_header{
+    margin-top: 5%;    
+  }
+
+
+  .your_notif_card{
+    margin-bottom: 1%;
+  }
+
+  .your_notif_icon{
+    height: 50px;
+    width: 50px !important;
+    vertical-align: super !important;
+  }
+
+  .your_notif_content{
+    padding: 5px;
+    padding-right: 0px;
+    margin-top: 0;
+    width: 93%;
+  }
+  
+  .your_notif_title{
+    margin-bottom: 0;
+  }
+
+  .fa-circle{
+    font-size: 15px;
+    float: right;
+  }
+  
+  .active_notif{
+    background-color: #F3F3F3;
+  }
+  
+  
+  .your_notif_item{
+    word-wrap: break-word;
+    width:400px;
+    display: block;
+    padding-left: 10px;
+    padding-right: 0px;
+  }
+
+  .your_notif_description{
+    word-break: break-word;
+    white-space: normal;
+    margin-bottom: 0px !important;
+  }
+
+  .your_notification_item{
+    text-align: left;
+    padding: 5px;
+  }
+
+  h5{
+    text-align: left !important;
+  }
+
   .card-title{
     margin-top: 5%
   }

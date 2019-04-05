@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>Summary (Admin)</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/Admin_Summary.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/Admin_Notification.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase-auth.js"></script>
@@ -25,96 +33,201 @@
         };
         firebase.initializeApp(config);
     </script>
-  </head>
-  <body>
+</head>
+
+<body>
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <img src="assets/images/logo.png" width="35" height="30" alt="">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a id="summary_button" class="nav-link" href="Admin_Summary.html">Summary</a>
-            </li>
-            <li class="nav-item">
-              <a id="admin_purchase_navbutton" class="nav-link" href="Admin_Purchase.html">Purchases</a>
-            </li>
-            <li class="nav-item">
-              <a id="admin_transac_navbutton" class="nav-link" href="Admin_Transactions.html">Transactions</a>
-            </li>
-            <li class="nav-item active">
-                <a id="admin_notifs_navbutton" class="nav-link" href="Admin_Notifications.html">Notifications</a>
-            </li>
-            <li class="nav-item">
-              <a id="admin_uaccount_navbutton" class="nav-link" href="Admin_UAccounts.html">User Accounts</a>
-            </li>
-            <li class="nav-item">
-              <a id="admin_monitor_navbuttonn" class="nav-link" href="Admin_Monitoring.html">Monitoring</a>
-            </li>
-            <li class="nav-item">
-              <a id="admin_contact_navbutton" class="nav-link" href="#">Help</a>
-            </li>
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="assets/images/logo.png" width="35" height="30" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a id="summary_button" class="nav-link" href="Admin_Summary.html">Summary</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a id="admin_notifs_navbutton" class="nav-link"
+                            href="Admin_Notifications.html">Notifications</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="admin_purchase_navbutton" class="nav-link" href="Admin_Purchase.html">Purchases</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="admin_transac_navbutton" class="nav-link" href="Admin_Transactions.html">Transactions</a>
+                    </li>
 
-          </ul>
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item notifs dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="fas fa-bell notifs"></span><span id="notif_count" class="badge badge-light">4</span>
-              </a>
-              <div id="notif_list" class="dropdown-menu notif-list dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <div class="dropdown-item notif-item container">
-                  <img id="notif-icon" class="notif-icon" src="assets/images/profile.jpg" alt="">
-                  <div class="d-inline-block notif-content">
-                    <h5 id="notif-title" class="notif-title">Notification Title</h5>
-                    <p id="notif-description" class="notif-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                  </div>
-                </div>
-                <div class="dropdown-item notif-item container">
-                  <img id="notif-icon" class="notif-icon" src="assets/images/profile.jpg" alt="">
-                  <div class="d-inline-block notif-content">
-                    <h5 id="notif-title" class="notif-title">Notification Title</h5>
-                    <p id="notif-description" class="notif-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                  </div>
-                </div>
-                <div class="dropdown-item notif-item container">
-                  <img id="notif-icon" class="notif-icon" src="assets/images/profile.jpg" alt="">
-                  <div class="d-inline-block notif-content">
-                    <h5 id="notif-title" class="notif-title">Notification Title</h5>
-                    <p id="notif-description" class="notif-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                  </div>
-                </div>
-              </div>
-            </li>
+                    <li class="nav-item">
+                        <a id="admin_uaccount_navbutton" class="nav-link" href="Admin_UAccounts.html">User Accounts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="admin_monitor_navbuttonn" class="nav-link" href="Admin_Monitoring.html">Monitoring</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item notifs dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="fas fa-bell notifs"></span><span id="notif_count"
+                                class="badge badge-light">4</span>
+                        </a>
+                        <div id="notif_list" class="dropdown-menu notif-list dropdown-menu-right"
+                            aria-labelledby="navbarDropdown">
+                            <div class="dropdown-item notif-item container">
+                                <img id="notif-icon" class="notif-icon" src="assets/images/profile.jpg" alt="">
+                                <div class="d-inline-block notif-content">
+                                    <h5 id="notif-title" class="notif-title">Notification Title</h5>
+                                    <p id="notif-description" class="notif-description">Lorem Ipsum is simply dummy text
+                                        of the printing and typesetting industry.</p>
+                                </div>
+                            </div>
+                            <div class="dropdown-item notif-item container">
+                                <img id="notif-icon" class="notif-icon" src="assets/images/profile.jpg" alt="">
+                                <div class="d-inline-block notif-content">
+                                    <h5 id="notif-title" class="notif-title">Notification Title</h5>
+                                    <p id="notif-description" class="notif-description">Lorem Ipsum is simply dummy text
+                                        of the printing and typesetting industry.</p>
+                                </div>
+                            </div>
+                            <div class="dropdown-item notif-item container">
+                                <img id="notif-icon" class="notif-icon" src="assets/images/profile.jpg" alt="">
+                                <div class="d-inline-block notif-content">
+                                    <h5 id="notif-title" class="notif-title">Notification Title</h5>
+                                    <p id="notif-description" class="notif-description">Lorem Ipsum is simply dummy text
+                                        of the printing and typesetting industry.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
 
 
 
-            <li class="nav-item setting dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="fas fa-cog setting"></span>
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="Admin_MyAccount.html">My Account</a>
-                <a class="dropdown-item" href="Admin_Settings.html">Settings</a>
-              </div>
-            </li>
+                    <li class="nav-item setting dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="fas fa-cog setting"></span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="Admin_MyAccount.html">My Account</a>
+                        </div>
+                    </li>
 
-            <li class="nav-item">
-              <a id="logout_button" class="nav-link" href="#">Log Out</a>
-            </li>
-          </ul>
+                    <li class="nav-item">
+                        <a id="logout_button" class="nav-link" href="#">Log Out</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
     </nav>
     <div class="container admin_summary_whole">
-      
+        <h3 id="your_notifications_header">Your Notifications</h3>
+        <div id="your_notifs_container">
+            <div class="card bg-light your_notif_card">
+                <div class="card-body">
+                    <div id="recent_notif_list" class="notif-list">
+                        <div class="your_notification_item">
+                            <img id="" class="your_notif_icon" src="assets/images/logo.png" alt="">
+                            <div class="d-inline-block your_notif_content">
+                                <h5 id="" class="your_notif_title">Notification Title <a href=#><span
+                                            class="far fa-circle your_seen_toggler"></span></a></h5>
+                                <p id="" class="your_notif_description">Lorem Ipsum is simply dummy text
+                                    of the printing and typesetting industry.</p>
+                                <small class="time_ago">6h ago</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-light your_notif_card">
+                <div class="card-body">
+                    <div id="recent_notif_list" class="notif-list">
+                        <div class="your_notification_item">
+                            <img id="" class="your_notif_icon" src="assets/images/logo.png" alt="">
+                            <div class="d-inline-block your_notif_content">
+                                <h5 id="" class="your_notif_title">Notification Title <a href=#><span
+                                            class="far fa-circle your_seen_toggler"></span></a></h5>
+                                <p id="" class="your_notif_description">Lorem Ipsum is simply dummy text
+                                    of the printing and typesetting industry.</p>
+                                <small class="time_ago">6h ago</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-light your_notif_card">
+                <div class="card-body">
+                    <div id="recent_notif_list" class="notif-list">
+                        <div class="your_notification_item">
+                            <img id="" class="your_notif_icon" src="assets/images/logo.png" alt="">
+                            <div class="d-inline-block your_notif_content">
+                                <h5 id="" class="your_notif_title">Notification Title <a href=#><span
+                                            class="far fa-circle your_seen_toggler"></span></a></h5>
+                                <p id="" class="your_notif_description">Lorem Ipsum is simply dummy text
+                                    of the printing and typesetting industry.</p>
+                                <small>6h ago</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-light your_notif_card">
+                <div class="card-body">
+                    <div id="recent_notif_list" class="notif-list">
+                        <div class="your_notification_item">
+                            <img id="" class="your_notif_icon" src="assets/images/logo.png" alt="">
+                            <div class="d-inline-block your_notif_content">
+                                <h5 id="" class="your_notif_title">Notification Title <a href=#><span
+                                            class="far fa-circle your_seen_toggler"></span></a></h5>
+                                <p id="" class="your_notif_description">Lorem Ipsum is simply dummy text
+                                    of the printing and typesetting industry.</p>
+                                <small>6h ago</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-light your_notif_card">
+                <div class="card-body">
+                    <div id="recent_notif_list" class="notif-list">
+                        <div class="your_notification_item">
+                            <img id="" class="your_notif_icon" src="assets/images/logo.png" alt="">
+                            <div class="d-inline-block your_notif_content">
+                                <h5 id="" class="your_notif_title">Notification Title <a href=#><span
+                                            class="far fa-circle your_seen_toggler"></span></a></h5>
+                                <p id="" class="your_notif_description">Lorem Ipsum is simply dummy text
+                                    of the printing and typesetting industry.</p>
+                                <small>6h ago</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-light your_notif_card">
+                <div class="card-body">
+                    <div id="recent_notif_list" class="notif-list">
+                        <div class="your_notification_item">
+                            <img id="" class="your_notif_icon" src="assets/images/logo.png" alt="">
+                            <div class="d-inline-block your_notif_content">
+                                <h5 id="" class="your_notif_title">Notification Title <a href=#><span
+                                            class="far fa-circle your_seen_toggler"></span></a></h5>
+                                <p id="" class="your_notif_description">Lorem Ipsum is simply dummy text
+                                    of the printing and typesetting industry.</p>
+                                <small>6h ago</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </body>
-  <script type="text/javascript" src="Admin_Notifcations.js"></script>
-  <script type="text/javascript" src="HttpRequest.js"></script>
-  <script type="text/javascript" src="NotificationHandler.js"></script>
-  <script type="text/javascript" src="sweetalert2.all.min.js"></script>
+</body>
+<script type="text/javascript" src="Admin_Notifications.js"></script>
+<script type="text/javascript" src="HttpRequest.js"></script>
+<script type="text/javascript" src="NotificationHandler.js"></script>
+<script type="text/javascript" src="sweetalert2.all.min.js"></script>
+<script type="text/javascript" src="moment.min.js"></script>
 </html>

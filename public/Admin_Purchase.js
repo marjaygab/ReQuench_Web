@@ -1,6 +1,5 @@
 $(document).ready(function () {
     const messaging = firebase.messaging();
-    var logout_button = document.getElementById('logout_button');
     var notif_list_div = document.getElementById('notif_list');
     var notif_count = document.getElementById('notif_count');
     var category_items = document.getElementsByClassName('category-item');
@@ -164,24 +163,6 @@ $(document).ready(function () {
             }
 
         });
-    }
-
-    // console.log(seen_toggler.item(2));
-    logout_button.onclick = function () {
-        // firebase.auth().signOut().then(function () {
-        //     var params = {};
-        //     var response = JSON.parse(sessionStorage.getItem('JSON_Response'));
-        //     params.Acc_ID = response.Account_Details.Acc_ID;
-        //     //clear registration token for later renewal
-        //     requestHttp('POST', "https://requench-rest.herokuapp.com/Clear_Token.php", params, function (e) { });
-        //     window.location.href = "index.html";
-        // }, function (error) {
-        //     Swal({
-        //         type: 'error',
-        //         title: 'Something went Wrong!',
-        //         text: 'Please contact your administrator for assistance. Thank you!'
-        //     });
-        // });
     }
 
     var params = {};

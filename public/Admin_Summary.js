@@ -6,8 +6,27 @@ $(document).ready(function () {
     });
 
     var json_response_string = sessionStorage.getItem('JSON_Response');
+    var table_toggle = document.getElementById('table_toggle');
+    var date_label = document.getElementById('date_label');
+    var time_label = document.getElementById('time_label');
+
     var recent_notification_list = [];
     var machine_list = [];
+    var recent_transactions_list = [];
+    var recent_purchase_list = [];
+
+
+
+    setInterval(()=>{
+        var date_today = moment().format("YYYY-MM-DD");
+        var time_today = moment().format("h:mm:ss a");
+        date_label.innerHTML = date_today
+        time_label.innerHTML = time_today;
+    },1000);
+
+
+
+
 
 
     var firestore = firebase.firestore();
@@ -54,6 +73,26 @@ $(document).ready(function () {
         });
     }
 
+
+    $('#table_toggle').change(function () {
+        var table_header_label = document.getElementById('table_header_label');
+        if ($(this).prop('checked') == false) {
+            //transactions
+            console.log('Transactions');
+            clearSalesTable();
+            displayTransactions();
+            table_header_label.innerHTML = 'Recent Transactions';
+        } else {
+            //purchases
+            console.log('Purchase');
+            clearSalesTable();
+            displayPurchases();
+            table_header_label.innerHTML = 'Recent Purchases';
+        }
+    });
+
+
+
     var params = {};
     params.Acc_ID = json_response_object.Account_Details.Acc_ID;
     requestHttps("https://requench-rest.herokuapp.com/Fetch_Notifs.php", params, data => {
@@ -66,8 +105,8 @@ $(document).ready(function () {
         console.log(data.Notifications);
         data.Notifications.sort(compDateTime);
 
-        if (data.Notifications.length >= 2) {
-            recent_notifs_length = 2;
+        if (data.Notifications.length >= 4) {
+            recent_notifs_length = 4;
         }
 
         clearRecentNotifs();
@@ -105,6 +144,20 @@ $(document).ready(function () {
         }
     });
 
+
+    var params = {};
+    requestHttps('https://requench-rest.herokuapp.com/Fetch_All_Sales.php', params, function (response) {
+        recent_purchase_list = response.Purchase_History;
+        recent_transactions_list = response.Transaction_History;
+        clearSalesTable();
+        displayTransactions();
+    });
+
+
+
+
+
+
     function getPercentage(value, overall) {
         var percentage_value = (value / overall) * 100
         return percentage_value;
@@ -136,32 +189,32 @@ $(document).ready(function () {
 
     function displayMachines() {
         var machine_items = document.getElementById("machine_items");
-            var machine_items_length = machine_list.length;
-            if (machine_items_length >= 5) {
-                machine_items_length = 5;
+        var machine_items_length = machine_list.length;
+        if (machine_items_length >= 5) {
+            machine_items_length = 5;
+        }
+        console.log("Machine Length" + machine_items_length);
+
+        for (let index = 0; index < machine_items_length; index++) {
+
+            if (machine_list[index].API_KEY == null) {
+                machine_list[index].API_KEY = "Not yet configured";
             }
-            console.log("Machine Length" + machine_items_length);
-            
-            for (let index = 0; index < machine_items_length; index++) {
 
-                if (machine_list[index].API_KEY == null) {
-                    machine_list[index].API_KEY = "Not yet configured";
-                }
+            current_percentage = Math.round(getPercentage(machine_list[index].Current_Water_Level, 20000));
+            if (current_percentage <= machine_list[index].Critical_Level) {
+                default_bg = "bg-danger";
+            } else {
+                default_bg = "bg-info";
+            }
 
-                current_percentage = Math.round(getPercentage(machine_list[index].Current_Water_Level, 20000));
-                if (current_percentage <= machine_list[index].Critical_Level) {
-                    default_bg = "bg-danger";
-                } else {
-                    default_bg = "bg-info";
-                }
+            if (index == 0) {
+                active = "active";
+            } else {
+                active = " ";
+            }
 
-                if (index == 0) {
-                    active = "active";
-                }else{
-                    active = " ";
-                }
-
-                var html_string = `<div class="carousel-item ${active}">
+            var html_string = `<div class="carousel-item ${active}">
                 <h1>Machine ${machine_list[index].MU_ID}</h1>
                 <p class="card-text">Last Maintenance Date:
                     <span>${machine_list[index].Last_Maintenance_Date}</span></p>
@@ -174,15 +227,115 @@ $(document).ready(function () {
                         aria-valuemax="100">${current_percentage}%</div>
                 </div>
                 </div>`;
-                console.log(html_string);
-                var $container = $("#machine_items");
-                console.log($container);
-                var html = $.parseHTML(html_string);
-                $container.append(html);
-            }
+            console.log(html_string);
+            var $container = $("#machine_items");
+            console.log($container);
+            var html = $.parseHTML(html_string);
+            $container.append(html);
+        }
 
     }
 
+    function displayTransactions() {
+        var sales_body = document.getElementById("sales_body");
+        var current_list = recent_transactions_list;
+        var recent_transactions_list_length = recent_transactions_list.length;
+        if (recent_transactions_list_length >= 5) {
+            recent_transactions_list_length = 5;
+        }
+
+        var pt_table = document.getElementById('pt_table');
+        clearSalesTable();
+        var total_amount = 0;
+        for (let index = 0; index < recent_transactions_list_length; index++) {
+            const item = current_list[index];
+            var newRow = pt_table.insertRow(pt_table.rows.length);
+            var cell1 = newRow.insertCell(0);
+            try {
+                cell1.innerHTML = current_list[index].Acc_ID;
+            } catch (error) {
+                cell1.innerHTML = current_list[index].UU_ID;
+            }
+            var cell2 = newRow.insertCell(1);
+            cell2.innerHTML = current_list[index].Amount;
+            var cell3 = newRow.insertCell(2);
+            cell3.innerHTML = current_list[index].Price_Computed;
+            var cell4 = newRow.insertCell(3);
+            cell4.innerHTML = current_list[index].Time;
+            var cell5 = newRow.insertCell(4);
+            cell5.innerHTML = current_list[index].Date;
+            newRow.onclick = function () {
+                if (this.style.backgroundColor != 'deepskyblue') {
+                    this.style.backgroundColor = 'deepskyblue';
+                    selected_items.push(this.rowIndex - 1);
+                } else {
+                    var selected_index = selected_items.indexOf(this.rowIndex - 1);
+                    if (selected_index > -1) {
+                        selected_items.splice(selected_index, 1);
+                    }
+                    this.style.backgroundColor = '#fff';
+                }
+                console.log(selected_items);
+            }
+        }
+
+    }
+
+    function displayPurchases() {
+        var sales_body = document.getElementById("sales_body");
+        var current_list = recent_purchase_list;
+        var recent_purchase_list_length = recent_purchase_list.length;
+        if (recent_purchase_list_length >= 5) {
+            recent_purchase_list_length = 5;
+        }
+
+        var pt_table = document.getElementById('pt_table');
+        clearSalesTable();
+        var total_amount = 0;
+        for (let index = 0; index < recent_purchase_list_length; index++) {
+            const item = current_list[index];
+            var newRow = pt_table.insertRow(pt_table.rows.length);
+            var cell1 = newRow.insertCell(0);
+            try {
+                cell1.innerHTML = current_list[index].Acc_ID;
+            } catch (error) {
+                cell1.innerHTML = current_list[index].UU_ID;
+            }
+            var cell2 = newRow.insertCell(1);
+            cell2.innerHTML = current_list[index].Amount;
+            var cell3 = newRow.insertCell(2);
+            cell3.innerHTML = current_list[index].Price_Computed;
+            var cell4 = newRow.insertCell(3);
+            cell4.innerHTML = current_list[index].Time;
+            var cell5 = newRow.insertCell(4);
+            cell5.innerHTML = current_list[index].Date;
+            newRow.onclick = function () {
+                if (this.style.backgroundColor != 'deepskyblue') {
+                    this.style.backgroundColor = 'deepskyblue';
+                    selected_items.push(this.rowIndex - 1);
+                } else {
+                    var selected_index = selected_items.indexOf(this.rowIndex - 1);
+                    if (selected_index > -1) {
+                        selected_items.splice(selected_index, 1);
+                    }
+                    this.style.backgroundColor = '#fff';
+                }
+                console.log(selected_items);
+            }
+        }
+    }
+
+    function clearSalesTable() {
+        var table = document.getElementById("pt_table");
+        table.innerHTML = '';
+        table.innerHTML = `<tr>
+        <th scope="col">ID</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Price Computed</th>
+        <th scope="col">Time</th>
+        <th scope="col">Date</th>
+        </tr>`;
+    }
 
 
 });
