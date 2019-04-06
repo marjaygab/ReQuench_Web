@@ -21,6 +21,9 @@ submit_button.onclick = function() {
   params.Email = email_field.value;
   params.Password = pass_field.value;
   console.log(params);
+
+  
+
   //put Form validation here
   // if (validated()) {
   //   put here request http to Login.php

@@ -1,57 +1,78 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <title>Cashier</title>
     <link rel="stylesheet" href="Cashier_Style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css"
+        integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
 </head>
-  <body background="assets/images/background_3.jpg" id="body_id">
-    <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">
-            <img src="..\assets\images\BrandwLogo.png" height="30" class="d-inline-block align-top" alt="">
-        </a>
+
+<body background="assets/images/background_3.jpg" id="body_id">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="../assets/images/BrandwLogo.png" height="30" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a id="logout_button" class="nav-link" href="#">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </nav>
-  <div class="column">
-    <div class="card left-card" id="left-card">
-        <div class="card-body">
+
+    <div class="column">
+        <div class="card left-card" id="left-card">
+            <div class="card-body">
                 <div class="row input_mode">
                     <div class="col-10">
                         <h6 id="input_mode_label">Input Mode:</h6>
                     </div>
                     <div class="col-2">
-                            <input id="toggle-method" type="checkbox" checked data-toggle="toggle" data-on="Preset" data-off="Keypad" data-onstyle="success" data-offstyle="danger">
+                        <input id="toggle-method" type="checkbox" checked data-toggle="toggle" data-on="Preset"
+                            data-off="Keypad" data-onstyle="success" data-offstyle="danger">
                     </div>
                 </div>
                 <div class="row input_control">
-                        <div class="col-10">
-                            <input type="text" class="form-control" placeholder="Enter ID Number or Scan ID" id="rfid_field">
-                        </div>
-                        <div class="col-2">
-                            <button class="btn btn-primary" id="enter_rfid">Enter</button>
-                        </div>
+                    <div class="col-10">
+                        <input type="text" class="form-control" placeholder="Enter ID Number or Scan ID"
+                            id="rfid_field">
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-primary" id="enter_rfid">Enter</button>
+                    </div>
                 </div>
                 <div class="row label_control">
-                        <div class="form-group col-6">
-                            <label for="acc_num_display">ID Number</label>
-                            <input id="acc_num_display" type="text" class="form-control" placeholder="ID Number" disabled>
-                        </div>
-                        <div class="form-group col-6">
-                            <label for="balance_display">Balance</label>
-                            <input id="balance_display" type="text" class="form-control" placeholder="Balance" disabled>
-                        </div>
+                    <div class="form-group col-6">
+                        <label for="acc_num_display">ID Number</label>
+                        <input id="acc_num_display" type="text" class="form-control" placeholder="ID Number" disabled>
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="balance_display">Balance</label>
+                        <input id="balance_display" type="text" class="form-control" placeholder="Balance" disabled>
+                    </div>
                 </div>
                 <div class="row toggle_control">
                     <div class="col-6">
                         <input type="text" class="form-control" id="amount_display" placeholder="Amount">
                     </div>
                     <div class="col-2">
-                        <input id="toggle-unit" type="checkbox" checked data-toggle="toggle" data-on="mL" data-off="Php" data-onstyle="success" data-offstyle="danger">
+                        <input id="toggle-unit" type="checkbox" checked data-toggle="toggle" data-on="mL" data-off="Php"
+                            data-onstyle="success" data-offstyle="danger">
                     </div>
                     <div class="col-4">
                         <button class="btn btn-info" id="add_item">Add Item</button>
@@ -123,101 +144,103 @@
                         </div>
                     </div>
                     <div class="card col-12 keypad" id="keypad">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-1">
-                                    </div>
-                                    <div class="button_card col-3 card text-center">
-                                        <button class="btn btn-outline-dark keypad_button">7</button>
-                                    </div>
-                                    <div class="button_card col-3 card text-center">
-                                        <button class="btn btn-outline-dark keypad_button">8</button>
-                                    </div>
-                                    <div class="button_card col-3 card text-center">
-                                        <button class="btn btn-outline-dark keypad_button">9</button>
-                                    </div>
-                                    <div class="col-1">
-                                    </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-1">
                                 </div>
-                                <div class="row">
-                                    <div class="col-1">
-                                    </div>
-                                    <div class="button_card col-3 card text-center">
-                                        <button class="btn btn-outline-dark keypad_button">4</button>
-                                    </div>
-                                    <div class="button_card col-3 card text-center">
-                                        <button class="btn btn-outline-dark keypad_button">5</button>
-                                    </div>
-                                    <div class="button_card col-3 card text-center">
-                                        <button class="btn btn-outline-dark keypad_button">6</button>
-                                    </div>
-                                    <div class="col-1">
-                                    </div>
+                                <div class="button_card col-3 card text-center">
+                                    <button class="btn btn-outline-dark keypad_button">7</button>
                                 </div>
-                                <div class="row">
-                                    <div class="col-1">
-                                    </div>
-                                    <div class="button_card col-3 card text-center">
-                                        <button class="btn btn-outline-dark keypad_button">1</button>
-                                    </div>
-                                    <div class="button_card col-3 card text-center">
-                                        <button class="btn btn-outline-dark keypad_button">2</button>
-                                    </div>
-                                    <div class="button_card col-3 card text-center">
-                                        <button class="btn btn-outline-dark keypad_button">3</button>
-                                    </div>
-                                    <div class="col-1">
-                                    </div>
+                                <div class="button_card col-3 card text-center">
+                                    <button class="btn btn-outline-dark keypad_button">8</button>
                                 </div>
-                                <div class="row">
-                                    <div class="col-1">
-                                    </div>
-                                    <div class="button_card col-3 card text-center">
-                                        <button class="btn btn-outline-dark keypad_button" id="backspace_button"><span class="fas fa-arrow-left"></span></button>
-                                    </div>
-                                    <div class="button_card col-3 card text-center">
-                                        <button class="btn btn-outline-dark keypad_button">0</button>
-                                    </div>
-                                    <div class="button_card col-3 card text-center">
-                                        <button class="btn btn-outline-dark keypad_button">CLEAR</button>
-                                    </div>
-                                    <div class="col-1">
-                                    </div>
+                                <div class="button_card col-3 card text-center">
+                                    <button class="btn btn-outline-dark keypad_button">9</button>
+                                </div>
+                                <div class="col-1">
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-1">
+                                </div>
+                                <div class="button_card col-3 card text-center">
+                                    <button class="btn btn-outline-dark keypad_button">4</button>
+                                </div>
+                                <div class="button_card col-3 card text-center">
+                                    <button class="btn btn-outline-dark keypad_button">5</button>
+                                </div>
+                                <div class="button_card col-3 card text-center">
+                                    <button class="btn btn-outline-dark keypad_button">6</button>
+                                </div>
+                                <div class="col-1">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1">
+                                </div>
+                                <div class="button_card col-3 card text-center">
+                                    <button class="btn btn-outline-dark keypad_button">1</button>
+                                </div>
+                                <div class="button_card col-3 card text-center">
+                                    <button class="btn btn-outline-dark keypad_button">2</button>
+                                </div>
+                                <div class="button_card col-3 card text-center">
+                                    <button class="btn btn-outline-dark keypad_button">3</button>
+                                </div>
+                                <div class="col-1">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1">
+                                </div>
+                                <div class="button_card col-3 card text-center">
+                                    <button class="btn btn-outline-dark keypad_button" id="backspace_button"><span
+                                            class="fas fa-arrow-left"></span></button>
+                                </div>
+                                <div class="button_card col-3 card text-center">
+                                    <button class="btn btn-outline-dark keypad_button">0</button>
+                                </div>
+                                <div class="button_card col-3 card text-center">
+                                    <button class="btn btn-outline-dark keypad_button">CLEAR</button>
+                                </div>
+                                <div class="col-1">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
-  </div>
 
-  <div class="card" id="right_card">
-    <div class="card-body">
+    <div class="card" id="right_card">
+        <div class="card-body">
             <center>
-                    <div class="row">
-                        <div class="col-1"></div>
-                        <div class="col-10">
-                                <div class="table table-hover" style="height:550px;width:100%;margin-top:20px;">
-                                    <table id="purch_summary" class="table" style="width:100%;background-color: none">
-                                        <tr>
-                                            <th>Volume (mL)</th>
-                                            <th>Price per mL</th>
-                                        </tr>
-                                    </table>
-                                </div>
-                        </div>
-                        <div class="col-1"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6"></div>
-                        <div class="col-2"></div>
-                        <div class="col-2">
-                            <button class="btn btn-warning delete_buttons btn-sm" id="remove_button" disabled>Remove</button>
-                        </div>
-                        <div class="col-2">
-                            <button class="btn btn-danger delete_buttons btn-sm" id="clear_button" disabled>Clear</button>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <div class="table table-hover" style="height:550px;width:100%;margin-top:20px;">
+                            <table id="purch_summary" class="table" style="width:100%;background-color: none">
+                                <tr>
+                                    <th>Volume (mL)</th>
+                                    <th>Price per mL</th>
+                                </tr>
+                            </table>
                         </div>
                     </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-6"></div>
+                    <div class="col-2"></div>
+                    <div class="col-2">
+                        <button class="btn btn-warning delete_buttons btn-sm" id="remove_button"
+                            disabled>Remove</button>
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-danger delete_buttons btn-sm" id="clear_button" disabled>Clear</button>
+                    </div>
+                </div>
                 <center>
                     <div class="row">
                         <div class="col-6 customer-info">
@@ -226,7 +249,7 @@
                                     Serving:
                                 </div>
                                 <div class="card-title text-info text-center">
-                                    Serving for: FirstName LastName
+                                    Serving for: <span id="account_name">FirstName LastName</span>
                                 </div>
                                 <div class="card-body">
 
@@ -243,7 +266,7 @@
                                         <div class="col-7">
                                             <input type="text" id="total_field" class="form-control mx-sm-3" disabled>
                                         </div>
-                                    </div>  
+                                    </div>
                                 </div>
                             </div>
                             <div class="row display">
@@ -255,7 +278,7 @@
                                         <div class="col-7">
                                             <input type="text" id="amount_field" class="form-control mx-sm-3" disabled>
                                         </div>
-                                    </div>  
+                                    </div>
                                 </div>
                             </div>
                             <div class="row display">
@@ -267,15 +290,15 @@
                                         <div class="col-7">
                                             <input type="text" id="change_field" class="form-control mx-sm-3" disabled>
                                         </div>
-                                    </div>  
-                                </div> 
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="row display">
                         <div class="col-3"></div>
                         <div class="col-6">
-                                <button class="btn btn-secondary btn-lg" id="checkout_button">CONFIRM</button>
+                            <button class="btn btn-secondary btn-lg" id="checkout_button">CONFIRM</button>
                         </div>
                         <div class="col-3"></div>
                     </div>
@@ -305,15 +328,22 @@
                         </div>
                     </center>
                     </form> -->
+        </div>
     </div>
     </div>
-  </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js" integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"
+    integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp"
+    crossorigin="anonymous"></script>
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <script type="text/javascript" src="sweetalert2.all.min.js"></script>
 <script src="Cashier.js"></script>
 <script type="text/javascript" src="HttpRequest.js"></script>
+
 </html>

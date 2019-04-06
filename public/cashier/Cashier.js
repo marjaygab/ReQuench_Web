@@ -19,6 +19,8 @@ var checkout_button = document.getElementById('checkout_button');
 var amount_field = document.getElementById('amount_field');
 var total_field = document.getElementById('total_field');
 var change_field = document.getElementById('change_field');
+var account_name = document.getElementById('account_name');
+var logout_button = document.getElementById('logout_button');
 var current_list = [];
 var selected_items = [];
 var current_account = {
@@ -142,9 +144,11 @@ checkout_button.onclick = function () {
 
         var total_price = parseInt(total_field.value);
 
+
         params.Load = total_volume;
         params.Price = total_price;
-
+        console.log('I am here');
+        console.log(params);
         Swal.fire({
             title: 'Updating..',
             onBeforeOpen: () => {
@@ -163,6 +167,8 @@ checkout_button.onclick = function () {
                                         window.location.reload();
                                     }
                                 });
+                            }else{
+                                console.log(json_object);
                             }
                         }
                     }
@@ -199,6 +205,9 @@ backspace_button.onclick = function () {
     }
 }
 
+logout_button.onclick = function() {
+    window.location.assign('../index.html');
+}
 
 rfid_field.onkeypress = function (e) {
     if (e.keyCode == 13) {
@@ -215,6 +224,7 @@ rfid_field.onkeypress = function (e) {
                         current_account.unrec.UU_ID = json_object.Account.UU_ID;
                         current_account.rec.isSelected = false;
                         balance_display.value = json_object.Account.Balance;
+                        account_name.innerHTML = 'Unrecorded Account'
                         if (json_object.Account.ID_Number == null) {
                             acc_num_display.value = 'Unset';
                             Swal.fire({
@@ -258,7 +268,7 @@ rfid_field.onkeypress = function (e) {
                                     acc_num_display.value = result.value.ID_Number;
                                 }
                             });
-                        } else {
+                        } else {    
                             acc_num_display.value = json_object.Account.ID_Number;
                         }
                     } else if (json_object.Success && json_object.Account_Type == 'Recorded') {
@@ -267,13 +277,27 @@ rfid_field.onkeypress = function (e) {
                         current_account.rec.Acc_ID = json_object.Account.Acc_ID;
                         acc_num_display.value = json_object.Account.ID_Number;
                         balance_display.value = json_object.Account.Balance;
+                        var params = {};
+                        params.Acc_ID = current_account.rec.Acc_ID;
+                        console.log(params);
+                        requestHttp('POST','https://requench-rest.herokuapp.com/Fetch_Profile.php',params,function(e) {
+                            if (this.readyState == 4 && this.status == 200) {
+                                var response = this.responseText;
+                                if (response != null) {
+                                    var json_object = JSON.parse(response);
+                                    account_name.innerHTML = json_object.Account_Details.First_Name + ' ' + json_object.Account_Details.Last_Name;
+                                }
+                            }
+                        });
+
+
                     } else if (json_object.Success && json_object.Account_Type == 'Inserted_Unrecorded') {
                         current_account.unrec.isSelected = true;
                         current_account.rec.isSelected = false;
                         current_account.unrec.UU_ID = json_object.Insert_ID;
                         acc_num_display.value = 'Unset';
                         balance_display.value = json_object.Balance;
-
+                        account_name.innerHTML = 'Unrecorded';
                         Swal.fire({
                             title: 'This ID does not have any Associated ID Number. Please enter the ID Number.',
                             input: 'text',
@@ -438,7 +462,7 @@ enter_rfid.onclick = function () {
                         allowOutsideClick: () => !Swal.isLoading()
                     }).then((result) => {
                         if (result.value) {
-                            acc_num_display.value = recult.value.ID_Number;
+                            acc_num_display.value = result.value.ID_Number;
                         }
                     })
                 }
@@ -456,7 +480,7 @@ for (let index = 0; index < add_links.length; index++) {
     const element = add_links[index];
     element.onclick = function () {
         console.log(this.id);
-        var perml = 2;
+        var perml = 0.002;
         var volume;
         var price;
         var newRow = table1.insertRow(table1.rows.length);
@@ -539,7 +563,7 @@ $('#toggle-unit').change(function () {
 
 
 confirm.addEventListener("click", function (event) {
-    var perml = 2;
+    var perml = 0.002;
     var volume;
     var price;
     var newRow = table1.insertRow(table1.rows.length);
