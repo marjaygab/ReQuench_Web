@@ -10,29 +10,54 @@ var pass_field = document.getElementById('pass');
 
 
 
-submit_button.onclick = function() {
-  //submit data here
-  params = {};
-  console.log("Submit Button Clicked");
-  params.ID_No = id_field.value;
-  params.User_Name = uname_field.value;
-  params.First_Name = fname_field.value;
-  params.Last_Name = lname_field.value;
-  params.Email = email_field.value;
-  params.Password = pass_field.value;
-  console.log(params);
+submit_button.onclick = function () {
+    //submit data here
+    params = {};
+    console.log("Submit Button Clicked");
+    params.ID_No = id_field.value;
+    params.User_Name = uname_field.value;
+    params.First_Name = fname_field.value;
+    params.Last_Name = lname_field.value;
+    params.Email = email_field.value;
+    params.Password = pass_field.value;
 
-  
+    Swal({
+        title: 'Please wait..',
+        allowOutsideClick: false,
+        onBeforeOpen: () => {
+            Swal.showLoading();
+        }
+    });
 
-  //put Form validation here
-  // if (validated()) {
-  //   put here request http to Login.php
-  // }
+    requestHttps('https://requench-rest.herokuapp.com/SignUp.php', params, function (response) {
+        if (response.Success) {
+            Swal.fire(
+                'Welcome!',
+                "You're ready to go!",
+                'success'
+            ).then(()=>{
+                Swal.close();
+                window.location.assign('index.html');
+            })
+        } else {
+            Swal.fire(
+                'An error occured!',
+                'Please try again later',
+                'error'
+            );
+        }
+    });
+
+
+    //put Form validation here
+    // if (validated()) {
+    //   put here request http to Login.php
+    // }
 
 }
 
-cancel_button.onclick = function() {
-  //clear all the data first
+cancel_button.onclick = function () {
+    //clear all the data first
     params = {};
     window.location.href = "index.html";
 }

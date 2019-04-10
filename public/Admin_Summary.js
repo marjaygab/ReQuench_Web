@@ -201,7 +201,7 @@ $(document).ready(function () {
                 machine_list[index].API_KEY = "Not yet configured";
             }
 
-            current_percentage = Math.round(getPercentage(machine_list[index].Current_Water_Level, 20000));
+            current_percentage = Math.round(getPercentage(machine_list[index].Current_Water_Level, 22500));
             if (current_percentage <= machine_list[index].Critical_Level) {
                 default_bg = "bg-danger";
             } else {

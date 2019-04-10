@@ -6,8 +6,8 @@ $('document').ready(function () {
 	var contact_button = document.getElementById('contact_button');
 	var login_button = document.getElementById("login_button");
 	var signup_button = document.getElementById("signup_button");
-
-
+	var from_normal_login = false;
+	var normal_login_email = '';
 	function authorize(al, jsobj) {
 		if (al == 'USER') {
 			sessionStorage.setItem('JSON_Response', jsobj);
@@ -42,6 +42,10 @@ $('document').ready(function () {
 					Swal.showLoading();
 				}
 			});
+
+			if (from_normal_login) {
+				params.Email = normal_login_email
+			}
 			requestHttp('POST', "https://requench-rest.herokuapp.com/Email_Check.php", params, function (e) {
 				if (this.readyState == 4 && this.status == 200) {
 					var response = this.responseText;
@@ -114,10 +118,13 @@ $('document').ready(function () {
 
 						if (json_object.Success == 'true') {
 							var access_level = json_object.Account_Details.Access_Level;
+							
 							if (access_level == 'ADMIN') {
 								var token = response.Custom_Token;
 							firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
 								.then(function () {
+									from_normal_login = true;
+									normal_login_email = json_object.Account_Details.Email;
 									return firebase.auth().signInWithCustomToken(token);
 								})
 								.then(() => {

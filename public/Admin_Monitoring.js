@@ -320,7 +320,7 @@ $(document).ready(function () {
 
             if (element.API_KEY != null) {
                 var current_water_level = element.Current_Water_Level;
-                var percentage = Math.round(getPercentage(current_water_level, 20000));
+                var percentage = Math.round(getPercentage(current_water_level, 22500));
                 var status = element.STATUS;
                 var critical_level = element.Critical_Level;
                 if (element.Critical_Level == null) {
@@ -499,7 +499,7 @@ $(document).ready(function () {
                         Date_of_Purchase.value = machine_list[index].Date_of_Purchase;
                         Last_Maintenance_Date.value = machine_list[index].Last_Maintenance_Date;
                         var current_water_level = machine_list[index].Current_Water_Level;
-                        var percentage = Math.round(getPercentage(current_water_level, 20000));
+                        var percentage = Math.round(getPercentage(current_water_level, 22500));
                         console.log(percentage);
                         machine_water_level.style.width = percentage + "%";
                         machine_water_level.innerHTML = percentage + "%";
@@ -542,6 +542,15 @@ $(document).ready(function () {
                             API_KEY.value = 'Not Yet Configured';
                             renew_key.innerHTML = "Generate Secret";
                         }
+
+                        if (STATUS.innerHTML == 'OFFLINE' || STATUS.innerHTML == 'REBOOTING' || STATUS.innerHTML == 'offline' || STATUS.innerHTML == 'rebooting') {
+                            shutdown.disabled = true;
+                            reboot.disabled = true;
+                        }else{
+                            shutdown.disabled = false;
+                            reboot.disabled = false;
+                        }
+
 
 
                         renew_key.onclick = function () {
@@ -743,6 +752,66 @@ $(document).ready(function () {
                             }
                         }
 
+                        shutdown.onclick = function() {
+                            if (STATUS.innerHTML == 'ONLINE') {
+                                var params = {};
+                                params.mu_id = MU_ID.innerHTML;
+                                params.Model_Number = Model_Number.value;
+                                params.date_of_purchase = Date_of_Purchase.value;
+                                params.last_maintenance_date = Last_Maintenance_Date.value;
+                                params.current_water_level = current_water_level;
+                                params.status = 'OFFLINE';
+                                params.price_per_ml = price_per_ml.value;
+                                params.critical_level = Critical_Level.value;
+                                params.notify_admin = notify_boolean;
+                                params.api_key = API_KEY.value;
+                                params.location = Machine_Location.value;
+                                console.log(params);
+                                requestHttps("https://requench-rest.herokuapp.com/Update_Machine_State.php", params, function (response) {
+                                    if (response.Success) {
+                                        var docReferece = collectionRef.doc(MU_ID.innerHTML);
+                                        return docReferece.update(params)
+                                            .then(() => {
+                                                Swal.fire(
+                                                    'Machine Shutdown!',
+                                                    'Machine has been shutted down',
+                                                    'success'
+                                                ).then(() => {
+                                                    requestHttps('https://requench-rest.herokuapp.com/Fetch_All_Machines.php', params, function (response) {
+                                                        if (response.Success) {
+                                                            machine_list = response.Machines;
+                                                            console.log('Im here');
+                                                            console.log(machine_list);
+                                                            displayMachinesGrid(machine_list);
+                                                        } else {
+                                                            console.log(response);
+                                                        }
+                                                    });
+                                                });
+                                            })
+                                            .catch(() => {
+                                                Swal.fire(
+                                                    'Firebase error occured!',
+                                                    'Please try again later',
+                                                    'error'
+                                                );
+                                            });
+
+                                    } else {
+                                        Swal.fire(
+                                            'An error occured!',
+                                            'Please try again later',
+                                            'error'
+                                        );
+                                    }
+                                });
+                            }else{
+
+                            }
+                        }
+
+
+
                         cancel.onclick = function () {
                             Swal.close();
                         }
@@ -891,7 +960,7 @@ $(document).ready(function () {
     }
 
     function compByWaterLevelAsc(a, b) {
-        if (getPercentage(a.Current_Water_Level, 20000) < getPercentage(b.Current_Water_Level, 20000)) {
+        if (getPercentage(a.Current_Water_Level, 22500) < getPercentage(b.Current_Water_Level, 22500)) {
             return -1;
         } else {
             return 0;
@@ -899,7 +968,7 @@ $(document).ready(function () {
     }
 
     function compByWaterLevelDesc(a, b) {
-        if (getPercentage(a.Current_Water_Level, 20000) > getPercentage(b.Current_Water_Level, 20000)) {
+        if (getPercentage(a.Current_Water_Level, 22500) > getPercentage(b.Current_Water_Level, 22500)) {
             return -1;
         } else {
             return 0;

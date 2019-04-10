@@ -13,7 +13,7 @@ $(document).ready(function () {
     var current_list, current_list_unrecorded;
     var notif_counter = 0;
     var selected_items = [];
-    var category_selected = 'Machine Location';
+    var category_selected = 'Date Time';
     var order_selected = 'Descending';
 
     // var seen_toggler = {
@@ -175,6 +175,13 @@ $(document).ready(function () {
                 current_list = json_object.Transaction_List;
                 current_list_unrecorded = json_object.Transaction_List_Unrecorded;
                 console.log(json_object);
+                
+                filter(current_list, category_selected, order_selected, function (list_returned) {
+                    console.log(list_returned);
+                });
+                filter(current_list_unrecorded, category_selected, order_selected, function (list_returned) {
+                    console.log(list_returned);
+                });
 
                 clearListDisplay();
                 displayList(current_list);
@@ -300,6 +307,8 @@ $(document).ready(function () {
             switch (order) {
                 case 'Ascending':
                     switch (cat) {
+                        case 'Date Time':
+                            list.sort(compByDateTimeAsc);
                         case 'Time':
                             list.sort(compByTimeAsc);
                             break;
@@ -325,6 +334,8 @@ $(document).ready(function () {
 
                 case 'Descending':
                     switch (cat) {
+                        case 'Date Time':
+                            list.sort(compByDateTimeDesc);
                         case 'Time':
                             list.sort(compByTimeDesc);
                             break;
@@ -446,6 +457,21 @@ $(document).ready(function () {
         if (a.Temperature > b.Temperature) {
             return -1;
         } else {
+            return 0;
+        }
+    }
+
+    function compByDateTimeDesc(a,b) {
+        if (moment(a.Date + ' ' + a.Time).isAfter(b.Date + ' ' + b.Time)) {
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    function compByDateTimeAsc(a,b) {
+        if (moment(a.Date + ' ' + a.Time).isAfter(b.Date + ' ' + b.Time)) {
+            return -1;
+        }else{
             return 0;
         }
     }

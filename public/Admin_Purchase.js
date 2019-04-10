@@ -10,12 +10,12 @@ $(document).ready(function () {
     var params = {};
     var response = JSON.parse(sessionStorage.getItem('JSON_Response'));
     var previous_list_count;
-    var current_list,current_list_unrecorded;
+    var current_list, current_list_unrecorded;
     var notif_counter = 0;
     var selected_items = [];
-    var category_selected = 'Amount';
+    var category_selected = 'Date Time';
     var order_selected = 'Descending';
-    
+
     // var seen_toggler = {
     //   seen:function(){
     //     $('.active_notif').removeClass('active_notif').addClass('new_class');
@@ -31,21 +31,21 @@ $(document).ready(function () {
     });
 
 
-    $('#record_toggler').change(function() {
+    $('#record_toggler').change(function () {
         console.log($(this).prop('checked'));
         toggleListDisplay($(this).prop('checked'));
         if ($(this).prop('checked') == false) {
             //unrecorded
             displayList(current_list_unrecorded);
-        }else{
+        } else {
             //recorded
             displayList(current_list);
         }
-      });
-    
+    });
+
     for (let index = 0; index < category_items.length; index++) {
         const element = category_items[index];
-        element.onclick = function() {
+        element.onclick = function () {
             for (let index = 0; index < category_items.length; index++) {
                 const element = category_items[index];
                 element.classList.remove('active');
@@ -54,24 +54,24 @@ $(document).ready(function () {
             document.getElementById('dropdown_sorter').innerHTML = this.innerHTML;
             category_selected = this.innerHTML;
             //sort by this.innerHTML category current list and current list unrecorded
-            filter(current_list,category_selected,order_selected,function(list_returned) {
+            filter(current_list, category_selected, order_selected, function (list_returned) {
                 console.log(list_returned);
             });
-            filter(current_list_unrecorded,category_selected,order_selected,function(list_returned) {
+            filter(current_list_unrecorded, category_selected, order_selected, function (list_returned) {
                 console.log(list_returned);
             });
             clearListDisplay();
             if ($("#record_toggler").prop('checked')) {
                 displayList(current_list);
-            }else{
+            } else {
                 displayList(current_list_unrecorded);
             }
-        }    
+        }
     }
 
     for (let index = 0; index < order_items.length; index++) {
         const element = order_items[index];
-        element.onclick = function() {
+        element.onclick = function () {
             for (let index = 0; index < order_items.length; index++) {
                 const element = order_items[index];
                 element.classList.remove('active');
@@ -79,23 +79,23 @@ $(document).ready(function () {
             this.classList.add('active');
             document.getElementById('dropdown_order').innerHTML = this.innerHTML;
             order_selected = this.innerHTML;
-            
-            filter(current_list,category_selected,order_selected,function(list_returned) {
+
+            filter(current_list, category_selected, order_selected, function (list_returned) {
                 console.log(list_returned);
             });
-            filter(current_list_unrecorded,category_selected,order_selected,function(list_returned) {
+            filter(current_list_unrecorded, category_selected, order_selected, function (list_returned) {
                 console.log(list_returned);
             });
-            
+
             clearListDisplay();
             if ($("#record_toggler").prop('checked')) {
                 displayList(current_list);
-            }else{
+            } else {
                 displayList(current_list_unrecorded);
             }
 
 
-        }    
+        }
     }
 
 
@@ -104,8 +104,8 @@ $(document).ready(function () {
             title: 'Generate PDF',
             allowOutsideClicks: false,
             showConfirmButton: false,
-            html: 
-            `<div class="row">
+            html:
+                `<div class="row">
                 <div class= 'col-6' >
                     <label class="sr-only" for="startdate">Start Date</label>
                     <div class="input-group mb-2">
@@ -133,15 +133,15 @@ $(document).ready(function () {
                     <button id = "cancel_button" type="button" class="btn btn-danger btn-block">Cancel</button>
                 </div>
             </div>`,
-            onBeforeOpen: ()=>{
+            onBeforeOpen: () => {
                 const content = Swal.getContent();
                 const $ = content.querySelector.bind(content);
                 var startdate = $("#startdate");
-                var enddate = $("#enddate");    
+                var enddate = $("#enddate");
                 var submit_button = $("#submit_button");
-                var cancel_button = $("#cancel_button");    
+                var cancel_button = $("#cancel_button");
 
-                submit_button.onclick = function() {
+                submit_button.onclick = function () {
                     var date_start = startdate.value;
                     var date_end = enddate.value;
 
@@ -151,12 +151,12 @@ $(document).ready(function () {
                     console.log(params);
 
                     //Request for file here
-                    window.location.assign('https://requench-rest.herokuapp.com/pdf_purchase.php?Start_Date=' + params.Start_Date + 
-                    "&End_Date="+params.End_Date);
+                    window.location.assign('https://requench-rest.herokuapp.com/pdf_purchase.php?Start_Date=' + params.Start_Date +
+                        "&End_Date=" + params.End_Date);
                     Swal.close();
                 }
 
-                cancel_button.onclick = function() {
+                cancel_button.onclick = function () {
                     Swal.close();
                 }
 
@@ -166,21 +166,21 @@ $(document).ready(function () {
     }
 
     var params = {};
-    requestHttp('POST', "https://requench-rest.herokuapp.com/Fetch_All_Purchase.php", params, function (e) { 
+    requestHttp('POST', "https://requench-rest.herokuapp.com/Fetch_All_Purchase.php", params, function (e) {
         if (this.readyState == 4 && this.status == 200) {
             var response = this.responseText;
             console.log(response);
-            
+
             if (response != null) {
                 var json_object = JSON.parse(response);
                 current_list = json_object.Purchase_List;
                 current_list_unrecorded = json_object.Purchase_List_Unrecorded;
                 console.log(json_object);
-                
-                filter(current_list,category_selected,order_selected,function(list_returned) {
+
+                filter(current_list, category_selected, order_selected, function (list_returned) {
                     console.log(list_returned);
                 });
-                filter(current_list_unrecorded,category_selected,order_selected,function(list_returned) {
+                filter(current_list_unrecorded, category_selected, order_selected, function (list_returned) {
                     console.log(list_returned);
                 });
 
@@ -227,12 +227,12 @@ $(document).ready(function () {
             const item = current_list[index];
             var newRow = table1.insertRow(table1.rows.length);
             var cell1 = newRow.insertCell(0);
-            if($("#record_toggler").prop('checked')){
+            if ($("#record_toggler").prop('checked')) {
                 cell1.innerHTML = current_list[index].Acc_ID;
-            }else{
+            } else {
                 cell1.innerHTML = current_list[index].UU_ID;
             }
-            
+
             var cell2 = newRow.insertCell(1);
             cell2.innerHTML = current_list[index].Amount;
             var cell3 = newRow.insertCell(2);
@@ -280,7 +280,7 @@ $(document).ready(function () {
             <th scope="col">Price_Computed</th>
             <th scope="col">Time</th>
             <th scope="col">Date</th>
-            </tr>`;    
+            </tr>`;
         } else {
             table.innerHTML = `<tr>
             <th scope="col">UU_ID</th>
@@ -288,125 +288,144 @@ $(document).ready(function () {
             <th scope="col">Price_Computed</th>
             <th scope="col">Time</th>
             <th scope="col">Date</th>
-            </tr>`;    
+            </tr>`;
         }
-        
+
     }
 
 
 
-    function filter(list,cat,order,fn) {
+    function filter(list, cat, order, fn) {
         if (list != '') {
             switch (order) {
                 case 'Ascending':
-                  switch (cat) {
-                      case 'Amount':
-                          list.sort(compByAmountAsc);
-                          break;
-                      case 'Price Computed':
-                          list.sort(compByPriceAsc);
-                          break;
-                      case 'Time':
-                          list.sort(compByTimeAsc);
-                          break;
-                      case 'Date':
-                          list.sort(compByDateAsc);
-                          break;
-                      default:
-                          break;
-                  }
-                  break;
-            
+                    switch (cat) {
+                        case 'Date Time':
+                            list.sort(compByDateTimeAsc);
+                        case 'Amount':
+                            list.sort(compByAmountAsc);
+                            break;
+                        case 'Price Computed':
+                            list.sort(compByPriceAsc);
+                            break;
+                        case 'Time':
+                            list.sort(compByTimeAsc);
+                            break;
+                        case 'Date':
+                            list.sort(compByDateAsc);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+
                 case 'Descending':
-                switch (cat) {
-                      case 'Amount':
-                        console.log('Testing');
-                        list.sort(compByAmountDesc);
-                      break;
-                      case 'Price Computed':
-                          list.sort(compByPriceDesc);
-                      break;
-                      case 'Time':
-                          list.sort(compByTimeDesc);
-                      break;
-                      case 'Date':
-                          list.sort(compByDateDesc);
-                          break;
-                      default:
-                      break;
-                }
-                break;
-            
+                    switch (cat) {
+                        case 'Date Time':
+                            list.sort(compByDateTimeDesc);
+                        case 'Amount':
+                            console.log('Testing');
+                            list.sort(compByAmountDesc);
+                            break;
+                        case 'Price Computed':
+                            list.sort(compByPriceDesc);
+                            break;
+                        case 'Time':
+                            list.sort(compByTimeDesc);
+                            break;
+                        case 'Date':
+                            list.sort(compByDateDesc);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+
                 default:
-                  break;
-              }
-              fn(list);   
+                    break;
+            }
+            fn(list);
         }
-      }
-      
-      
-      function compByDateAsc(a,b) {
+    }
+
+
+    function compByDateAsc(a, b) {
         if (Date.parse(a.Date) < Date.parse(b.Date)) {
-          return -1;
-        }else {
-          return 0;
+            return -1;
+        } else {
+            return 0;
         }
-      }
-      function compByDateDesc(a,b) {
+    }
+    function compByDateDesc(a, b) {
         if (Date.parse(a.Date) > Date.parse(b.Date)) {
-          return -1;
-        }else {
-          return 0;
+            return -1;
+        } else {
+            return 0;
         }
-      }
-      
-      function compByTimeAsc(a,b) {
+    }
+
+    function compByTimeAsc(a, b) {
         if (a.Time < b.Time) {
-          return -1;
-        }else {
-          return 0;
+            return -1;
+        } else {
+            return 0;
         }
-      }
-      
-      function compByTimeDesc(a,b) {
+    }
+
+    function compByTimeDesc(a, b) {
         if (a.Time > b.Time) {
-          return -1;
-        }else {
-          return 0;
+            return -1;
+        } else {
+            return 0;
         }
-      }
-      
-      function compByAmountAsc(a,b) {
+    }
+
+    function compByAmountAsc(a, b) {
         if (parseFloat(a.Amount) < parseFloat(b.Amount)) {
-          return -1;
-        }else {
-          return 0;
+            return -1;
+        } else {
+            return 0;
         }
-      }
+    }
 
-      function compByAmountDesc(a,b) {
+    function compByAmountDesc(a, b) {
         if (parseFloat(a.Amount) > parseFloat(b.Amount)) {
-          return -1;
-        }else {
-          return 0;
+            return -1;
+        } else {
+            return 0;
         }
-      }
+    }
 
-      function compByPriceAsc(a,b) {
+    function compByPriceAsc(a, b) {
         if (parseFloat(a.Price_Computed) < parseFloat(b.Price_Computed)) {
-          return -1;
-        }else {
-          return 0;
+            return -1;
+        } else {
+            return 0;
         }
-      }
+    }
 
-      function compByPriceDesc(a,b) {
+    function compByPriceDesc(a, b) {
         if (parseFloat(a.Price_Computed) > parseFloat(b.Price_Computed)) {
-          return -1;
-        }else {
-          return 0;
+            return -1;
+        } else {
+            return 0;
         }
-      }
+    }
+
+    function compByDateTimeDesc(a, b) {
+        if (moment(a.Date + ' ' + a.Time).isAfter(b.Date + ' ' + b.Time)) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+    function compByDateTimeAsc(a, b) {
+        if (moment(a.Date + ' ' + a.Time).isAfter(b.Date + ' ' + b.Time)) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
 
 });
 
