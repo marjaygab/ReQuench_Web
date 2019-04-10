@@ -701,7 +701,11 @@ $(document).ready(function () {
                                 });
                             } else {
                                 //need to reboot after updating
-
+                                Swal.fire(
+                                    'Machine is online!',
+                                    'Please shutdown machine before saving.',
+                                    'error'
+                                );
                             }
                         }
 
