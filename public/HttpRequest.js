@@ -11,16 +11,6 @@ function requestHttp(method,url,parameters,fn) {
     xhr.onreadystatechange = fn;
 }
 
-function requestHttpURL(method,url,parameters,fn) {
-  var xhr = new XMLHttpRequest();
-  var parameter_objects = {};
-  xhr.timeout = 60000;
-  xhr.open(method,url,true);
-  xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded; charset=utf-8');
-  var data = JSON.stringify(parameters);
-  xhr.send(data);
-  xhr.onreadystatechange = fn;
-}
 
 function requestHttps(URL,params,callback) {
   const otherParam = {
@@ -35,21 +25,6 @@ function requestHttps(URL,params,callback) {
   .then(data => callback(data))
   .catch(error => console.log(error));
 }
-
-function requestHttpsNoResponse(URL,params,callback) {
-  const otherParam = {
-    headers:{
-      "content-type":"application/json; charset=UTF-8"
-    },
-    body:JSON.stringify(params),
-    method: "POST"
-  }
-  fetch(URL,otherParam)
-  .then(data => callback())
-  .catch(error => console.log(error));
-}
-
-
 
 function updateSessionVariable(params,callback) {
   requestHttp('POST',"https://requench-rest.herokuapp.com/Update_Session.php",params,function(e){

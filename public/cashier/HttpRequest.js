@@ -12,7 +12,7 @@ function requestHttp(method,url,parameters,fn) {
 }
 
 
-function requestHttps(URL,params,callback) {
+function requestHttps(URL,params,fn_res,fn_err) {
   const otherParam = {
     headers:{
       "content-type":"application/json; charset=UTF-8"
@@ -21,11 +21,8 @@ function requestHttps(URL,params,callback) {
     method: "POST"
   }
   fetch(URL,otherParam)
-  .then(res => res.json())
-  .then(data => () => {
-    console.log(data);
-    callback(data);})
-  .catch(error => console.log(error));
+  .then(fn_res(res))
+  .then(fn_err(error))  
 }
 
 function updateSessionVariable(params,callback) {

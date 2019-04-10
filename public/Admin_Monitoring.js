@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    var logout_button = document.getElementById('logout_button');
     var params = {};
     var response = JSON.parse(sessionStorage.getItem('JSON_Response'));
     params.Acc_ID = response.Account_Details.Acc_ID;
@@ -14,12 +15,12 @@ $(document).ready(function () {
     var firestore = firebase.firestore();
     const collectionRef = firestore.collection('Machines');
 
-    var getRealTimeUpdates = function () {
-        collectionRef.onSnapshot(function (collection) {
+    var getRealTimeUpdates = function() {
+        collectionRef.onSnapshot(function(collection) {
             collection.docs.forEach(element => {
-                if (element.exists) {
+                if(element.exists){
                     const machine_firestore_data = element.data();
-                    console.log('Something changed');
+                    
                     machine_list.forEach(machine => {
                         if (machine_firestore_data.mu_id == machine.MU_ID) {
                             machine.API_KEY = machine_firestore_data.api_key;
@@ -29,14 +30,13 @@ $(document).ready(function () {
                             machine.Machine_Location = machine_firestore_data.location;
                             machine.Model_Number = machine_firestore_data.Model_Number;
                             machine.STATUS = machine_firestore_data.status;
-
+                            clearDisplay();
+                            displayMachinesGrid(machine_list);
                         }
                     });
-                    clearDisplay();
-                    displayMachinesGrid(machine_list);
                     //update data here
                     console.log(machine_firestore_data);
-                }
+               }      
             });
         });
     }
@@ -90,7 +90,7 @@ $(document).ready(function () {
         if (response.Success) {
             machine_list = response.Machines;
             console.log(machine_list);
-
+            
             console.log(machine_list);
             displayMachinesGrid(machine_list);
             getRealTimeUpdates();
@@ -286,6 +286,25 @@ $(document).ready(function () {
         selected_view.toggle('list');
     }
 
+    // console.log(seen_toggler.item(2));
+
+    //Get Generated User Token then update the Back End DB fpr changes.
+    logout_button.onclick = function () {
+        // firebase.auth().signOut().then(function() {
+        //   var params = {};
+        //   var response = JSON.parse(sessionStorage.getItem('JSON_Response'));
+        //   params.Acc_ID = response.Account_Details.Acc_ID;
+        //   //clear registration token for later renewal
+        //   requestHttp('POST',"https://requench-rest.herokuapp.com/Clear_Token.php",params,function(e){});
+        //   window.location.href = "index.html";
+        // }, function(error) {
+        //   Swal({
+        //     type: 'error',
+        //     title: 'Something went Wrong!',
+        //     text: 'Please contact your administrator for assistance. Thank you!'
+        //   });
+        // });
+    }
 
     function compByDateDesc(a, b) {
         if (Date.parse(a.Date_Posted) > Date.parse(b.Date_Posted)) {
@@ -313,25 +332,20 @@ $(document).ready(function () {
 
     function displayMachinesGrid(machine_list) {
         clearDisplay();
-        console.log(machine_list);
         filter(machine_list, current_category, current_order, function (returned_list) { });
         for (let index = 0; index < machine_list.length; index++) {
             const element = machine_list[index];
-
+            
             if (element.API_KEY != null) {
                 var current_water_level = element.Current_Water_Level;
                 var percentage = Math.round(getPercentage(current_water_level, 22500));
                 var status = element.STATUS;
-                var critical_level = element.Critical_Level;
-                if (element.Critical_Level == null) {
-                    critical_level = 0;
-                }
                 var status_indicator = 'text-danger';
                 if (status == 'ONLINE' || status == 'online') {
                     status_indicator = 'text-success';
                 }
                 var default_bg = "bg-info";
-                if (percentage <= critical_level) {
+                if (percentage <= 20) {
                     default_bg = "bg-danger";
                 }
                 var html_string = `<div class="col-sm-4">
@@ -370,7 +384,7 @@ $(document).ready(function () {
 
         for (let index = 0; index < machine_cards.length; index++) {
             const element = machine_cards[index];
-            element.addEventListener('dblclick', function () {
+            element.addEventListener('dblclick',function() {
                 var MU_ID = machine_list[index].MU_ID;
                 Swal({
                     title: "Machine Details",
@@ -379,22 +393,11 @@ $(document).ready(function () {
                     allowOutsideClick: false,
                     html: `
                     <div class="container">
-                        <div class="row machine_form">
-                            <p class="col-4">Machine ID#: <span id="MU_ID">1</span></p>
-                            <p class="col-4">Status: <span id="STATUS">OFFLINE</span> </p>
-                            <div class='col-4'>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary btn-block dropdown-toggle bg-info" type="button" id="notifysilent" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Notify
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="notifysilent">
-                                        <a id="dropdown_notify" class="dropdown-item" href="#">Notify</a>
-                                        <a id="dropdown_silent" class="dropdown-item" href="#">Silent</a>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="row">
+                            <p class="col-sm-6">Machine ID#: <span id="MU_ID">1</span></p>
+                            <p class="col-sm-6">Status: <span id="STATUS">OFFLINE</span> </p>
                         </div>
-                        <div class="row machine_form">
+                        <div class="row">
                             <div class="col-6 form-group">
                                 <label for="Model_Number" style="text-align:left;">Model Number</label>
                                 <input type="text" class="form-control" id="Model_Number">
@@ -404,7 +407,7 @@ $(document).ready(function () {
                                 <input type="text" class="form-control" id="Machine_Location"s>
                             </div>
                         </div>
-                        <div class="row machine_form">
+                        <div class="row">
                             <div class="col-6 form-group">
                                 <label for="Date_of_Purchase">Date of Purchase</label>
                                 <input type="date" class="form-control" id="Date_of_Purchase">
@@ -414,7 +417,7 @@ $(document).ready(function () {
                                 <input type="date" class="form-control" id="Last_Maintenance_Date">
                             </div>
                         </div>
-                        <div class="row machine_form">
+                        <div class="row">
                             <div class="col-12">
                                 <div class="input-group mb-3">
                                     <label for="API_KEY">API Key</label>
@@ -425,29 +428,7 @@ $(document).ready(function () {
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row machine_form">
-                            <div class="col-6 form-group">
-                                <label for="critical_level">Critical Level</label>
-                                <input id="critical_level" type="number" class="form-control input_form" placeholder="Critical Level">
-                            </div>
-                            <div class="col-6 form-group">
-                                <label for="price_per_ml">Price per mL</label>
-                                <input id="price_per_ml" type="number" class="form-control input_form" placeholder="Price per mL">
-                            </div>
-                        </div>
-
-                        <div class="row machine_form">
-                            <div class="col-12">
-                                <h5 class="water_level_header">Water Level</h5>
-                                <div class="progress">
-                                    <div id="machine_water_level" class="progress-bar bg-info" role="progressbar" style="width: 100%;" aria-valuenow="50"
-                                        aria-valuemin="0" aria-valuemax="100">100%</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row controls_row machine_form">
+                        <div class="row">
                             <div class="col-3">
                                 <button id = "shutdown" type="button" class="btn btn-outline-danger btn-block">Shutdown</button>
                             </div>
@@ -461,12 +442,6 @@ $(document).ready(function () {
                                 <button id = "cancel" type="button" class="btn btn-outline-danger btn-block">Cancel</button>
                             </div>
                         </div>
-
-                        <div class="row controls_row machine_form">
-                            <div class="col-12">
-                                <button id = "remove_device" type="button" class="btn btn-outline-danger btn-block">Remove Device</button>
-                            </div>
-                        </div>
                     </div>`,
                     onBeforeOpen: function () {
                         var content = Swal.getContent();
@@ -476,23 +451,17 @@ $(document).ready(function () {
                         var Machine_Location = $('#Machine_Location');
                         var Date_of_Purchase = $('#Date_of_Purchase');
                         var Last_Maintenance_Date = $('#Last_Maintenance_Date');
-                        var machine_water_level = $('#machine_water_level');
-                        var Critical_Level = $('#critical_level');
-                        var Price_per_mL = $('#price_per_ml');
-                        var STATUS = $('#STATUS');
+                        var STATUS = $('#STATUS');                        
                         var API_KEY = $('#API_KEY');
                         var shutdown = $('#shutdown');
                         var reboot = $('#reboot');
                         var save_changes = $('#save_changes');
                         var renew_key = $('#renew_key');
-                        var notifysilent = $('#notifysilent');
-                        var dropdown_notify = $('#dropdown_notify');
-                        var dropdown_silent = $('#dropdown_silent');
-                        var remove_device = $('#remove_device');
+
                         var cancel = $('#cancel');
-
-
-
+                        
+                        
+                        
                         MU_ID.innerHTML = machine_list[index].MU_ID;
                         Model_Number.value = machine_list[index].Model_Number;
                         Machine_Location.value = machine_list[index].Machine_Location;
@@ -531,17 +500,13 @@ $(document).ready(function () {
 
                         if (machine_list[index].API_KEY != null) {
                             STATUS.innerHTML = machine_list[index].STATUS.toUpperCase();
-                            API_KEY.value = machine_list[index].API_KEY;
-                            Critical_Level.value = machine_list[index].Critical_Level;
-                            Price_per_mL.value = machine_list[index].Price_Per_ML;
+                            API_KEY.value = machine_list[index].API_KEY;    
                         } else {
-                            machine_water_level.innerHTML = '0%';
-                            Critical_Level.value = '0';
-                            Price_per_mL.value = '0';
                             STATUS.innerHTML = "N/A";
                             API_KEY.value = 'Not Yet Configured';
                             renew_key.innerHTML = "Generate Secret";
                         }
+                        
 
                         if (STATUS.innerHTML == 'OFFLINE' || STATUS.innerHTML == 'REBOOTING' || STATUS.innerHTML == 'offline' || STATUS.innerHTML == 'rebooting') {
                             shutdown.disabled = true;
@@ -612,20 +577,10 @@ $(document).ready(function () {
                                                     var params = {};
                                                     params.MU_ID = MU_ID.innerHTML;
                                                     
-                                                    requestHttps('https://requench-rest.herokuapp.com/Generate_Secret.php', params, function (response) {
-                                                        console.log(response);
-                                                        if (response.Success) {
-                                                            secret_field.value = response.Secret;
-                                                            var params = {};
-                                                            params.MU_ID = MU_ID.innerHTML;
-                                                            
-                                                        }
-                                                    });
-
                                                 }
                                             });
                                         }
-
+                        
                                         submit_button.onclick = function () {
                                             Swal.close();
                                         }
@@ -634,10 +589,10 @@ $(document).ready(function () {
                                         }
                                     },
                                     onClose: function () {
-
+                        
                                     }
                                 });
-                            } else {
+                            }else{
                                 //renew key
                             }
                         }
@@ -816,9 +771,8 @@ $(document).ready(function () {
                             Swal.close();
                         }
 
-
                     }
-                });
+                }); 
             });
         }
     }

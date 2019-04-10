@@ -138,10 +138,7 @@ $('document').ready(function () {
 									var errorCode = error.code;
 									var errorMessage = error.message;
 									console.log(error);
-								});	
-							}else{
-								authorize(access_level,JSON.stringify(response));
-							}
+								});
 						}
 						else {
 							

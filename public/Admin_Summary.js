@@ -1,14 +1,5 @@
 $(document).ready(function () {
-    $('.grid').masonry({
-        // options
-        itemSelector: '.grid-item',
-        columnWidth: 500
-    });
 
-    var json_response_string = sessionStorage.getItem('JSON_Response');
-    var table_toggle = document.getElementById('table_toggle');
-    var date_label = document.getElementById('date_label');
-    var time_label = document.getElementById('time_label');
 
     var recent_notification_list = [];
     var machine_list = [];

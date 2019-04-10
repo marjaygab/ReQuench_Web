@@ -1,5 +1,6 @@
 $(document).ready(function () {
     const messaging = firebase.messaging();
+    var logout_button = document.getElementById('logout_button');
     var notif_list_div = document.getElementById('notif_list');
     var notif_count = document.getElementById('notif_count');
     var category_items = document.getElementsByClassName('category-item');

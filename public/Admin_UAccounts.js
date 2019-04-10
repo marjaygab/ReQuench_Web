@@ -1,5 +1,6 @@
 $(document).ready(function () {
     const messaging = firebase.messaging();
+    var logout_button = document.getElementById('logout_button');
     var notif_list_div = document.getElementById('notif_list');
     var notif_count = document.getElementById('notif_count');
     var permission = Notification.permission;
@@ -19,7 +20,57 @@ $(document).ready(function () {
     var current_active = 'USER';
 
     //initialize
-    fetch();
+    var params = {};
+    params.Access_Level = 'USER';
+    requestHttp('POST', "https://requench-rest.herokuapp.com/Fetch_Accounts.php", params, function (e) {
+        if (this.readyState == 4 && this.status == 200) {
+            var response = this.responseText;
+            if (response != null) {
+                var json_object = JSON.parse(this.response);
+                if (json_object.Success == true) {
+                    for (var i = 0; i < json_object.USER.length; i++) {
+                        user_list.push(json_object.USER[i]);
+                    }
+                    console.log(user_list);
+                    var params = {};
+                    params.Access_Level = 'ADMIN';
+                    requestHttp('POST', "https://requench-rest.herokuapp.com/Fetch_Accounts.php", params, function (e) {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var response = this.responseText;
+                            if (response != null) {
+                                var json_object = JSON.parse(this.response);
+                                if (json_object.Success == true) {
+                                    for (var i = 0; i < json_object.ADMIN.length; i++) {
+                                        admin_list.push(json_object.ADMIN[i]);
+                                    }
+
+                                    var params = {};
+                                    params.Access_Level = 'CASHIER';
+                                    requestHttp('POST', "https://requench-rest.herokuapp.com/Fetch_Accounts.php", params, function (e) {
+                                        if (this.readyState == 4 && this.status == 200) {
+                                            var response = this.responseText;
+                                            if (response != null) {
+                                                var json_object = JSON.parse(this.response);
+                                                if (json_object.Success == true) {
+                                                    for (var i = 0; i < json_object.CASHIER.length; i++) {
+                                                        cashier_list.push(json_object.CASHIER[i]);
+                                                    }
+                                                    clearAccountList();
+                                                    displayAccountCards(user_list);
+                                                }
+                                            }
+                                        }
+                                    });
+
+                                }
+                            }
+                        }
+                    });
+
+                }
+            }
+        }
+    });
 
 
     user_tab.onclick = function () {
@@ -103,7 +154,7 @@ $(document).ready(function () {
                 </div>
                 <div class="dropdown col-sm-4">
                   <button class="btn btn-block btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonCat" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  USER</button>
+                  Access Level</button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonCat">
                     <a id="access_level_user" class="dropdown-item category-item active" href="#">USER</a>
                     <a id="access_level_admin" class="dropdown-item category-item" href="#">ADMIN</a>
@@ -181,7 +232,7 @@ $(document).ready(function () {
                 // var valid_last = false;
                 var valid_user = false;
                 // var valid_password = false;
-                dropdownMenuButtonCat.innerHTML = 'USER';
+
                 access_level_user.onclick = function () {
                     this.className = "dropdown-item category-item active";
                     access_level_admin.className = "dropdown-item category-item";
@@ -319,7 +370,6 @@ $(document).ready(function () {
                                     if (json_object.Success == true) {
                                         //enlist parsed notifs
                                         console.log('Update Success');
-                                        fetch();
                                     }
                                     else {
                                         Swal({
@@ -356,73 +406,22 @@ $(document).ready(function () {
 
 
 
-
-    function fetch() {
-        var params = {};
-        params.Access_Level = 'USER';
-        user_list = [];
-        admin_list = [];
-        cashier_list = [];
-    requestHttp('POST', "https://requench-rest.herokuapp.com/Fetch_Accounts.php", params, function (e) {
-        if (this.readyState == 4 && this.status == 200) {
-            
-            var response = this.responseText;
-            if (response != null) {
-                var json_object = JSON.parse(this.response);
-                console.log(json_object);
-                if (json_object.Success == true) {
-                    for (var i = 0; i < json_object.USER.length; i++) {
-                        user_list.push(json_object.USER[i]);
-                    }
-                    console.log(user_list);
-                    var params = {};
-                    params.Access_Level = 'ADMIN';
-                    requestHttp('POST', "https://requench-rest.herokuapp.com/Fetch_Accounts.php", params, function (e) {
-                        if (this.readyState == 4 && this.status == 200) {
-                            var response = this.responseText;
-                            if (response != null) {
-                                var json_object = JSON.parse(this.response);
-                                if (json_object.Success == true) {
-                                    for (var i = 0; i < json_object.ADMIN.length; i++) {
-                                        admin_list.push(json_object.ADMIN[i]);
-                                    }
-
-                                    var params = {};
-                                    params.Access_Level = 'CASHIER';
-                                    requestHttp('POST', "https://requench-rest.herokuapp.com/Fetch_Accounts.php", params, function (e) {
-                                        if (this.readyState == 4 && this.status == 200) {
-                                            var response = this.responseText;
-                                            if (response != null) {
-                                                var json_object = JSON.parse(this.response);
-                                                if (json_object.Success == true) {
-                                                    for (var i = 0; i < json_object.CASHIER.length; i++) {
-                                                        cashier_list.push(json_object.CASHIER[i]);
-                                                    }
-                                                    clearAccountList();
-                                                    if (current_active == 'ADMIN') {
-                                                        displayAccountCards(admin_list);
-                                                    }else if (current_active == 'CASHIER') {
-                                                        displayAccountCards(cashier_list);
-                                                    }else{
-                                                        displayAccountCards(user_list);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    });
-
-                                }
-                            }
-                        }
-                    });
-
-                }
-            }
-        }
-    });
+    logout_button.onclick = function () {
+        // firebase.auth().signOut().then(function () {
+        //     var params = {};
+        //     var response = JSON.parse(sessionStorage.getItem('JSON_Response'));
+        //     params.Acc_ID = response.Account_Details.Acc_ID;
+        //     //clear registration token for later renewal
+        //     requestHttp('POST', "https://requench-rest.herokuapp.com/Clear_Token.php", params, function (e) { });
+        //     window.location.href = "index.html";
+        // }, function (error) {
+        //     Swal({
+        //         type: 'error',
+        //         title: 'Something went Wrong!',
+        //         text: 'Please contact your administrator for assistance. Thank you!'
+        //     });
+        // });
     }
-
-
 
 
     function clearAccountList() {
@@ -515,17 +514,12 @@ $(document).ready(function () {
                         showConfirmButton: false,
                         html: `
                         <div class="container">
-                        <input type="text" autofocus style="display:none;">
                         <div class="row form-account">
-                            <div class="col-4">
+                            <div class="col-sm-8">
                             <input id = "id_num_field" type="text" class="form-control" placeholder = "ID Number">
                             <p id="duplicate_id_error" class="error">Duplicated ID Detected!</p>
                             </div>
-                            <div class="col-4">
-                            <input id = "rfid_field" type="text" class="form-control" placeholder = "RFID Number">
-                            <p id="duplicate_rfid_error" class="error">Duplicated ID Detected!</p>
-                            </div>
-                            <div class="dropdown col-4">
+                            <div class="dropdown col-sm-4">
                             <button class="btn btn-block btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonCat" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Access Level</button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonCat">
@@ -536,10 +530,10 @@ $(document).ready(function () {
                         </div>
                         </div>
                         <div class="row form-account">
-                            <div class="col-6">
+                            <div class="col-sm-6">
                             <input id="First_Name" type="text" class="form-control" placeholder = "First Name" required>
                             </div>
-                            <div class="col-6">
+                            <div class="col-sm-6">
                             <input id="Last_Name" type="text" class="form-control" placeholder = "Last Name" required>
                             </div>
                         </div>
@@ -550,12 +544,9 @@ $(document).ready(function () {
                             </div>
                         </div>
                         <div class="row form-account">
-                            <div class="col-6">
-                                <input id="User_Name" type="text" class="form-control" placeholder = "User Name" required>
-                                <p id="username_taken_error" class="error">This username is already taken!</p>
-                            </div>
-                            <div class="col-6">
-                                <input id="Balance" type="number" class="form-control" placeholder = "Balance" required>
+                            <div class="col-sm-12">
+                            <input id="User_Name" type="text" class="form-control" placeholder = "User Name" required>
+                            <p id="username_taken_error" class="error">This username is already taken!</p>
                             </div>
                         </div>
                         <div class="row form-account">
@@ -567,7 +558,6 @@ $(document).ready(function () {
                             <p id="pass_mismatch_error" class="error">Password Mismatch!</p>
                             </div>
                         </div>
-                        
                         <div class="row form-account">
                             <div class="col-4">
                                 <button id = "submit" type="button" class="btn btn-outline-primary btn-block">Submit</button>
@@ -585,7 +575,6 @@ $(document).ready(function () {
                             var content = Swal.getContent();
                             var $ = content.querySelector.bind(content);
                             var id_num_field = $('#id_num_field');
-                            var rfid_field = $('#rfid_field');
                             var first_field = $('#First_Name');
                             var last_field = $('#Last_Name');
                             var user_field = $('#User_Name');
@@ -603,249 +592,203 @@ $(document).ready(function () {
                             var remove_account = $('#remove_account');
                             var cancel = $('#cancel');
                             var duplicate_id_error = $('#duplicate_id_error');
-                            var duplicate_rfid_error = $('#duplicate_rfid_error');
                             var duplicate_email_error = $('#duplicate_email_error');
                             var username_taken_error = $('#username_taken_error');
                             var pass_mismatch_error = $('#pass_mismatch_error');
     
                             duplicate_id_error.style.visibility = "hidden";
-                            duplicate_rfid_error.style.visibility = "hidden";
                             duplicate_email_error.style.visibility = "hidden";
                             username_taken_error.style.visibility = "hidden";
                             pass_mismatch_error.style.visibility = "hidden";
                             incomplete_info_error.style.visibility = "hidden";
-                            var valid_id = true;
-                            var valid_rfid = true;
-                            var valid_email = true;
-                            var valid_first = true;
-                            var valid_last = true;
-                            var valid_user = true;
-                            var valid_password = true;
+                            var valid_id = false;
+                            var valid_email = false;
+                            var valid_first = false;
+                            var valid_last = false;
+                            var valid_user = false;
+                            var valid_password = false;
 
                             //get user data here
                             var params = {};
                             params.Acc_ID = list[index].Acc_ID;
-                            console.log(params);
-                            var data_response = {};
                             requestHttps("https://requench-rest.herokuapp.com/Fetch_Profile.php",params,function(data) {
                                 console.log(data);
-                                data_response = data;
-                                id_num_field.value = data.Account_Details.ID_Number;
-                                rfid_field.value = data.Account_Details.RFID_ID;
-                                first_field.value = data.Account_Details.First_Name;
-                                last_field.value = data.Account_Details.Last_Name;
-                                user_field.value = data.Account_Details.User_Name;
-                                pass_field.value = data.Account_Details.Password;
-                                retype_password.value = data.Account_Details.Password;
-                                email_field.value = data.Account_Details.Email;
-                                balance_field.value = data.Account_Details.Balance;
-                                dropdownMenuButtonCat.innerHTML = data.Account_Details.Access_Level;
-
-                                access_level_user.onclick = function () {
-                                    this.className = "dropdown-item category-item active";
-                                    access_level_admin.className = "dropdown-item category-item";
-                                    access_level_cashier.className = "dropdown-item category-item";
-                                    dropdownMenuButtonCat.innerHTML = 'USER';
-                                }
-                                access_level_admin.onclick = function () {
-                                    this.className = "dropdown-item category-item active";
-                                    access_level_user.className = "dropdown-item category-item";
-                                    access_level_cashier.className = "dropdown-item category-item";
-                                    dropdownMenuButtonCat.innerHTML = 'ADMIN';
-                                }
-                                access_level_cashier.onclick = function () {
-                                    this.className = "dropdown-item category-item active";
-                                    access_level_admin.className = "dropdown-item category-item";
-                                    access_level_user.className = "dropdown-item category-user";
-                                    dropdownMenuButtonCat.innerHTML = 'CASHIER';
-                                }
-                
-                                id_num_field.onblur = function () {
-                                    if (data_response.Account_Details.ID_Number != id_num_field.value) {
-                                        var params = {};
-                                    params.Command = "ID_NUM";
-                                    params.Variable = this.value;
-                                    requestHttp('POST', "https://requench-rest.herokuapp.com/Check_Dup.php", params, function (e) {
-                                        if (this.readyState == 4 && this.status == 200) {
-                                            var response = this.responseText;
-                                            if (response != null) {
-                                                console.log(response);
-                                                var json_object = JSON.parse(response);
-                                                console.log(json_object.Success);
-                                                valid_id = true;
-                                                if (!json_object.Success) {
-                                                    duplicate_id_error.style.visibility = "visible";
-                                                    valid_id = false;
-                                                }
-                                            }
-                                        }
-                                    });    
-                                    }
-                                }
-    
-                                rfid_field.onblur = function () {
-                                    if (data_response.Account_Details.RFID_ID != rfid_field.value) {   
-                                    var params = {};
-                                    params.Command = "RFID";
-                                    params.Variable = this.value;
-                                    requestHttp('POST', "https://requench-rest.herokuapp.com/Check_Dup.php", params, function (e) {
-                                        if (this.readyState == 4 && this.status == 200) {
-                                            var response = this.responseText;
-                                            if (response != null) {
-                                                console.log(response);
-                                                var json_object = JSON.parse(response);
-                                                console.log(json_object.Success);
-                                                valid_rfid = true;
-                                                if (!json_object.Success) {
-                                                    duplicate_rfid_error.style.visibility = "visible";
-                                                    valid_rfid = false;
-                                                }
-                                            }
-                                        }
-                                    });    
-                                    }
-                                }
-    
-                                id_num_field.onfocus = function () {
-                                    duplicate_id_error.style.visibility = "hidden";
-                                }
-    
-                                rfid_field.onfocus = function () {
-                                    duplicate_rfid_error.style.visibility = "hidden";
-                                }
-                
-                                email_field.onblur = function () {
-                                    if (data_response.Account_Details.Email != email_field.value) {
-                                        var params = {};
-                                    params.Command = "EMAIL";
-                                    params.Variable = this.value;
-                                    requestHttp('POST', "https://requench-rest.herokuapp.com/Check_Dup.php", params, function (e) {
-                                        if (this.readyState == 4 && this.status == 200) {
-                                            var response = this.responseText;
-                                            if (response != null) {
-                                                console.log(response);
-                                                var json_object = JSON.parse(response);
-                                                console.log(json_object.Success);
-                                                valid_email = true;
-                
-                                                if (!json_object.Success) {
-                                                    duplicate_email_error.style.visibility = "visible";
-                                                    valid_email = false;
-                                                }
-                                            }
-                                        }
-                                    });    
-                                    }
-                                }
-                
-                                email_field.onfocus = function () {
-                
-                                    duplicate_email_error.style.visibility = "hidden";
-                                }
-                
-                                user_field.onblur = function () {
-                                    if(data_response.Account_Details.User_Name !=  user_field.value){
-                                        var params = {};
-                                    params.Command = "USER_NAME";
-                                    params.Variable = this.value;
-                                    requestHttp('POST', "https://requench-rest.herokuapp.com/Check_Dup.php", params, function (e) {
-                                        if (this.readyState == 4 && this.status == 200) {
-                                            var response = this.responseText;
-                                            if (response != '') {
-                                                console.log(response);
-                                                var json_object = JSON.parse(response);
-                                                console.log(json_object.Success);
-                                                valid_user = true;
-                
-                                                if (!json_object.Success) {
-                                                    username_taken_error.style.visibility = "visible";
-                                                    valid_user = false;
-                                                }
-                                            }
-                                        }
-                                    });
-                                    }
-                                }
-                
-                                user_field.onfocus = function () {
-                                    username_taken_error.style.visibility = "hidden";
-                                }
-                                pass_mismatch_error.onfocus = function () {
-                                    pass_mismatch_error.style.visibility = "hidden";
-                                }
-                
-                                submit.onclick = function () {
-                                    var params = {};
-                                    params.Acc_ID = data_response.Account_Details.Acc_ID;
-                                    params.ID_Number = id_num_field.value;
-                                    params.First_Name = first_field.value;
-                                    params.Last_Name = last_field.value;
-                                    params.User_Name = user_field.value;
-                                    params.Password = pass_field.value;
-                                    params.retype_password = retype_password.value;
-                                    params.Email = email_field.value;
-                                    params.Access_Level = dropdownMenuButtonCat.innerHTML;
-                                    params.Balance = balance_field.value;
-                                    params.RFID_ID = rfid_field.value;
-                                    // var regex = new RegExp('[a-zA-Z]');
-                                    // params.Access_Level = regex.matchAll(dropdownMenuButtonCat.innerHTML);
-                                    console.log(params);
-                
-                                    if (params.Password != params.retype_password) {
-                                        document.getElementById('Retype_Password').value = '';
-                                        pass_mismatch_error.style.visibility = "visible";
-                                        //handle error here
-                                    }
-                                    else if (id_num_field.value == '' || first_field.value == '' || last_field.value == '' || user_field.value == '' || pass_field.value == '') {
-                                        incomplete_info_error.style.visibility = "visible";
-                                        //handle error here
-                                    }
-                                    else if (valid_id && valid_email && valid_user && valid_rfid) {
-                                        //Set params.command to update. Set to 'all' to update all at once. 
-                                        params.Command = 'all';
-                                        requestHttps("https://requench-rest.herokuapp.com/Update_Account.php",params,function(response) {
-                                             //result_json is of type JSON. No need to parse.
-                                            //do something here after updating
-
+                                id_num_field.value = data.User_Information.ID_Number;
+                                first_field.value = data.User_Information.First_Name;
+                                last_field.value = data.User_Information.Last_Name;
+                                user_field.value = data.User_Information.User_Name;
+                                pass_field.value = data.User_Information.Password;
+                                retype_password.value = data.User_Information.Password;
+                                email_field.value = data.User_Information.Email;
+                                dropdownMenuButtonCat.innerHTML = data.User_Information.Access_Level;
+                            });
+                            access_level_user.onclick = function () {
+                                this.className = "dropdown-item category-item active";
+                                access_level_admin.className = "dropdown-item category-item";
+                                access_level_cashier.className = "dropdown-item category-item";
+                                dropdownMenuButtonCat.innerHTML = 'USER';
+                            }
+                            access_level_admin.onclick = function () {
+                                this.className = "dropdown-item category-item active";
+                                access_level_user.className = "dropdown-item category-item";
+                                access_level_cashier.className = "dropdown-item category-item";
+                                dropdownMenuButtonCat.innerHTML = 'ADMIN';
+                            }
+                            access_level_cashier.onclick = function () {
+                                this.className = "dropdown-item category-item active";
+                                access_level_admin.className = "dropdown-item category-item";
+                                access_level_user.className = "dropdown-item category-user";
+                                dropdownMenuButtonCat.innerHTML = 'CASHIER';
+                            }
+            
+                            id_num_field.onblur = function () {
+                                var params = {};
+                                params.Command = "ID_NUM";
+                                params.Variable = this.value;
+                                requestHttp('POST', "https://requench-rest.herokuapp.com/Check_Dup.php", params, function (e) {
+                                    if (this.readyState == 4 && this.status == 200) {
+                                        var response = this.responseText;
+                                        if (response != null) {
                                             console.log(response);
-                                            if(response.Update_Success){
-                                                fetch();
-                                                Swal.close();
+                                            var json_object = JSON.parse(response);
+                                            console.log(json_object.Success);
+                                            valid_id = true;
+                                            if (!json_object.Success) {
+                                                duplicate_id_error.style.visibility = "visible";
+                                                valid_id = false;
+                                            }
+                                        }
+                                    }
+                                });
+            
+                            }
+                            id_num_field.onfocus = function () {
+                                duplicate_id_error.style.visibility = "hidden";
+            
+                            }
+            
+                            email_field.onblur = function () {
+                                var params = {};
+                                params.Command = "EMAIL";
+                                params.Variable = this.value;
+                                requestHttp('POST', "https://requench-rest.herokuapp.com/Check_Dup.php", params, function (e) {
+                                    if (this.readyState == 4 && this.status == 200) {
+                                        var response = this.responseText;
+                                        if (response != null) {
+                                            console.log(response);
+                                            var json_object = JSON.parse(response);
+                                            console.log(json_object.Success);
+                                            valid_email = true;
+            
+                                            if (!json_object.Success) {
+                                                duplicate_email_error.style.visibility = "visible";
+                                                valid_email = false;
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+            
+                            email_field.onfocus = function () {
+            
+                                duplicate_email_error.style.visibility = "hidden";
+                            }
+            
+                            user_field.onblur = function () {
+                                var params = {};
+                                params.Command = "USER_NAME";
+                                params.Variable = this.value;
+                                requestHttp('POST', "https://requench-rest.herokuapp.com/Check_Dup.php", params, function (e) {
+                                    if (this.readyState == 4 && this.status == 200) {
+                                        var response = this.responseText;
+                                        if (response != '') {
+                                            console.log(response);
+                                            var json_object = JSON.parse(response);
+                                            console.log(json_object.Success);
+                                            valid_user = true;
+            
+                                            if (!json_object.Success) {
+                                                username_taken_error.style.visibility = "visible";
+                                                valid_user = false;
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+            
+                            user_field.onfocus = function () {
+            
+                                username_taken_error.style.visibility = "hidden";
+                            }
+                            pass_mismatch_error.onfocus = function () {
+            
+                                pass_mismatch_error.style.visibility = "hidden";
+                            }
+            
+                            submit.onclick = function () {
+                                var params = {};
+                                params.ID_Number = id_num_field.value;
+                                params.First_Name = first_field.value;
+                                params.Last_Name = last_field.value;
+                                params.User_Name = user_field.value;
+                                params.Password = pass_field.value;
+                                params.retype_password = retype_password.value;
+                                params.Email = email_field.value;
+                                params.Access_Level = dropdownMenuButtonCat.innerHTML;
+                                params.Balance = balance_field.value;
+                                // var regex = new RegExp('[a-zA-Z]');
+                                // params.Access_Level = regex.matchAll(dropdownMenuButtonCat.innerHTML);
+                                console.log(params);
+            
+                                if (params.Password != params.retype_password) {
+                                    document.getElementById('Retype_Password').value = '';
+                                    pass_mismatch_error.style.visibility = "visible";
+                                    //handle error here
+                                }
+                                else if (id_num_field.value == '' || first_name.value == '' || last_name.value == '' || user_name.value == '' || password.value == '') {
+                                    incomplete_info_error.style.visibility = "visible";
+                                    //handle error here
+                                }
+                                else if (valid_id == true && valid_email == true && valid_user == true) {
+                                    //Set params.command to update. Set to 'all' to update all at once. 
+                                    // params.Command = 'all';
+                                    //request
+                                    //HTTP Request.
+                                    // requestHttps("https://request-rest.herokuapp.com",params,function(result_json) {
+                                    //      //result_json is of type JSON. No need to parse.
+                                    //     //do something here after updating
+                                    // });
+                                }
+                            }
+
+                            remove_account.onclick = function() {
+                                Swal.fire({
+                                    title: 'Are you sure?',
+                                    text: "You won't be able to revert this!",
+                                    type: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Yes, delete it!',
+                                    allowOutsideClick: false,
+                                  }).then((result) => {
+                                    if (result.value) {
+                                        var params = {};
+                                        params.Acc_ID = list[index].Acc_ID;
+                                        params.Account_Type = current_active;
+                                        requestHttps('https://requench-rest.herokuapp.com/Remove_Account.php',params,function(response) {
+                                            if (response.Success) {
+                                                Swal.fire(
+                                                    'Deleted!',
+                                                    'Account has been deleted',
+                                                    'success'
+                                                );
+                                                window.location.reload();      
                                             }
                                         });
                                     }
-                                }
-    
-                                remove_account.onclick = function() {
-                                    Swal.fire({
-                                        title: 'Are you sure?',
-                                        text: "You won't be able to revert this!",
-                                        type: 'warning',
-                                        showCancelButton: true,
-                                        confirmButtonColor: '#3085d6',
-                                        cancelButtonColor: '#d33',
-                                        confirmButtonText: 'Yes, delete it!',
-                                        allowOutsideClick: false,
-                                      }).then((result) => {
-                                        if (result.value) {
-                                            var params = {};
-                                            params.Acc_ID = list[index].Acc_ID;
-                                            params.Account_Type = current_active;
-                                            requestHttps('https://requench-rest.herokuapp.com/Remove_Account.php',params,function(response) {
-                                                if (response.Success) {
-                                                    Swal.fire(
-                                                        'Deleted!',
-                                                        'Account has been deleted',
-                                                        'success'
-                                                    );
-                                                    fetch();    
-                                                }
-                                            });
-                                        }
-                                      });
-                                }
-                            });
-                            
+                                  });
+                            }
 
                             cancel.onclick = function() {
                                 Swal.close();
