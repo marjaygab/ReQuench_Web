@@ -7,7 +7,6 @@ $(document).ready(function () {
     var recent_purchase_list = [];
 
 
-
     setInterval(()=>{
         var date_today = moment().format("YYYY-MM-DD");
         var time_today = moment().format("h:mm:ss a");
@@ -60,7 +59,7 @@ $(document).ready(function () {
             title: 'Something went Wrong!',
             text: 'Please contact your administrator for assistance. Thank you!'
         }).then(() => {
-            windows.location.assign("index.html");
+            window.location.assign("index.html");
         });
     }
 
