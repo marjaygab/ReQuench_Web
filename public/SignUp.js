@@ -12,15 +12,14 @@ var pass_field = document.getElementById('pass');
 
 submit_button.onclick = function () {
     //submit data here
-    params = {};
-    console.log("Submit Button Clicked");
-    params.ID_No = id_field.value;
+    var params = {};
+    params.ID_Number = id_field.value;
     params.User_Name = uname_field.value;
     params.First_Name = fname_field.value;
     params.Last_Name = lname_field.value;
     params.Email = email_field.value;
     params.Password = pass_field.value;
-
+    console.log(params);
     Swal({
         title: 'Please wait..',
         allowOutsideClick: false,
@@ -30,6 +29,7 @@ submit_button.onclick = function () {
     });
 
     requestHttps('https://requench-rest.herokuapp.com/SignUp.php', params, function (response) {
+        console.log(response);
         if (response.Success) {
             Swal.fire(
                 'Welcome!',

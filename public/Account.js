@@ -104,7 +104,7 @@ $(document).ready(function() {
                           sessionStorage.setItem('JSON_Response',string_json);
                           jsonobj = JSON.parse(sessionStorage.getItem('JSON_Response'));
                           var path = "url('.." + jsonobj.file_path +"')";
-                          profile_picture_div.style.backgroundImage = "url('../ReQuench/" + jsonobj.file_path +"')";
+                          profile_picture_div.style.backgroundImage = "url('../ReQuench_REST" + jsonobj.file_path +"')";
                         });
                       });
                     }else if (json_object.Update_Success == false) {
