@@ -56,16 +56,22 @@ $(document).ready(function () {
             //sort by this.innerHTML category current list and current list unrecorded
             filter(current_list, category_selected, order_selected, function (list_returned) {
                 console.log(list_returned);
+                clearListDisplay();
+                if ($("#record_toggler").prop('checked')) {
+                    displayList(current_list);
+                } else {
+                    displayList(current_list_unrecorded);
+                }
             });
             filter(current_list_unrecorded, category_selected, order_selected, function (list_returned) {
-                console.log(list_returned);
+                clearListDisplay();
+                if ($("#record_toggler").prop('checked')) {
+                    displayList(current_list);
+                } else {
+                    displayList(current_list_unrecorded);
+                }
             });
-            clearListDisplay();
-            if ($("#record_toggler").prop('checked')) {
-                displayList(current_list);
-            } else {
-                displayList(current_list_unrecorded);
-            }
+            
         }
     }
 
@@ -177,14 +183,17 @@ $(document).ready(function () {
                 console.log(json_object);
                 
                 filter(current_list, category_selected, order_selected, function (list_returned) {
+                    console.log(`Sorted by ${category_selected} in ${order_selected} order`);
+                    clearListDisplay();
+                    displayList(current_list);
                     console.log(list_returned);
                 });
                 filter(current_list_unrecorded, category_selected, order_selected, function (list_returned) {
-                    console.log(list_returned);
+                    clearListDisplay();
+                    displayList(current_list_unrecorded);
                 });
 
-                clearListDisplay();
-                displayList(current_list);
+
             }
         }
     });
@@ -309,6 +318,7 @@ $(document).ready(function () {
                     switch (cat) {
                         case 'Date Time':
                             list.sort(compByDateTimeAsc);
+                            break;
                         case 'Time':
                             list.sort(compByTimeAsc);
                             break;
@@ -336,6 +346,7 @@ $(document).ready(function () {
                     switch (cat) {
                         case 'Date Time':
                             list.sort(compByDateTimeDesc);
+                            break;
                         case 'Time':
                             list.sort(compByTimeDesc);
                             break;
@@ -461,17 +472,23 @@ $(document).ready(function () {
         }
     }
 
-    function compByDateTimeDesc(a,b) {
+
+    function compByDateTimeDesc(a, b) {
         if (moment(a.Date + ' ' + a.Time).isAfter(b.Date + ' ' + b.Time)) {
+            return -1;
+        }else if (moment(a.Date + ' ' + a.Time).isBefore(b.Date + ' ' + b.Time)) {
             return 1;
-        }else{
+        }else {
             return 0;
         }
     }
-    function compByDateTimeAsc(a,b) {
+    function compByDateTimeAsc(a, b) {
         if (moment(a.Date + ' ' + a.Time).isAfter(b.Date + ' ' + b.Time)) {
+            return 1;
+        }else if (moment(a.Date + ' ' + a.Time).isBefore(b.Date + ' ' + b.Time)) {
             return -1;
-        }else{
+        }
+        else {
             return 0;
         }
     }

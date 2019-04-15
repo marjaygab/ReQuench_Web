@@ -480,7 +480,7 @@ for (let index = 0; index < add_links.length; index++) {
     const element = add_links[index];
     element.onclick = function () {
         console.log(this.id);
-        var perml = 0.002;
+        var perml = 0.02;
         var volume;
         var price;
         var newRow = table1.insertRow(table1.rows.length);
@@ -541,7 +541,7 @@ $('#toggle-method').change(function () {
 
 $('#toggle-unit').change(function () {
 
-    var perml = 0.002;
+    var perml = 0.020;
 
     if ($(this).prop('checked')) {
         unit.ml = true;
@@ -563,7 +563,7 @@ $('#toggle-unit').change(function () {
 
 
 confirm.addEventListener("click", function (event) {
-    var perml = 0.002;
+    var perml = 0.020;
     var volume;
     var price;
     var newRow = table1.insertRow(table1.rows.length);

@@ -29,7 +29,7 @@ $(document).ready(function () {
                             machine.Machine_Location = machine_firestore_data.location;
                             machine.Model_Number = machine_firestore_data.Model_Number;
                             machine.STATUS = machine_firestore_data.status;
-
+                            machine.Critical_Level = machine_firestore_data.critical_level;
                         }
                     });
                     clearDisplay();
@@ -384,7 +384,7 @@ $(document).ready(function () {
                             <p class="col-4">Status: <span id="STATUS">OFFLINE</span> </p>
                             <div class='col-4'>
                                 <div class="dropdown">
-                                    <button class="btn btn-secondary btn-block dropdown-toggle bg-info" type="button" id="notifysilent" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button class="btn btn-secondary btn-block dropdown-toggle bg-info control" type="button" id="notifysilent" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Notify
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="notifysilent">
@@ -397,30 +397,30 @@ $(document).ready(function () {
                         <div class="row machine_form">
                             <div class="col-6 form-group">
                                 <label for="Model_Number" style="text-align:left;">Model Number</label>
-                                <input type="text" class="form-control" id="Model_Number">
+                                <input type="text" class="form-control control" id="Model_Number">
                             </div>
                             <div class="col-6 form-group">
                                 <label for="Machine_Location" style="text-align:left;">Machine Location</label>
-                                <input type="text" class="form-control" id="Machine_Location"s>
+                                <input type="text" class="form-control control" id="Machine_Location"s>
                             </div>
                         </div>
                         <div class="row machine_form">
                             <div class="col-6 form-group">
                                 <label for="Date_of_Purchase">Date of Purchase</label>
-                                <input type="date" class="form-control" id="Date_of_Purchase">
+                                <input type="date" class="form-control control" id="Date_of_Purchase">
                             </div>
                             <div class="col-6 form-group">
                                 <label for="Last_Maintenance_Date">Last Maintenance Date</label>
-                                <input type="date" class="form-control" id="Last_Maintenance_Date">
+                                <input type="date" class="form-control control" id="Last_Maintenance_Date">
                             </div>
                         </div>
                         <div class="row machine_form">
                             <div class="col-12">
                                 <div class="input-group mb-3">
                                     <label for="API_KEY">API Key</label>
-                                    <input id="API_KEY" type="text" class="form-control input_form" placeholder="API Key" aria-label="Hidden" aria-describedby="basic-addon2" readonly>
+                                    <input id="API_KEY" type="text" class="form-control input_form control" placeholder="API Key" aria-label="Hidden" aria-describedby="basic-addon2" readonly>
                                     <div class="input-group-append">
-                                        <button id="renew_key" class="btn btn-outline-info" type="button">Renew Key</button>
+                                        <button id="renew_key" class="btn btn-outline-info control" type="button">Renew Key</button>
                                     </div>
                                 </div>
                             </div>
@@ -429,11 +429,11 @@ $(document).ready(function () {
                         <div class="row machine_form">
                             <div class="col-6 form-group">
                                 <label for="critical_level">Critical Level</label>
-                                <input id="critical_level" type="number" class="form-control input_form" placeholder="Critical Level">
+                                <input id="critical_level" type="number" class="form-control input_form control" placeholder="Critical Level">
                             </div>
                             <div class="col-6 form-group">
                                 <label for="price_per_ml">Price per mL</label>
-                                <input id="price_per_ml" type="number" class="form-control input_form" placeholder="Price per mL">
+                                <input id="price_per_ml" type="number" class="form-control input_form control" placeholder="Price per mL">
                             </div>
                         </div>
 
@@ -455,7 +455,7 @@ $(document).ready(function () {
                                 <button id = "reboot" type="button" class="btn btn-outline-warning btn-block">Reboot</button>
                             </div>
                             <div class="col-3">
-                                <button id = "save_changes" type="button" class="btn btn-outline-info btn-block">Save</button>
+                                <button id = "save_changes" type="button" class="btn btn-outline-info btn-block control">Save</button>
                             </div>
                             <div class="col-3">
                                 <button id = "cancel" type="button" class="btn btn-outline-danger btn-block">Cancel</button>
@@ -464,7 +464,7 @@ $(document).ready(function () {
 
                         <div class="row controls_row machine_form">
                             <div class="col-12">
-                                <button id = "remove_device" type="button" class="btn btn-outline-danger btn-block">Remove Device</button>
+                                <button id = "remove_device" type="button" class="btn btn-outline-danger btn-block control">Remove Device</button>
                             </div>
                         </div>
                     </div>`,
@@ -489,9 +489,10 @@ $(document).ready(function () {
                         var dropdown_notify = $('#dropdown_notify');
                         var dropdown_silent = $('#dropdown_silent');
                         var remove_device = $('#remove_device');
+                        var controls = $('.control');
                         var cancel = $('#cancel');
 
-
+                        
 
                         MU_ID.innerHTML = machine_list[index].MU_ID;
                         Model_Number.value = machine_list[index].Model_Number;
@@ -546,10 +547,13 @@ $(document).ready(function () {
                         if (STATUS.innerHTML == 'OFFLINE' || STATUS.innerHTML == 'REBOOTING' || STATUS.innerHTML == 'offline' || STATUS.innerHTML == 'rebooting') {
                             shutdown.disabled = true;
                             reboot.disabled = true;
+
+
                         }else{
                             shutdown.disabled = false;
                             reboot.disabled = false;
                         }
+
 
 
 
@@ -814,6 +818,64 @@ $(document).ready(function () {
                             }
                         }
 
+
+                        reboot.onclick = function() {
+                            if (STATUS.innerHTML == 'ONLINE') {
+                                var params = {};
+                                params.mu_id = MU_ID.innerHTML;
+                                params.Model_Number = Model_Number.value;
+                                params.date_of_purchase = Date_of_Purchase.value;
+                                params.last_maintenance_date = Last_Maintenance_Date.value;
+                                params.current_water_level = current_water_level;
+                                params.status = 'REBOOTING';
+                                params.price_per_ml = price_per_ml.value;
+                                params.critical_level = Critical_Level.value;
+                                params.notify_admin = notify_boolean;
+                                params.api_key = API_KEY.value;
+                                params.location = Machine_Location.value;
+                                console.log(params);
+                                requestHttps("https://requench-rest.herokuapp.com/Update_Machine_State.php", params, function (response) {
+                                    if (response.Success) {
+                                        var docReferece = collectionRef.doc(MU_ID.innerHTML);
+                                        return docReferece.update(params)
+                                            .then(() => {
+                                                Swal.fire(
+                                                    'Machine is rebooting..',
+                                                    'Please wait for further operations.',
+                                                    'success'
+                                                ).then(() => {
+                                                    requestHttps('https://requench-rest.herokuapp.com/Fetch_All_Machines.php', params, function (response) {
+                                                        if (response.Success) {
+                                                            machine_list = response.Machines;
+                                                            console.log('Im here');
+                                                            console.log(machine_list);
+                                                            displayMachinesGrid(machine_list);
+                                                        } else {
+                                                            console.log(response);
+                                                        }
+                                                    });
+                                                });
+                                            })
+                                            .catch(() => {
+                                                Swal.fire(
+                                                    'Firebase error occured!',
+                                                    'Please try again later',
+                                                    'error'
+                                                );
+                                            });
+
+                                    } else {
+                                        Swal.fire(
+                                            'An error occured!',
+                                            'Please try again later',
+                                            'error'
+                                        );
+                                    }
+                                });
+                            }else{
+
+                            }
+                        }
 
 
                         cancel.onclick = function () {

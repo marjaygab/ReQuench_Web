@@ -302,6 +302,7 @@ $(document).ready(function () {
                     switch (cat) {
                         case 'Date Time':
                             list.sort(compByDateTimeAsc);
+                            break;
                         case 'Amount':
                             list.sort(compByAmountAsc);
                             break;
@@ -323,6 +324,7 @@ $(document).ready(function () {
                     switch (cat) {
                         case 'Date Time':
                             list.sort(compByDateTimeDesc);
+                            break;
                         case 'Amount':
                             console.log('Testing');
                             list.sort(compByAmountDesc);
