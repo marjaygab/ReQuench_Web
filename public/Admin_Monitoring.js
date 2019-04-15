@@ -489,10 +489,9 @@ $(document).ready(function () {
                         var dropdown_notify = $('#dropdown_notify');
                         var dropdown_silent = $('#dropdown_silent');
                         var remove_device = $('#remove_device');
-                        var controls = $('.control');
+                        var controls = content.getElementsByClassName('control');
                         var cancel = $('#cancel');
 
-                        
 
                         MU_ID.innerHTML = machine_list[index].MU_ID;
                         Model_Number.value = machine_list[index].Model_Number;
@@ -548,10 +547,18 @@ $(document).ready(function () {
                             shutdown.disabled = true;
                             reboot.disabled = true;
 
+                            for (let index = 0; index < controls.length; index++) {
+                                const element = controls[index];
+                                element.disabled = false;
+                            }
 
                         }else{
                             shutdown.disabled = false;
                             reboot.disabled = false;
+                            for (let index = 0; index < controls.length; index++) {
+                                const element = controls[index];
+                                element.disabled = true;
+                            }
                         }
 
 
