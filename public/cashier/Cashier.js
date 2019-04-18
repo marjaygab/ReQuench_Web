@@ -123,76 +123,85 @@ checkout_button.onclick = function () {
 
     } else {
 
-        var params = {};
-        console.log(current_list);
-        amount_field.disabled = true;
-        console.log(current_account.selected() + ' ' + current_account.getSelectedID());
-        var account_type = '';
-        if (current_account.selected() == 'rec') {
-            account_type = 'Recorded';
-            params.Acc_ID = current_account.getSelectedID();
-        } else {
-            account_type = 'Unrecorded';
-            params.UU_ID = current_account.getSelectedID();
-        }
-        params.Account_Type = account_type;
-        var total_volume = 0;
-        for (let index = 0; index < current_list.length; index++) {
-            const element = current_list[index];
-            total_volume = total_volume + parseInt(current_list[index].volume);
-        }
-
+        var amount_input = parseInt(amount_field.value);
         var total_price = parseInt(total_field.value);
+        if (amount_input < total_price) {
 
+            Swal.fire(
+                'Oops..',
+                'You entered insufficient amount for the price.',
+                'error'
+            );
 
-        params.Load = total_volume;
-        params.Price = total_price;
-        console.log('I am here');
-        console.log(params);
-        Swal.fire({
-            title: 'Updating..',
-            onBeforeOpen: () => {
-                Swal.showLoading();
-                requestHttp('POST', 'https://requench-rest.herokuapp.com/Update_Balance.php', params, function (e) {
-                    if (this.readyState == 4 && this.status == 200) {
-                        var response = this.responseText;
-                        if (response != null) {
-                            var json_object = JSON.parse(response);
-                            if (json_object.Success) {
-                                Swal.fire({
-                                    title: "Update Complete!",
-                                    type: 'success'
-                                }).then((result) => {
-                                    if (result.value) {
-                                        window.location.reload();
-                                    }
-                                });
-                            }else{
-                                console.log(json_object);
+        } else {
+            var params = {};
+            console.log(current_list);
+            amount_field.disabled = true;
+            console.log(current_account.selected() + ' ' + current_account.getSelectedID());
+            var account_type = '';
+            if (current_account.selected() == 'rec') {
+                account_type = 'Recorded';
+                params.Acc_ID = current_account.getSelectedID();
+            } else {
+                account_type = 'Unrecorded';
+                params.UU_ID = current_account.getSelectedID();
+            }
+            params.Account_Type = account_type;
+            var total_volume = 0;
+            for (let index = 0; index < current_list.length; index++) {
+                const element = current_list[index];
+                total_volume = total_volume + parseInt(current_list[index].volume);
+            }
+
+            params.Load = total_volume;
+            params.Price = total_price;
+            console.log('I am here');
+            console.log(params);
+            Swal.fire({
+                title: 'Updating..',
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                    requestHttp('POST', 'https://requench-rest.herokuapp.com/Update_Balance.php', params, function (e) {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var response = this.responseText;
+                            if (response != null) {
+                                var json_object = JSON.parse(response);
+                                if (json_object.Success) {
+                                    Swal.fire({
+                                        title: "Update Complete!",
+                                        type: 'success'
+                                    }).then((result) => {
+                                        if (result.value) {
+                                            window.location.reload();
+                                        }
+                                    });
+                                } else {
+                                    console.log(json_object);
+                                }
                             }
                         }
-                    }
-                });
-            },
-            onClose: () => {
-            }
-        }).then((result) => {
-            if (
-                // Read more about handling dismissals
-                result.dismiss === Swal.DismissReason.timer
-            ) {
-                console.log('I was closed by the timer')
-            }
-        })
+                    });
+                },
+                onClose: () => {
+                }
+            }).then((result) => {
+                if (
+                    // Read more about handling dismissals
+                    result.dismiss === Swal.DismissReason.timer
+                ) {
+                    console.log('I was closed by the timer')
+                }
+            })
 
-        checkout_button.innerHTML = 'CONFIRM';
-        checkout_button.classList.remove('btn-info');
-        checkout_button.classList.add('btn-secondary');
-        total_field.value = '';
-        amount_field.value = '';
-        change_field.value = '';
-        current_list = [];
-        displayList(current_list);
+            checkout_button.innerHTML = 'CONFIRM';
+            checkout_button.classList.remove('btn-info');
+            checkout_button.classList.add('btn-secondary');
+            total_field.value = '';
+            amount_field.value = '';
+            change_field.value = '';
+            current_list = [];
+            displayList(current_list);
+        }
     }
 }
 
@@ -205,7 +214,7 @@ backspace_button.onclick = function () {
     }
 }
 
-logout_button.onclick = function() {
+logout_button.onclick = function () {
     window.location.assign('../index.html');
 }
 
@@ -268,7 +277,7 @@ rfid_field.onkeypress = function (e) {
                                     acc_num_display.value = result.value.ID_Number;
                                 }
                             });
-                        } else {    
+                        } else {
                             acc_num_display.value = json_object.Account.ID_Number;
                         }
                     } else if (json_object.Success && json_object.Account_Type == 'Recorded') {
@@ -280,7 +289,7 @@ rfid_field.onkeypress = function (e) {
                         var params = {};
                         params.Acc_ID = current_account.rec.Acc_ID;
                         console.log(params);
-                        requestHttp('POST','https://requench-rest.herokuapp.com/Fetch_Profile.php',params,function(e) {
+                        requestHttp('POST', 'https://requench-rest.herokuapp.com/Fetch_Profile.php', params, function (e) {
                             if (this.readyState == 4 && this.status == 200) {
                                 var response = this.responseText;
                                 if (response != null) {

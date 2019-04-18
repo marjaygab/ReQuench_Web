@@ -560,10 +560,6 @@ $(document).ready(function () {
                                 element.disabled = true;
                             }
                         }
-
-
-
-
                         renew_key.onclick = function () {
                             if (this.innerHTML == 'Generate Secret') {
                                 // generate secret

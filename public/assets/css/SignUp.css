@@ -1,34 +1,32 @@
-.container{
-  background-color: #fff;
-  text-align: center;
-
-}
-table{
-  margin-left: auto;
-  margin-right: auto;
+.container {
+	background-color: #fff;
+	text-align: center;
 }
 
-
-.signup_control{
-  padding: 16px;
+table {
+	margin-left: auto;
+	margin-right: auto;
 }
 
-.controls{
-  display: inline;
-  width: 20%;
-  text-align: center;
+.signup_control {
+	padding: 16px;
 }
 
-#signup_card{
-  margin-top: 10%;
-  border-radius: 25px;
-  padding: 16px;
-  width:40%;
+.controls {
+	display: inline;
+	width: 20%;
+	text-align: center;
 }
 
-#body_id{
-  background: url('../images/bg.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
+#signup_card {
+	margin-top: 10%;
+	border-radius: 25px;
+	padding: 16px;
+	width: 40%;
+}
 
+#body_id {
+	background: url('../images/bg.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
 }
