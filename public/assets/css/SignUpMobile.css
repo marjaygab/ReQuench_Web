@@ -19,7 +19,7 @@ table {
 }
 
 #signup_card {
-    margin-top: 10%;
+    margin-top: 35%;
     border-radius: 25px;
     padding: 16px;
     width: 90%;
@@ -30,3 +30,4 @@ table {
     background-repeat: round;
     background-size: cover;
 }
+
