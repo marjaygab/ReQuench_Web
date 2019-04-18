@@ -763,7 +763,66 @@ $(document).ready(function () {
 
                             } else {
                                 //remove from db, then remove from db. make sure machine is offline remove from firebase
-
+                                if (STATUS.innerHTML == 'ONLINE' || STATUS.innerHTML == 'online') {
+                                    Swal.fire(
+                                        'Machine is online!',
+                                        'Please shutdown machine before Removing.',
+                                        'error'
+                                    );
+                                }else if(STATUS.innerHTML == 'rebooting' || STATUS.innerHTML == 'REBOOTING'){
+                                    Swal.fire(
+                                        'Machine is rebooting!',
+                                        'Please shutdown machine before Removing.',
+                                        'error'
+                                    );
+                                }else{
+                                    // THIS CODE IS UNSAFE FOR USAGE
+                                    if (current_water_level == 0) {
+                                        //allow removal
+                                        Swal.fire({
+                                            title: 'Are you sure?',
+                                            text: "You won't be able to revert this!",
+                                            type: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#3085d6',
+                                            cancelButtonColor: '#d33',
+                                            confirmButtonText: 'Yes, delete it!'
+                                          }).then((result) => {
+                                            //think about this code ver carefully
+                                            
+                                            // if (result.value) {
+                                            //     var params = {};
+                                            //     params.MU_ID = MU_ID.innerHTML;
+                                            //     requestHttps("https://requench-rest.herokuapp.com/Remove_Machine.php",params,function(response) {
+                                            //         if (response.Success) {
+                                            //             Swal.fire(
+                                            //                 'Deleted!',
+                                            //                 'Your device has been deleted.',
+                                            //                 'success'
+                                            //               ).then(()=>{
+                                            //                 requestHttps('https://requench-rest.herokuapp.com/Fetch_All_Machines.php', params, function (response) {
+                                            //                     if (response.Success) {
+                                            //                         machine_list = response.Machines;
+                                            //                         console.log('Im here');
+                                            //                         console.log(machine_list);
+                                            //                         displayMachinesGrid(machine_list);
+                                            //                     } else {
+                                            //                         console.log(response);
+                                            //                     }
+                                            //                 });
+                                            //               });          
+                                            //         }
+                                            //     })
+                                            // }
+                                          });
+                                    }else{
+                                        Swal.fire(
+                                            'Machine is currently active.',
+                                            'Please conduct concluding maintenance before removal. This will effectively remove the machine from the database.',
+                                            'error'
+                                        );
+                                    }
+                                }
                             }
                         }
 
