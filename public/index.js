@@ -6,6 +6,10 @@ $('document').ready(function () {
 	var contact_button = document.getElementById('contact_button');
 	var login_button = document.getElementById("login_button");
 	var signup_button = document.getElementById("signup_button");
+	var contact_name = document.getElementById('contact_name');
+	var contact_email = document.getElementById('contact_email');
+	var contact_message = document.getElementById('contact_message');
+	var contact_send = document.getElementById('contact_send');
 	var from_normal_login = false;
 	var normal_login_email = '';
 	function authorize(al, jsobj) {
@@ -86,8 +90,8 @@ $('document').ready(function () {
 				'<input id="user_field" type="text" name="User_Name" placeholder="Username" required class="form-control input-lg"/><br/>' +
 				'<input id="pass_field" type="password" name="Password" placeholder="Password" required class="form-control input-lg" /><br/>' +
 				'<a id="account_link" href="#">Create account</a>' +
-				'<button id = "login_button" type="button" class="btn btn-primary">Log In</button>' +
-				'<button id = "google_login_button" type="button" class="btn btn-danger">Sign in with Google</button>',
+				'<button id = "login_button" type="button" class="btn btn-primary login_buttons">Log In</button>' +
+				'<button id = "google_login_button" type="button" class="btn btn-danger login_buttons">Sign in with Google</button>',
 			showConfirmButton: false,
 			width: '300px',
 			onBeforeOpen: () => {
@@ -101,7 +105,7 @@ $('document').ready(function () {
 
 				create_account.onclick = function () {
 					//lead to sign up page
-
+					window.location.href = "SignUpCard.html";
 				}
 
 				login_button.onclick = function () {
@@ -185,16 +189,44 @@ $('document').ready(function () {
 
 	home_button.onclick = function () {
 		// refresh page
+		window.location.reload();
 	}
 
-	about_button.onclick = function () {
-		// resize header container
-		// Load About Page on Header
-	}
+	contact_send.onclick = function() {
+		if (contact_name.value == '' || contact_name.value == null || contact_email.value == '' || contact_email.value == null || contact_message.value == '' || contact_message.value == null) {
+			Swal({
+				type: 'error',
+				title: 'Ooops..',
+				text: 'Please fill out the necessary text boxes!'
+			});
+		}else{
+			var params = {};
+			params.name_sender = contact_name.value;
+			params.email_sender = contact_email.value;
+			params.message = contact_message.value;
 
-	contact_button.onclick = function () {
-		//resize header container
-		// Load contact us page
+			requestHttps("https://requench-rest.herokuapp.com/EmailTester.php",params,function(response) {
+				if (response.Success) {
+					Swal({
+						type: 'success',
+						title: 'Thanks!',
+						text: 'Thank you for your feedback!'
+					}).then((result)=>{
+						if (result) {
+							contact_name.value = '';
+							contact_email.value = '';
+							contact_message.value = '';
+						}
+					});	
+				}else{
+					Swal({
+						type: 'error',
+						title: 'Ooops..',
+						text: 'Something went wrong! Please try again. '
+					});	
+				}
+			})
+		}
 	}
 
 

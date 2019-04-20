@@ -1,152 +1,152 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Account</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="assets/css/bootstrap-datepicker.min.css"> -->
-    <link rel="stylesheet" href="assets/css/Account.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-  </head>
-  <body>
-    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <img src="assets/images/logo.png" width="35" height="30" alt="">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a id="summary_button" class="nav-link" href="Summary.html">Summary</a>
-            </li>
-            <li class="nav-item">
-              <a id="activity_button" class="nav-link" href="Activity.html">Activity</a>
-            </li>
-            <li class="nav-item">
-              <a id="contact_button" class="nav-link" href="#">Help</a>
-            </li>
-          </ul>
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active setting dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="fas fa-cog setting"></span>
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="Account.html">Account</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a id="contact_button" class="nav-link" href="#">Log Out</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <div class="account_whole container">
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Profile</h5>
-              <div class="d-inline-block picture_block d-inline-block">
-                <div id="profile_picture" class="profile_picture test">
-                </div>
-                <a id="update_photo" href="#">Update Photo</a>
-              </div>
-              <div class="d-inline-block user_block">
-                <h4 id="full_name" class="user_label">FirstName LastName</h4>
-                <p>Joined 2019</p>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Account Options <a id="details" class="details" href="#"><span id="edit_account" class="fas fa-edit"></span></a></h5>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <div class="row">
-                    <label for="id_num_field" class="col-sm-3 col-form-label">ID Number</label>
-                    <div class="col-sm-9">
-                      <input type="text" readonly class="form-control account_details" id="id_num_field" value="0123456789">
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="row">
-                    <label for="firstname_field" class="col-sm-3 col-form-label">First Name</label>
-                    <div class="col-sm-9">
-                      <input type="text" readonly class="form-control account_details" id="firstname_field" value="first_name">
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="row">
-                    <label for="lastname_field" class="col-sm-3 col-form-label">Last Name</label>
-                    <div class="col-sm-9">
-                      <input type="text" readonly class="form-control account_details" id="lastname_field" value="last_name">
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="row">
-                    <label for="user_field" class="col-sm-3 col-form-label">Username</label>
-                    <div class="col-sm-9">
-                      <input type="text" readonly class="form-control account_details" id="user_field" value="user_name">
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="row">
-                    <label for="pass_field" class="col-sm-3 col-form-label">Password</label>
-                    <div class="col-sm-9">
-                      <input type="password" readonly class="form-control" id="pass_field" value="2014141511">
-                      <a id="change_pass_link" class="isDisabled" href="#">Change Password</a>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Email Address <a id="details" class="details" href="#"><span id="edit_email" class="fas fa-edit"></span></a></h5>
-              <div class="row">
-                <label for="email_field" class="col-sm-3 col-form-label">Email</label>
-                <div class="col-sm-9">
-                  <input type="text" readonly class="form-control email_details" id="email_field" value="email@domain.com">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Phone <a id="details" class="details" href="#"><span id="edit_phone" class="fas fa-edit"></span></a></h5>
-              <div class="row">
-                <label for="phone_field" class="col-sm-4 col-form-label">Phone Number</label>
-                <div class="col-sm-8">
-                  <input type="text" readonly class="form-control phone_details" id="phone_field" value="09123456789">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-  </body>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-  <!-- <script type="text/javascript" src="bootstrap-datepicker.min.js"></script> -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-  <script type="text/javascript" src="Account.js"></script>
-  <script type="text/javascript" src="HttpRequest.js"></script>
-  <script type="text/javascript" src="sweetalert2.all.min.js"></script>
+<head>
+	<meta charset="utf-8">
+	<title>Account</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+		integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+		integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+	<!-- <link rel="stylesheet" href="assets/css/bootstrap-datepicker.min.css"> -->
+	<link rel="stylesheet" href="assets/css/Account.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+</head>
+
+<body>
+	<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+		<div class="container">
+			<a class="navbar-brand" href="#">
+				<img src="assets/images/logo.png" width="35" height="30" alt="">
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a id="summary_button" class="nav-link" href="Summary.html">Summary</a>
+					</li>
+					<li class="nav-item">
+						<a id="activity_button" class="nav-link" href="Activity.html">Activity</a>
+					</li>
+					<li class="nav-item">
+						<a id="account_button" class="nav-link active" href="Account.html">My Account</a>
+					</li>
+				</ul>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a id="contact_button" class="nav-link" href="#">Log Out</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="account_whole container">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Profile</h5>
+						<div class="d-inline-block picture_block d-inline-block">
+							<div id="profile_picture" class="profile_picture test">
+							</div>
+							<a id="update_photo" href="#">Update Photo</a>
+						</div>
+						<div class="d-inline-block user_block">
+							<h4 id="full_name" class="user_label">FirstName LastName</h4>
+							<p>Joined 2019</p>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Account Options <a id="details" class="details" href="#"><span
+									id="edit_account" class="fas fa-edit"></span></a></h5>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">
+								<div class="row">
+									<label for="id_num_field" class="col-sm-3 col-form-label">ID Number</label>
+									<div class="col-sm-9">
+										<input type="text" readonly class="form-control account_details"
+											id="id_num_field" value="0123456789">
+									</div>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="row">
+									<label for="firstname_field" class="col-sm-3 col-form-label">First Name</label>
+									<div class="col-sm-9">
+										<input type="text" readonly class="form-control account_details"
+											id="firstname_field" value="first_name">
+									</div>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="row">
+									<label for="lastname_field" class="col-sm-3 col-form-label">Last Name</label>
+									<div class="col-sm-9">
+										<input type="text" readonly class="form-control account_details"
+											id="lastname_field" value="last_name">
+									</div>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="row">
+									<label for="user_field" class="col-sm-3 col-form-label">Username</label>
+									<div class="col-sm-9">
+										<input type="text" readonly class="form-control account_details" id="user_field"
+											value="user_name">
+									</div>
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="row">
+									<label for="pass_field" class="col-sm-3 col-form-label">Password</label>
+									<div class="col-sm-9">
+										<input type="password" readonly class="form-control" id="pass_field"
+											value="2014141511">
+										<a id="change_pass_link" class="isDisabled" href="#">Change Password</a>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Email Address <a id="details" class="details" href="#"><span
+									id="edit_email" class="fas fa-edit"></span></a></h5>
+						<div class="row">
+							<label for="email_field" class="col-sm-3 col-form-label">Email</label>
+							<div class="col-sm-9">
+								<input type="text" readonly class="form-control email_details" id="email_field"
+									value="email@domain.com">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+	integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+	crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+	integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+	crossorigin="anonymous"></script>
+<!-- <script type="text/javascript" src="bootstrap-datepicker.min.js"></script> -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script type="text/javascript" src="Account.js"></script>
+<script type="text/javascript" src="HttpRequest.js"></script>
+<script type="text/javascript" src="sweetalert2.all.min.js"></script>
+
 </html>

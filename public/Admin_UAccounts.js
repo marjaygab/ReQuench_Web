@@ -437,7 +437,7 @@ $(document).ready(function () {
             if (file_path == null) {
                 file_path = "https://requench-rest.herokuapp.com/user_images/logo.png";
             } else {
-                file_path = `https://requench-rest.herokuapp.com/${file_path}`;
+                file_path = `https://requench-rest.herokuapp.com${file_path}`;
             }
             var string = `<div class="col-sm-4">
             <div class="card account_card">
