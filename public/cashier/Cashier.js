@@ -233,7 +233,7 @@ rfid_field.onkeypress = function (e) {
                         current_account.unrec.UU_ID = json_object.Account.UU_ID;
                         current_account.rec.isSelected = false;
                         balance_display.value = json_object.Account.Balance;
-                        account_name.innerHTML = 'Unrecorded Account'
+                        account_name.innerHTML = 'Unrecorded Account';
                         if (json_object.Account.ID_Number == null) {
                             acc_num_display.value = 'Unset';
                             Swal.fire({
@@ -242,13 +242,15 @@ rfid_field.onkeypress = function (e) {
                                 inputAttributes: {
                                     autocapitalize: 'off'
                                 },
-                                showCancelButton: true,
+                                showCancelButton: false,
                                 confirmButtonText: 'Submit',
+                                allowOutsideClick: false,
                                 showLoaderOnConfirm: true,
                                 preConfirm: (ID_NUMBER) => {
                                     var params = {};
                                     params.UU_ID = current_account.unrec.UU_ID;
                                     params.ID_Number = ID_NUMBER;
+                                    params.RFID_ID = rfid_field.value;
                                     console.log(params);
                                     console.log(json_object);
                                     const otherParam = {
@@ -313,13 +315,15 @@ rfid_field.onkeypress = function (e) {
                             inputAttributes: {
                                 autocapitalize: 'off'
                             },
-                            showCancelButton: true,
+                            showCancelButton: false,
                             confirmButtonText: 'Submit',
+                            allowOutsideClick: false,
                             showLoaderOnConfirm: true,
                             preConfirm: (ID_NUMBER) => {
                                 var params = {};
                                 params.UU_ID = json_object.Insert_ID;
                                 params.ID_Number = ID_NUMBER;
+                                params.RFID_ID = rfid_field.value;
                                 const otherParam = {
                                     headers: {
                                         "content-type": "application/json; charset=UTF-8"
@@ -344,8 +348,13 @@ rfid_field.onkeypress = function (e) {
                         }).then((result) => {
                             if (result.value) {
                                 console.log(result.value);
-
                                 acc_num_display.value = result.value.ID_Number;
+                                if (result.value.Account_Type == 'Recorded') {
+                                    current_account.unrec.isSelected = false;
+                                    current_account.rec.isSelected = true;
+                                    current_account.rec.Acc_ID = result.value.Acc_ID;
+                                    account_name.innerHTML = 'Recorded Account';
+                                }
                             }
                         })
                     }
@@ -384,13 +393,15 @@ enter_rfid.onclick = function () {
                             inputAttributes: {
                                 autocapitalize: 'off'
                             },
-                            showCancelButton: true,
+                            showCancelButton: false,
                             confirmButtonText: 'Submit',
+                            allowOutsideClick: false,
                             showLoaderOnConfirm: true,
                             preConfirm: (ID_NUMBER) => {
                                 var params = {};
                                 params.UU_ID = current_account.unrec.UU_ID;
                                 params.ID_Number = ID_NUMBER;
+                                params.RFID_ID = rfid_field.value;
                                 console.log(params);
                                 console.log(json_object);
                                 const otherParam = {
@@ -441,13 +452,15 @@ enter_rfid.onclick = function () {
                         inputAttributes: {
                             autocapitalize: 'off'
                         },
-                        showCancelButton: true,
+                        showCancelButton: false,
+                        allowOutsideClick: false,
                         confirmButtonText: 'Submit',
                         showLoaderOnConfirm: true,
                         preConfirm: (ID_NUMBER) => {
                             var params = {};
                             params.UU_ID = json_object.Insert_ID;
                             params.ID_Number = ID_NUMBER;
+                            params.RFID_ID = rfid_field.value;
                             const otherParam = {
                                 headers: {
                                     "content-type": "application/json; charset=UTF-8"
@@ -472,6 +485,12 @@ enter_rfid.onclick = function () {
                     }).then((result) => {
                         if (result.value) {
                             acc_num_display.value = result.value.ID_Number;
+                            if (result.value.Account_Type == 'Recorded') {
+                                current_account.unrec.isSelected = false;
+                                current_account.rec.isSelected = true;
+                                current_account.rec.Acc_ID = result.value.Acc_ID;
+                                account_name.innerHTML = 'Recorded Account';
+                            }
                         }
                     })
                 }

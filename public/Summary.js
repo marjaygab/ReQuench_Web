@@ -19,8 +19,6 @@ $('document').ready(function () {
     console.log(jsonobj);
     
     var profile_picture_div = document.getElementById('profile_picture');
-    var path = "url('.." + jsonobj.file_path + "')";
-    profile_picture_div.style.backgroundImage = "url('https://requench-rest.herokuapp.com" + jsonobj.file_path + "')";
     user_fn_banner.innerHTML = jsonobj.Account_Details.First_Name;
     balance_label.innerHTML = jsonobj.Account_Details.Balance + " mL"
     var i = 0;
@@ -30,6 +28,13 @@ $('document').ready(function () {
     $('.dropdown-toggle').dropdown();
 
 
+
+    var params = {};
+    params.Acc_ID = jsonobj.Account_Details.Acc_ID;
+    requestHttps("https://requench-rest.herokuapp.com/Fetch_Image.php",params,function(response) {
+        var path = "url('" + response.image_link + "')";
+        profile_picture_div.style.backgroundImage = path; 
+    });
 
 
 
